@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"axios": "^1.1.2"
+		"axios": "^1.1.2",
+		"telegram-webapps-types": "^1.0.5"
 	}
 }

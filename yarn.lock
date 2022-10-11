@@ -1414,6 +1414,11 @@ tar@^6.1.11:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
+telegram-webapps-types@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/telegram-webapps-types/-/telegram-webapps-types-1.0.5.tgz#35eee9b690cc8a8127b4d68ec6e8b2b40b33847b"
+  integrity sha512-QLBBjEgdGdJZmnSshq2jVUrqwolRBiM7e0YPsUpHOFxA2W9nkUYI5yBFd3vGyCqFlNoJw8S6k2Q7lxVffzUwlw==
+
 tiny-glob@^0.2.9:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/tiny-glob/-/tiny-glob-0.2.9.tgz#2212d441ac17928033b110f8b3640683129d31e2"

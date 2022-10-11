@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply fixed w-full;
+    @apply w-full overflow-y-auto;
   }
 }
