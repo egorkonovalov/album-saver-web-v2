@@ -4,10 +4,10 @@ publish(
   'build', // path to public directory
   {
     branch: 'gh-pages',
-    repo: 'https://github.com/el3um4s/memento-sveltekit-and-github-pages.git', // Update to point to your repository
+    repo: 'https://github.com/egorkonovalov/album-saver-web-v2',
     user: {
-      name: 'Samuele de Tomasi', // update to use your name
-      email: 'samuele@stranianelli.com' // Update to use your email
+      name: 'Egor Konovalov',
+      email: 'konovalov.ye@gmail.com'
     },
     dotfiles: true
   },
