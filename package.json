@@ -6,7 +6,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"deploy": "node ./gh-pages.ts",
+		"deploy": "node ./gh-pages.js",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
@@ -29,6 +29,7 @@
 		"@types/gh-pages": "^3.2.1",
 		"axios": "^1.1.2",
 		"gh-pages": "^4.0.0",
-		"telegram-webapps-types": "^1.0.5"
+		"telegram-webapps-types": "^1.0.5",
+		"ts-node": "^10.9.1"
 	}
 }
