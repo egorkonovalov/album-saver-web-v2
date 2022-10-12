@@ -6,11 +6,13 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"deploy": "node ./gh-pages.ts",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/adapter-static": "^1.0.0-next.44",
 		"@sveltejs/kit": "next",
 		"autoprefixer": "^10.4.12",
 		"postcss": "^8.4.17",
@@ -24,7 +26,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/gh-pages": "^3.2.1",
 		"axios": "^1.1.2",
+		"gh-pages": "^4.0.0",
 		"telegram-webapps-types": "^1.0.5"
 	}
 }
