@@ -21,7 +21,7 @@
         }}
       >
         <img src={imageUrl} alt={title} class="w-full rounded-lg" />
-        <p class="truncate">{title}</p>
+        <p class="truncate dark:text-white">{title}</p>
       </a>
     {/each}
   </div>
