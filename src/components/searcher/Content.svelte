@@ -1,49 +1,53 @@
 <script lang="ts">
-  import InfiniteScroll from "svelte-infinite-scroll";
-  import type { MusicQueryRequest } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
-  import Placeholder from "./Placeholder.svelte";
+  import type { MusicQueryRequest } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Album } from "$lib/modules/musicsearch/interfaces/album.interface";
+  import AlbumCard from "./AlbumCard.svelte";
+  import InfiniteScroll from "svelte-infinite-scroll";
+  import Placeholder from "./Placeholder.svelte";
+  import LoadinWheel from "./LoadinWheel.svelte";
   import { onMount } from "svelte";
 
   export let query: MusicQueryRequest;
 
-  let telegram = Telegram;
   let queryCopy = query;
   let data: Album[] = [];
   let newBatch: Album[] = [];
 
-  async function fetchData() {
-    newBatch = await SearchRequestController.getAlbums(queryCopy);
-  }
+  let loadingMore = false;
 
   $: data = [...data, ...newBatch];
+
+  async function fetchData() {
+    newBatch = await SearchRequestController.getAlbums(queryCopy);
+    loadingMore = false;
+  }
+
+  function handleLoadMore() {
+    loadingMore = true;
+    queryCopy.page++;
+    fetchData();
+  }
 
   onMount(() => {
     fetchData();
   });
 </script>
 
-<div class="grid grid-cols-2 p-4 gap-4 max-h-[63rem] overflow-x-scroll">
-  {#each data as { youTubeMusicPlaylistUrl, title, imageUrl }}
-    <a
-      href="/"
-      class="flex flex-col gap-2 cursor-pointer"
-      on:click|preventDefault={async (e) => {
-        await SearchRequestController.requestAlbum(youTubeMusicPlaylistUrl);
-        telegram.WebApp.close();
-      }}
-    >
-      <img src={imageUrl} alt={title} class="w-full rounded-lg" />
-      <p class="truncate dark:text-white">{title}</p>
-    </a>
-  {/each}
-  <InfiniteScroll
-    threshold={100}
-    on:loadMore={() => {
-      console.log("got there!");
-      queryCopy.page++;
-      fetchData();
-    }}
-  />
-</div>
+{#if !data.length}
+  <Placeholder />
+{:else}
+  <div class="album-list">
+    {#each data as album}
+      <AlbumCard {album} />
+    {/each}
+
+    <InfiniteScroll threshold={100} on:loadMore={handleLoadMore} />
+
+    {#if loadingMore}
+      <div class="col-span-2 h-5">
+        <LoadinWheel />
+      </div>
+    {/if}
+  </div>
+{/if}
