@@ -1,14 +1,11 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import type { TelegramWebApps } from "telegram-webapps-types";
+  import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
+  import { PlatformEnvironmentService } from "$lib/modules/platformenvironment/platformenvironment.service";
   import Main from "../components/Main.svelte";
-  let telegram: TelegramWebApps.SDK;
-  onMount(async () => {
-    telegram = Telegram;
-  });
+  let environment = PlatformEnvironmentService.getEnvironment();
 </script>
 
-{#if telegram?.WebApp.initData}
+{#if environment instanceof TelegramEnvironment}
   <Main />
 {:else}
   <p class="w-full text-center p-10 font-semibold leading-loose">

@@ -1,0 +1,22 @@
+import type { PlatformEnvironment } from "../interfaces/PlatformEnvironment.interface";
+import { QueryStringParser } from "$lib/utils/QueryStringParser.utility";
+
+export class
+  TelegramEnvironment implements PlatformEnvironment {
+  readonly _userId: number;
+  readonly _platformName: string;
+  constructor() {
+    const data = QueryStringParser.parseString(Telegram.WebApp.initData);
+    const user = QueryStringParser.parseJson(data.user);
+    this._userId = user.id;
+    this._platformName = data.platform
+  };
+
+  get userId(): number {
+    return this._userId;
+  };
+
+  get platformName(): string {
+    return this._platformName;
+  };
+}
