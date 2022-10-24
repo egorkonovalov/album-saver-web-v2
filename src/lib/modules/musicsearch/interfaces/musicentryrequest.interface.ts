@@ -1,6 +1,6 @@
-import type { Album } from "./album.interface";
+import type { Record } from "./record.interface";
 
 export interface MusicEntryRequest {
   userId: number,
-  youTubeMusicPlaylistUrl: Album["youTubeMusicPlaylistUrl"];
+  youTubeMusicPlaylistUrl: Record["youTubeMusicPlaylistUrl"];
 }

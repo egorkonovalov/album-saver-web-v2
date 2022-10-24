@@ -4,20 +4,61 @@
 
 @layer base {
   body {
-    @apply w-full overflow-y-auto;
+    @apply w-full overflow-y-hidden;
   }
 }
 
 @layer components {
-  .album-list {
-    @apply grid grid-cols-2 p-4 gap-4 overflow-x-scroll mt-16;
-    max-height: calc(100vh - 4rem);
+  .records-grid {
+    @apply grid grid-cols-2 p-4 gap-4 overflow-x-scroll mt-24;
+    max-height: calc(100vh - 6rem);
+  }
+
+  .records-grid a {
+    @apply flex flex-col gap-2 cursor-pointer;
+  }
+
+  .records-grid img {
+    @apply w-full rounded-lg;
+  }
+
+  .records-grid p {
+    @apply truncate dark:text-white;
+  }
+
+  .records-list {
+    @apply flex flex-col p-4 gap-4 overflow-x-scroll mt-24;
+    max-height: calc(100vh - 6rem);
+  }
+
+  .records-list a {
+    @apply flex flex-row gap-2 items-center;
+  }
+
+  .records-list img {
+    @apply rounded-sm w-2/12;
   }
   .form {
-    @apply w-full p-4 flex gap-4 justify-between h-16 backdrop-blur-sm fixed inset-0;
+    @apply w-full p-4 flex gap-4 justify-between h-16;
   }
 
   .headphones {
     @apply flex justify-center items-center h-screen;
+  }
+
+  .filter {
+    @apply px-4 flex gap-3;
+  }
+
+  .filter-button {
+    @apply rounded-full bg-stone-100 px-2 py-0.5 text-sm font-medium capitalize border-2 border-transparent;
+  }
+
+  .filter-button.active {
+    @apply border-blue-700;
+  }
+
+  .searchbar {
+    @apply bg-stone-100 h-full text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
   }
 }
