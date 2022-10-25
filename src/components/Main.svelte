@@ -13,28 +13,22 @@
     page: 0,
     requestType: null,
   };
+
   let requestType = RequestType.Albums;
 
-  const changeRequestType = (event: any) => (requestType = event.detail.value);
-  const startSearching = (event?: any) => {
-    searchQuery = {
-      query: event.detail.value,
-      page: 0,
-      requestType: requestType,
-    };
-  };
   $: {
-    searchQuery = {
-      query: searchQuery.query,
-      page: 0,
-      requestType: requestType,
-    };
+    searchQuery.page = 0;
+    searchQuery.requestType = requestType;
+    searchQuery = searchQuery;
   }
 </script>
 
-<div class="flex flex-col fixed inset-0 h-24">
-  <Searchbar on:search={startSearching} />
-  <FilterSelector on:changeRequestType={changeRequestType} {requestType} />
+<div class="top-bar">
+  <Searchbar on:search={(event) => (searchQuery.query = event.detail.value)} />
+  <FilterSelector
+    on:changeRequestType={(event) => (requestType = event.detail.value)}
+    {requestType}
+  />
 </div>
 
 {#if searchQuery?.query}

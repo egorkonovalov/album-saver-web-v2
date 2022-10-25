@@ -4,14 +4,13 @@
 
 @layer base {
   body {
-    @apply w-full overflow-y-hidden;
+    @apply w-full h-full bg-white dark:bg-stone-900;
   }
 }
 
 @layer components {
   .records-grid {
-    @apply grid grid-cols-2 p-4 gap-4 overflow-x-scroll mt-24;
-    max-height: calc(100vh - 6rem);
+    @apply grid grid-cols-2 p-4 gap-4 mt-[calc(100vh/6)];
   }
 
   .records-grid a {
@@ -27,8 +26,7 @@
   }
 
   .records-list {
-    @apply flex flex-col p-4 gap-4 overflow-x-scroll mt-24;
-    max-height: calc(100vh - 6rem);
+    @apply flex flex-col p-4 gap-4 mt-[calc(100vh/6)];
   }
 
   .records-list a {
@@ -36,7 +34,15 @@
   }
 
   .records-list img {
-    @apply rounded-sm w-2/12;
+    @apply rounded-sm w-14 h-14;
+  }
+
+  .records-list p {
+    @apply truncate dark:text-white max-w-[60vw];
+  }
+
+  .placeholder {
+    @apply mt-[calc(100vh/6)];
   }
   .form {
     @apply w-full p-4 flex gap-4 justify-between h-16;
@@ -51,7 +57,7 @@
   }
 
   .filter-button {
-    @apply rounded-full bg-stone-100 px-2 py-0.5 text-sm font-medium capitalize border-2 border-transparent;
+    @apply rounded-full bg-stone-100 dark:bg-stone-800 dark:text-white px-2 py-0.5 text-sm font-medium capitalize border-2 border-transparent;
   }
 
   .filter-button.active {
@@ -59,6 +65,10 @@
   }
 
   .searchbar {
-    @apply bg-stone-100 h-full text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    @apply bg-stone-100 h-full text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-stone-800 dark:border-gray-600 dark:placeholder-stone-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  }
+
+  .top-bar {
+    @apply flex flex-col z-10 justify-center fixed inset-0 h-1/6 bg-white/95 backdrop-blur-xl dark:bg-stone-900/90;
   }
 }

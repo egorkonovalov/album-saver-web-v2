@@ -11,9 +11,9 @@ export class MusicGetterService {
     return response.data;
   }
 
-  public async requestMusicEntry(data: MusicEntryRequest) {
+  public async requestMusicEntry(data: MusicEntryRequest, requestType: RequestType) {
     const request = createRequest();
-    const response = await request.post(`/download?userId=${data.userId}&youTubeMusicPlaylistUrl=${data.youTubeMusicPlaylistUrl}`)
+    const response = await request.post(`/download?userId=${data.userId}&youTubeMusicPlaylistUrl=${data.youTubeMusicPlaylistUrl}&entityType=${requestType === RequestType.Albums ? 1 : 2}`)
     console.log(response.data)
   }
 };
