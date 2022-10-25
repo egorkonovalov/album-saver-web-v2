@@ -36,7 +36,7 @@
     <Content query={searchQuery} {requestType} />
   {/key}
 {:else}
-  <div class="headphones">
-    <img src="{base}/headphones.webp" alt="headphones" class="drop-shadow-xl" />
+  <div class="logo">
+    <img src="{base}/logo.png" alt="logo" class="drop-shadow-2xl" />
   </div>
 {/if}
