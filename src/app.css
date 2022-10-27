@@ -10,7 +10,7 @@
 
 @layer components {
   .records-grid {
-    @apply grid grid-cols-2 p-4 gap-4 mt-[calc(100vh/6)];
+    @apply grid grid-cols-2 p-4 gap-4 mt-[min(6rem,25%)];
   }
 
   .records-grid a {
@@ -26,7 +26,7 @@
   }
 
   .records-list {
-    @apply flex flex-col p-4 gap-4 mt-[calc(100vh/6)];
+    @apply flex flex-col p-4 gap-4 mt-[min(6rem,25%)];
   }
 
   .records-list a {
@@ -42,7 +42,7 @@
   }
 
   .placeholder {
-    @apply mt-[calc(100vh/6)];
+    @apply mt-[min(6rem,25%)];
   }
   .form {
     @apply w-full p-4 flex gap-4 justify-between h-16;
@@ -69,6 +69,7 @@
   }
 
   .top-bar {
-    @apply flex flex-col z-10 justify-center fixed inset-0 h-1/6 bg-white/95 backdrop-blur-xl dark:bg-stone-900/90;
+    @apply flex flex-col z-10 justify-center fixed inset-0 w-screen bg-white/95 backdrop-blur-xl dark:bg-stone-900/90;
+    height: min(6rem, 25%);
   }
 }
