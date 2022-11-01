@@ -24,7 +24,7 @@ export class MusicGetterService {
 
   public async requestMusicEntry(requestQuery: MusicEntryRequest, requestType: RequestType) {
     const response = await createRequest()
-      .post("/download", {
+      .post("/download", {}, {
         params: {
           ...requestQuery,
           entityType: requestType === RequestType.Albums ? 1 : 2
