@@ -8,31 +8,30 @@
   } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import { base } from "$app/paths";
 
-  let searchQuery: MusicQueryRequest = {
-    query: "",
-    page: 0,
-    requestType: null,
+  let searchQuery: MusicQueryRequest = "";
+  let requestType = RequestType.Albums;
+  let keyObject = {
+    searchQuery: "",
+    requestType: "",
   };
 
-  let requestType = RequestType.Albums;
-
   $: {
-    searchQuery.page = 0;
-    searchQuery.requestType = requestType;
-    searchQuery = searchQuery;
+    keyObject.requestType = requestType;
+    keyObject.searchQuery = searchQuery;
+    keyObject = keyObject;
   }
 </script>
 
 <div class="top-bar">
-  <Searchbar on:search={(event) => (searchQuery.query = event.detail.value)} />
+  <Searchbar on:search={(event) => (searchQuery = event.detail.value)} />
   <FilterSelector
     on:changeRequestType={(event) => (requestType = event.detail.value)}
     {requestType}
   />
 </div>
 
-{#if searchQuery?.query}
-  {#key searchQuery}
+{#if searchQuery}
+  {#key keyObject}
     <Content query={searchQuery} {requestType} />
   {/key}
 {:else}

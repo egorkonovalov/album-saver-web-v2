@@ -11,6 +11,7 @@
   import ListPlaceholder from "../utils/ListPlaceholder.svelte";
   import LoadinWheel from "../utils/LoadinWheel.svelte";
   import { onMount } from "svelte";
+  import { tokens } from "$lib/stores";
 
   export let query: MusicQueryRequest;
   export let requestType: RequestType;
@@ -23,17 +24,17 @@
   $: data = [...data, ...newBatch];
 
   async function fetchData() {
-    newBatch = await SearchRequestController.getRecords(queryCopy);
+    newBatch = await SearchRequestController.getRecords(queryCopy, requestType);
     loadingMore = false;
   }
 
   function handleLoadMore() {
     loadingMore = true;
-    queryCopy.page++;
     fetchData();
   }
 
   onMount(() => {
+    tokens.set({});
     fetchData();
   });
 </script>

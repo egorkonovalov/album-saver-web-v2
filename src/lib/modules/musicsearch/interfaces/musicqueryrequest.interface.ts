@@ -3,8 +3,4 @@ export enum RequestType {
   Tracks = 'tracks'
 }
 
-export interface MusicQueryRequest {
-  query: string,
-  page: number
-  requestType: RequestType | null
-}
+export type MusicQueryRequest = string;
