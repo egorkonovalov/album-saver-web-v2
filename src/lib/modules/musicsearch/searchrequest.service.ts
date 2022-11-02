@@ -9,7 +9,7 @@ import type { MusicQueryRequest } from "./interfaces/musicqueryrequest.interface
 export class MusicGetterService {
 
   private setTokens(response: any) {
-    const { result, continuationToken, token } = response;
+    const { continuationToken, token } = response;
     return tokens.set({ continuationToken: continuationToken, token: token, continuation: true });
   }
 
