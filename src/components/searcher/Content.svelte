@@ -12,6 +12,7 @@
   import LoadinWheel from "../utils/LoadinWheel.svelte";
   import { onMount } from "svelte";
   import { tokens } from "$lib/stores";
+  import { base } from "$app/paths";
 
   export let query: MusicQueryRequest;
   export let requestType: RequestType;
@@ -20,6 +21,7 @@
   let data: Record[] = [];
   let newBatch: Record[] = [];
   let loadingMore = false;
+  let showPlaceholder = false;
 
   $: data = [...data, ...newBatch];
 
@@ -33,19 +35,21 @@
     fetchData();
   }
 
-  onMount(() => {
+  onMount(async () => {
+    showPlaceholder = true;
     tokens.set({});
-    fetchData();
+    await fetchData();
+    showPlaceholder = false;
   });
 </script>
 
-{#if !data.length}
+{#if showPlaceholder}
   {#if requestType === RequestType.Albums}
     <GridPlaceholder />
   {:else}
     <ListPlaceholder />
   {/if}
-{:else}
+{:else if data.length}
   <div
     class={`${
       requestType === RequestType.Albums ? "records-grid" : "records-list"
@@ -61,4 +65,12 @@
     {/if}
   </div>
   <InfiniteScroll threshold={100} window={true} on:loadMore={handleLoadMore} />
+{:else}
+  <div class="content-in-center flex flex-col gap-3 dark:text-white">
+    <img src="{base}/search.svg" alt="search" class="dark:invert" />
+    <div class="flex flex-col text-center">
+      <h3 class="font-medium">No results</h3>
+      <p>Please try changing the query</p>
+    </div>
+  </div>
 {/if}

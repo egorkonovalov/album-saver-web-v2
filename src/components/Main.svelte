@@ -35,7 +35,7 @@
     <Content query={searchQuery} {requestType} />
   {/key}
 {:else}
-  <div class="logo">
+  <div class="content-in-center">
     <img src="{base}/logo.png" alt="logo" class="drop-shadow-2xl" />
   </div>
 {/if}

@@ -48,7 +48,7 @@
     @apply w-full p-4 flex gap-4 justify-between h-16;
   }
 
-  .logo {
+  .content-in-center {
     @apply flex justify-center items-center h-screen;
   }
 
