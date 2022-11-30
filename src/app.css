@@ -65,7 +65,7 @@
   }
 
   .searchbar {
-    @apply bg-stone-100 h-full text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-stone-800 dark:border-gray-600 dark:placeholder-stone-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    @apply bg-stone-100 h-full text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 dark:bg-stone-800 dark:border-gray-600 dark:placeholder-stone-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
   }
 
   .top-bar {
