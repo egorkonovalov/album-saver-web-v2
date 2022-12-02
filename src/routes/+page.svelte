@@ -9,8 +9,7 @@
 </script>
 
 {#await getEnvironment() then environment}
-  <!-- {#if environment instanceof TelegramEnvironment} -->
-  {#if !(environment instanceof TelegramEnvironment)}
+  {#if environment instanceof TelegramEnvironment}
     <Main />
   {:else}
     <p class="w-full text-center p-10 font-semibold leading-loose">
