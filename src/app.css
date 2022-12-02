@@ -9,41 +9,82 @@
 }
 
 @layer components {
-  .records-grid {
+  .album-grid {
     @apply grid grid-cols-2 p-4 gap-4 mt-[min(6rem,25%)];
   }
 
-  .records-grid a {
+  .album-grid a {
     @apply flex flex-col gap-2 cursor-pointer;
   }
 
-  .records-grid img {
+  .album-grid img {
     @apply w-full rounded-lg;
   }
 
-  .records-grid p {
+  .album-grid p {
     @apply truncate dark:text-white;
   }
 
-  .records-list {
+  .track-list {
     @apply flex flex-col p-4 gap-4 mt-[min(6rem,25%)];
   }
 
-  .records-list a {
+  .track-list a {
     @apply flex flex-row gap-2 items-center;
   }
 
-  .records-list img {
+  .track-list img {
     @apply rounded-sm w-14 h-14;
   }
 
-  .records-list p {
+  .track-list p {
     @apply truncate dark:text-white max-w-[60vw];
   }
 
   .placeholder {
-    @apply mt-[min(6rem,25%)];
+    @apply mt-[min(6rem,25%)] p-4 gap-4 animate-pulse;
   }
+
+  .placeholder.album-grid {
+    @apply grid grid-cols-2;
+  }
+
+  .placeholder.track-list {
+    @apply flex flex-col;
+  }
+
+  .placeholder.track-list .entry {
+    @apply flex-row;
+  }
+
+  .placeholder.album-grid .entry {
+    @apply flex-col h-48;
+  }
+
+  .placeholder.track-list .image {
+    @apply w-14 h-14;
+  }
+
+  .placeholder.album-grid .image {
+    @apply w-full h-full;
+  }
+
+  .placeholder .entry {
+    @apply flex gap-2 w-full;
+  }
+
+  .placeholder .image {
+    @apply bg-gray-200 dark:bg-stone-700 rounded;
+  }
+
+  .placeholder .text-line {
+    @apply bg-gray-200 dark:bg-stone-700 h-2 rounded;
+  }
+
+  .placeholder .text-container {
+    @apply flex flex-col  gap-2 justify-center;
+  }
+
   .form {
     @apply w-full p-4 flex gap-4 justify-between h-16;
   }

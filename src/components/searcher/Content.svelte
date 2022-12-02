@@ -7,12 +7,11 @@
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import RecordCard from "./RecordCard.svelte";
   import InfiniteScroll from "svelte-infinite-scroll";
-  import GridPlaceholder from "../utils/GridPlaceholder.svelte";
-  import ListPlaceholder from "../utils/ListPlaceholder.svelte";
+  import Placeholder from "../utils/Placeholder.svelte";
   import LoadinWheel from "../utils/LoadinWheel.svelte";
   import { onMount } from "svelte";
   import { tokens } from "$lib/stores";
-  import { base } from "$app/paths";
+  import NoResults from "./NoResults.svelte";
 
   export let query: MusicQueryRequest;
   export let requestType: RequestType;
@@ -44,33 +43,21 @@
 </script>
 
 {#if showPlaceholder}
-  {#if requestType === RequestType.Albums}
-    <GridPlaceholder />
-  {:else}
-    <ListPlaceholder />
-  {/if}
+  <Placeholder
+    placeholderClass={requestType === RequestType.Albums
+      ? "album-grid"
+      : "track-list"}
+  />
 {:else if data.length}
-  <div
-    class={`${
-      requestType === RequestType.Albums ? "records-grid" : "records-list"
-    }`}
-  >
+  <div class={requestType === RequestType.Albums ? "album-grid" : "track-list"}>
     {#each data as record}
       <RecordCard {record} {requestType} />
     {/each}
     {#if loadingMore}
-      <div class="col-span-2 h-4">
-        <LoadinWheel />
-      </div>
+      <LoadinWheel stylingClass={"col-span-2 h-4"} />
     {/if}
   </div>
   <InfiniteScroll threshold={100} window={true} on:loadMore={handleLoadMore} />
 {:else}
-  <div class="content-in-center flex flex-col gap-3 dark:text-white">
-    <img src="{base}/search.svg" alt="search" class="dark:invert" />
-    <div class="flex flex-col text-center">
-      <h3 class="font-medium">No results</h3>
-      <p>Please try changing the query</p>
-    </div>
-  </div>
+  <NoResults />
 {/if}

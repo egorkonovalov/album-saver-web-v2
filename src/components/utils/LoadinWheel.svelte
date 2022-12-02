@@ -1,4 +1,8 @@
-<div class="flex justify-center">
+<script lang="ts">
+  export let stylingClass: string;
+</script>
+
+<div class={`${stylingClass} flex justify-center`}>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
