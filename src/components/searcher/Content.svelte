@@ -21,6 +21,7 @@
   let newBatch: Record[] = [];
   let loadingMore = false;
   let showPlaceholder = false;
+  let layout = requestType === RequestType.Album ? "album-grid" : "track-list";
 
   $: data = [...data, ...newBatch];
 
@@ -43,13 +44,9 @@
 </script>
 
 {#if showPlaceholder}
-  <Placeholder
-    placeholderClass={requestType === RequestType.Albums
-      ? "album-grid"
-      : "track-list"}
-  />
+  <Placeholder {layout} />
 {:else if data.length}
-  <div class={requestType === RequestType.Albums ? "album-grid" : "track-list"}>
+  <div class={layout}>
     {#each data as record}
       <RecordCard {record} {requestType} />
     {/each}

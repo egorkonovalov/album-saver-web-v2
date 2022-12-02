@@ -9,7 +9,7 @@
   import { base } from "$app/paths";
 
   let searchQuery: MusicQueryRequest = "";
-  let requestType = RequestType.Albums;
+  let requestType = RequestType.Album;
   let keyObject = {
     searchQuery: "",
     requestType: "",

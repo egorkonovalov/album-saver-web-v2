@@ -1,8 +1,8 @@
 <script lang="ts">
-  export let placeholderClass: string;
+  export let layout: string;
 </script>
 
-<div class={`${placeholderClass} placeholder`}>
+<div class={`${layout} placeholder`}>
   {#each Array(8) as _}
     <div class="entry">
       <div class="image" />

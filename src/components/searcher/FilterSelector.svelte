@@ -9,10 +9,10 @@
   let requestTypeCopy = requestType;
   let variants: Selector[] = [
     {
-      type: RequestType.Albums,
+      type: RequestType.Album,
     },
     {
-      type: RequestType.Tracks,
+      type: RequestType.Track,
     },
   ];
   $: {

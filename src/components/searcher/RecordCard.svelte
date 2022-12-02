@@ -24,7 +24,7 @@
     <p class="font-light">
       {record.author === undefined ? "Various Artists" : record.author}
     </p>
-    {#if requestType === "albums"}
+    {#if requestType === "album"}
       <div class="flex gap-1 text-[11px] font-medium">
         {#if record.recordType}
           <p>
