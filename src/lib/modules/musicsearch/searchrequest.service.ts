@@ -8,7 +8,7 @@ import type { MusicQueryRequest } from "./interfaces/musicqueryrequest.interface
 
 export class MusicGetterService {
 
-  private setTokens(response: any) {
+  private setTokens(response: { continuationToken: string, token: string }) {
     const { continuationToken, token } = response;
     return tokens.set({ continuationToken: continuationToken, token: token, continuation: true });
   }
@@ -22,7 +22,7 @@ export class MusicGetterService {
     return response.data.result;
   }
 
-  public async requestMusicEntry(requestQuery: MusicEntryRequest, requestType: RequestType) {
+  public async requestMusicEntry(requestQuery: MusicEntryRequest, requestType: RequestType): Promise<void> {
     const response = await createRequest()
       .post("/download", {}, {
         params: {

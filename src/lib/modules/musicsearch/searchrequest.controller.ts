@@ -14,7 +14,7 @@ export class SearchRequestController {
     return environment.userId
   }
 
-  static async requestRecord(youTubeMusicPlaylistUrl: string, requestType: RequestType): Promise<any> {
+  static async requestRecord(youTubeMusicPlaylistUrl: string, requestType: RequestType): Promise<void> {
     const environment = PlatformEnvironmentService.getEnvironment();
     const userId = this.getUserId(environment);
     const data: MusicEntryRequest = { userId: userId, youTubeMusicPlaylistUrl: youTubeMusicPlaylistUrl }

@@ -13,7 +13,8 @@ export class
     this._userId = user.id;
     this._platformName = data.platform;
     this._colorScheme = Telegram.WebApp.colorScheme;
-    this.applyColorScheme()
+    this.applyColorScheme();
+    this.applyStyles();
   };
 
   get userId(): number {
@@ -28,11 +29,17 @@ export class
     return this._colorScheme;
   }
 
-  applyColorScheme() {
+  private applyColorScheme() {
     if (this._webApp.colorScheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+  }
+
+  private applyStyles() {
+    // if (this._platformName) {
+
+    // }
   }
 }

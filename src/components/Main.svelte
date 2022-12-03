@@ -8,7 +8,7 @@
   } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import { base } from "$app/paths";
 
-  let searchQuery: MusicQueryRequest = "";
+  let searchQuery: MusicQueryRequest;
   let requestType = RequestType.Album;
   let keyObject = {
     searchQuery: "",
