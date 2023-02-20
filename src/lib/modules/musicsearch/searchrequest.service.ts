@@ -14,7 +14,7 @@ export class MusicGetterService {
   }
 
   public async getMusicQuery(requestQuery: MusicQueryRequest, requestType: RequestType): Promise<Record[]> {
-    const endpoint = `/${requestType === RequestType.Album ? 'search' : 'tracks'}`;
+    const endpoint = `/${requestType}`;
     const tokensToSend = get(tokens);
     const response = await createRequest()
       .get(endpoint, { params: { query: requestQuery, ...tokensToSend } });
@@ -30,6 +30,5 @@ export class MusicGetterService {
           entityType: requestType === RequestType.Album ? 1 : 2
         }
       })
-    console.log(response.data)
   }
 };
