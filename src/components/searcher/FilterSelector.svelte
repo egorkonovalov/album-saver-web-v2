@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { blur } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
@@ -6,7 +7,6 @@
     type: RequestType;
   }
   export let requestType: RequestType;
-  let requestTypeCopy = requestType;
   let variants: Selector[] = [
     {
       type: RequestType.Album,
@@ -17,27 +17,29 @@
   ];
   $: {
     dispatch("changeRequestType", {
-      value: requestTypeCopy,
+      value: requestType,
     });
   }
 </script>
 
-<div class="filter">
-  {#each variants as variant}
-    <input
-      type="radio"
-      name="record-type"
-      bind:group={requestTypeCopy}
-      value={variant.type}
-      id={`request_${variant.type}`}
-      class="hidden"
-    />
-    <label
-      for={`request_${variant.type}`}
-      class="filter-button
-      {variant.type === requestTypeCopy ? 'active' : ''}"
-    >
-      {variant.type}
-    </label>
-  {/each}
-</div>
+{#if requestType === RequestType.Album || requestType === RequestType.Track}
+  <div class="filter" transition:blur>
+    {#each variants as variant}
+      <input
+        type="radio"
+        name="record-type"
+        bind:group={requestType}
+        value={variant.type}
+        id={`request_${variant.type}`}
+        class="hidden"
+      />
+      <label
+        for={`request_${variant.type}`}
+        class="filter-button
+      {variant.type === requestType ? 'active' : ''}"
+      >
+        {variant.type}
+      </label>
+    {/each}
+  </div>
+{/if}

@@ -1,4 +1,4 @@
-import axios, { Axios, type AxiosInstance } from "axios";
+import axios, { type AxiosInstance } from "axios";
 // import httpCommon from "src/httpCommon";
 export default function createRequest(): AxiosInstance {
   return axios.create({

@@ -11,23 +11,34 @@
   import LoadinWheel from "../utils/LoadinWheel.svelte";
   import { onMount } from "svelte";
   import { tokens } from "$lib/stores";
-  import NoResults from "./NoResults.svelte";
+  import Banner from "./Banner.svelte";
 
   export let query: MusicQueryRequest;
   export let requestType: RequestType;
+  export let infinitelyScrollable = false;
 
   let queryCopy = query;
   let data: Record[] = [];
   let newBatch: Record[] = [];
   let loadingMore = false;
   let showPlaceholder = false;
-  let layout = requestType === RequestType.Album ? "album-grid" : "track-list";
+  let layout = requestType === RequestType.Track ? "track-list" : "album-grid";
 
   $: data = [...data, ...newBatch];
 
   async function fetchData() {
-    newBatch = await SearchRequestController.getRecords(queryCopy, requestType);
-    loadingMore = false;
+    if (requestType === RequestType.Release) {
+      newBatch = await SearchRequestController.getRecords(
+        queryCopy,
+        requestType
+      );
+    } else if (queryCopy) {
+      newBatch = await SearchRequestController.getRecords(
+        queryCopy,
+        requestType
+      );
+      loadingMore = false;
+    }
   }
 
   function handleLoadMore() {
@@ -54,7 +65,21 @@
       <LoadinWheel stylingClass={"col-span-2 h-4"} />
     {/if}
   </div>
-  <InfiniteScroll threshold={100} window={true} on:loadMore={handleLoadMore} />
+  {#if infinitelyScrollable}
+    <InfiniteScroll
+      threshold={100}
+      window={true}
+      on:loadMore={handleLoadMore}
+    />
+  {/if}
+{:else if !query}
+  <Banner>
+    <h3 class="font-medium">Play what you love</h3>
+    <p>Search for artists, songs or albums</p>
+  </Banner>
 {:else}
-  <NoResults />
+  <Banner hasIcon={true}>
+    <h3 class="font-medium">No results</h3>
+    <p>Please try changing the query</p>
+  </Banner>
 {/if}

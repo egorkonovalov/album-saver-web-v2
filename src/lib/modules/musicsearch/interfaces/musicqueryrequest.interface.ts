@@ -1,6 +1,7 @@
 export enum RequestType {
   Album = 'albums',
-  Track = 'tracks'
+  Track = 'tracks',
+  Release = 'releases'
 }
 
 export type MusicQueryRequest = string;

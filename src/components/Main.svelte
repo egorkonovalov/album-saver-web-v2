@@ -6,36 +6,64 @@
     RequestType,
     type MusicQueryRequest,
   } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
-  import { base } from "$app/paths";
 
-  let searchQuery: MusicQueryRequest;
-  let requestType = RequestType.Album;
+  function handleSearch() {
+    searchQuery = inputQuery;
+  }
+  function changeRequestType(type: RequestType) {
+    requestType = type;
+  }
+  function handleInputFocusChange(focus: boolean) {
+    if (focus) {
+      requestType === RequestType.Release
+        ? changeRequestType(RequestType.Album)
+        : null;
+    } else {
+      searchQuery === undefined || ""
+        ? requestType === RequestType.Release
+        : null;
+    }
+  }
+  function handleInputValueChange(inputValue: string) {
+    inputQuery = inputValue;
+    if (!inputQuery) {
+      searchQuery = "";
+      requestType = RequestType.Release;
+    } else if (requestType === RequestType.Release) {
+      requestType = RequestType.Album;
+    }
+  }
+  let inputQuery = "";
+  let searchQuery: MusicQueryRequest = "";
+  let requestType = RequestType.Release;
   let keyObject = {
-    searchQuery: "",
-    requestType: "",
+    searchQuery: searchQuery,
+    requestType: RequestType.Release,
   };
 
   $: {
-    keyObject.requestType = requestType;
     keyObject.searchQuery = searchQuery;
+    keyObject.requestType = requestType;
     keyObject = keyObject;
   }
 </script>
 
 <div class="top-bar">
-  <Searchbar on:search={(event) => (searchQuery = event.detail.value)} />
+  <Searchbar
+    on:search={() => handleSearch()}
+    on:inputQueryChange={(event) => handleInputValueChange(event.detail.value)}
+    on:inputFocuseChange={(event) => handleInputFocusChange(event.detail.value)}
+  />
   <FilterSelector
-    on:changeRequestType={(event) => (requestType = event.detail.value)}
+    on:changeRequestType={(event) => changeRequestType(event.detail.value)}
     {requestType}
   />
 </div>
 
-{#if searchQuery}
-  {#key keyObject}
-    <Content query={searchQuery} {requestType} />
-  {/key}
-{:else}
-  <div class="content-in-center">
-    <img src="{base}/logo.png" alt="logo" class="drop-shadow-2xl" />
-  </div>
-{/if}
+{#key keyObject}
+  <Content
+    query={searchQuery}
+    {requestType}
+    infinitelyScrollable={requestType === RequestType.Release ? false : true}
+  />
+{/key}

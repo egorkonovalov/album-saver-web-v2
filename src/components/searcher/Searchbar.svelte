@@ -3,13 +3,24 @@
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
+  let value: string;
   function searchRecord() {
     dispatch("search", {
       value: value,
     });
   }
-  let value: string;
   let input: HTMLElement;
+  let inFocuse = false;
+  $: {
+    dispatch("inputQueryChange", {
+      value: value,
+    });
+  }
+  $: {
+    dispatch("inputFocuseChange", {
+      value: inFocuse,
+    });
+  }
 </script>
 
 <form
@@ -20,6 +31,8 @@
   <div class="w-full searchbar flex items-center">
     <label class="w-full">
       <input
+        on:focus={() => (inFocuse = true)}
+        on:blur={() => (inFocuse = false)}
         bind:this={input}
         type="text"
         bind:value

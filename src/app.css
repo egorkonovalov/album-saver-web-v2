@@ -110,7 +110,7 @@
   }
 
   .top-bar {
-    @apply flex flex-col z-10 justify-center fixed inset-0 w-screen bg-white/95 backdrop-blur-xl dark:bg-stone-900/90;
+    @apply flex flex-col z-10 fixed inset-0 w-screen bg-white/95 backdrop-blur-xl dark:bg-stone-900/90 justify-start;
     height: min(6rem, 25%);
   }
 }

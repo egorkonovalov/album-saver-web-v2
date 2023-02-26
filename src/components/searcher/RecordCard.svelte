@@ -11,10 +11,7 @@
 <a
   href="/"
   on:click|preventDefault={async () => {
-    await SearchRequestController.requestRecord(
-      record.youTubeMusicPlaylistUrl,
-      requestType
-    );
+    await SearchRequestController.requestRecord(record.youTubeMusicPlaylistUrl);
     telegram.WebApp.close();
   }}
 >
@@ -24,13 +21,13 @@
     <p class="font-light">
       {record.author === undefined ? "Various Artists" : record.author}
     </p>
-    {#if requestType === "album"}
+    {#if requestType === "albums"}
       <div class="flex gap-1 text-[11px] font-medium">
         {#if record.recordType}
           <p>
             {record.recordType ? record.recordType : "Album"}
           </p>
-          •
+          <p>•</p>
         {/if}
         <p>{record.year}</p>
       </div>
