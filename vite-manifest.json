@@ -1,11 +1,11 @@
 {
   "node_modules/@sveltejs/kit/src/runtime/client/start.js": {
-    "file": "internal/immutable/start-6b7b99e6.js",
+    "file": "internal/immutable/start-3fe32284.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/client/start.js",
     "isEntry": true,
     "imports": [
       "_index-6d029d2d.js",
-      "_singletons-b4baef31.js",
+      "_singletons-e3b53018.js",
       "_paths-5e378296.js"
     ],
     "dynamicImports": [
@@ -26,16 +26,16 @@
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
-    "file": "internal/immutable/components/error.svelte-dbf8bb31.js",
+    "file": "internal/immutable/components/error.svelte-fef59af6.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
     "isEntry": true,
     "imports": [
       "_index-6d029d2d.js",
-      "_singletons-b4baef31.js"
+      "_singletons-e3b53018.js"
     ]
   },
   "src/routes/+page.svelte": {
-    "file": "internal/immutable/components/pages/_page.svelte-c48931ec.js",
+    "file": "internal/immutable/components/pages/_page.svelte-1b84ce3c.js",
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
@@ -51,8 +51,8 @@
       "__layout-c2405b24.js"
     ]
   },
-  "_singletons-b4baef31.js": {
-    "file": "internal/immutable/chunks/singletons-b4baef31.js",
+  "_singletons-e3b53018.js": {
+    "file": "internal/immutable/chunks/singletons-e3b53018.js",
     "imports": [
       "_paths-5e378296.js"
     ]
@@ -79,7 +79,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/1.js": {
-    "file": "internal/immutable/chunks/1-48c2dfb5.js",
+    "file": "internal/immutable/chunks/1-0236e72d.js",
     "src": ".svelte-kit/generated/nodes/1.js",
     "isDynamicEntry": true,
     "imports": [
@@ -87,7 +87,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/2.js": {
-    "file": "internal/immutable/chunks/2-f36b38cd.js",
+    "file": "internal/immutable/chunks/2-a4e5a7ed.js",
     "src": ".svelte-kit/generated/nodes/2.js",
     "isDynamicEntry": true,
     "imports": [
