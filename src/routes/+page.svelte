@@ -15,7 +15,7 @@
     <p class="w-full text-center p-10 font-semibold leading-loose">
       You can use this website only with a<br /><a
         class="text-blue-700 underline"
-        href="https://t.me/album_saver_web_tes_bot">Telegram bot</a
+        href={import.meta.env.VITE_API_TG_URL}>Telegram bot</a
       >
     </p>
   {/if}

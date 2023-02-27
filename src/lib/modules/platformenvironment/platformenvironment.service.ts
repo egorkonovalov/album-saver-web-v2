@@ -7,7 +7,7 @@ export class PlatformEnvironmentService {
       let _initData = Telegram.WebApp.initData
       return new TelegramEnvironment();
     } catch (error: any) {
-      console.info("You can use this website only with this telegram bot: https://t.me/album_saver_web_tes_bot")
+      console.info(`You can use this website only with this telegram bot: ${import.meta.env.VITE_API_TG_URL}`)
       return error
     }
   }
