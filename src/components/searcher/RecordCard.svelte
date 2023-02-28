@@ -11,7 +11,7 @@
 <a
   href="/"
   on:click|preventDefault={async () => {
-    await SearchRequestController.requestRecord(record.youTubeMusicPlaylistUrl);
+    await SearchRequestController.requestRecord(record.youTubeMusicPlaylistUrl, requestType);
     telegram.WebApp.close();
   }}
 >

@@ -1,7 +1,7 @@
 import createRequest from "../httprequest/httprequest.service";
 import { tokens } from "$lib/stores";
 import { get } from 'svelte/store';
-import type { RequestType } from "./interfaces/musicqueryrequest.interface"
+import { RequestType } from "./interfaces/musicqueryrequest.interface"
 import type { Record } from "./interfaces/record.interface";
 import type { MusicEntryRequest } from "./interfaces/musicentryrequest.interface";
 import type { MusicQueryRequest } from "./interfaces/musicqueryrequest.interface"
@@ -22,11 +22,12 @@ export class MusicGetterService {
     return response.data.result;
   }
 
-  public async requestMusicEntry(requestQuery: MusicEntryRequest): Promise<void> {
+  public async requestMusicEntry(requestQuery: MusicEntryRequest, requestType: RequestType): Promise<void> {
     await createRequest()
       .post("/download", {}, {
         params: {
-          ...requestQuery
+          ...requestQuery,
+          entityType: requestType === (RequestType.Album || RequestType.Release) ? 1 : 2
         }
       })
   }

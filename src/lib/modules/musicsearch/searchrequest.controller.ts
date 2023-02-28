@@ -14,10 +14,10 @@ export class SearchRequestController {
     return environment.userId
   }
 
-  static async requestRecord(youTubeMusicPlaylistUrl: string): Promise<void> {
+  static async requestRecord(youTubeMusicPlaylistUrl: string, requestType: RequestType): Promise<void> {
     const environment = PlatformEnvironmentService.getEnvironment();
     const userId = this.getUserId(environment);
     const data: MusicEntryRequest = { userId: userId, youTubeMusicPlaylistUrl: youTubeMusicPlaylistUrl }
-    return await new MusicGetterService().requestMusicEntry(data);
+    return await new MusicGetterService().requestMusicEntry(data, requestType);
   }
 }
