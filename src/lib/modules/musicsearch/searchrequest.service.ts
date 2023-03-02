@@ -8,7 +8,16 @@ import type { MusicQueryRequest } from "./interfaces/musicqueryrequest.interface
 
 export class MusicGetterService {
 
-  private setTokens(response: { continuationToken: string, token: string }) {
+  private getEntityType(requestType: RequestType): number {
+    switch (requestType) {
+      case RequestType.Track: return 2;
+      case RequestType.Album:
+      case RequestType.Release:
+      default: return 1
+    }
+  }
+
+  private setTokens(response: { continuationToken: string, token: string }): void {
     const { continuationToken, token } = response;
     return tokens.set({ continuationToken: continuationToken, token: token, continuation: true });
   }
@@ -27,7 +36,7 @@ export class MusicGetterService {
       .post("/download", {}, {
         params: {
           ...requestQuery,
-          entityType: requestType === (RequestType.Album || RequestType.Release) ? 1 : 2
+          entityType: this.getEntityType(requestType)
         }
       })
   }
