@@ -1,4 +1,6 @@
 export interface PlatformEnvironment {
-  readonly userId: number
-  readonly platformName: string
+  readonly user: { id: number, username: string }
+  readonly userId: number;
+  readonly platformName: string;
+  envokeHaptic(type: string): void
 }

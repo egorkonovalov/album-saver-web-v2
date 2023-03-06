@@ -1,6 +1,5 @@
-import type { Record } from "./record.interface";
-
 export interface MusicEntryRequest {
   userId: number,
-  youTubeMusicPlaylistUrl: Record["youTubeMusicPlaylistUrl"];
+  youTubeMusicPlaylistUrl: string;
+  entityType: number;
 }

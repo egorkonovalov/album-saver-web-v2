@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply w-full h-full bg-white dark:bg-stone-900;
+    @apply w-full h-full bg-[color:var(--tg-theme-bg-color)];
   }
 }
 
@@ -74,11 +74,11 @@
   }
 
   .placeholder .image {
-    @apply bg-gray-200 dark:bg-stone-700 rounded;
+    @apply bg-[color:var(--tg-theme-secondary-bg-color)] rounded;
   }
 
   .placeholder .text-line {
-    @apply bg-gray-200 dark:bg-stone-700 h-2 rounded;
+    @apply bg-[color:var(--tg-theme-secondary-bg-color)] h-2 rounded;
   }
 
   .placeholder .text-container {
@@ -98,7 +98,7 @@
   }
 
   .filter-button {
-    @apply rounded-full bg-stone-100 dark:bg-stone-800 dark:text-white px-2 py-0.5 text-sm font-medium capitalize border-2 border-transparent;
+    @apply rounded-full bg-[color:var(--tg-theme-secondary-bg-color)] text-[color:var(--tg-theme-text-color)] px-2 py-0.5 text-sm font-medium capitalize border-2 border-transparent;
   }
 
   .filter-button.active {
@@ -106,11 +106,11 @@
   }
 
   .searchbar {
-    @apply bg-stone-100 h-full text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 dark:bg-stone-800 dark:border-gray-600 dark:placeholder-stone-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    @apply bg-[color:var(--tg-theme-secondary-bg-color)] h-full text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 dark:border-gray-600 placeholder-[color:var(--tg-theme-hint-color)] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
   }
 
   .top-bar {
-    @apply flex flex-col z-10 fixed inset-0 w-screen bg-white/95 backdrop-blur-xl dark:bg-stone-900/90 justify-start;
+    @apply flex flex-col z-10 fixed inset-0 w-screen bg-[color:var(--tg-theme-bg-color)] bg-opacity-90 backdrop-blur-xl justify-start;
     height: min(6rem, 25%);
   }
 }

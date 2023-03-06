@@ -5,14 +5,15 @@
 
   export let requestType: RequestType;
   export let record: Record;
-  let telegram = Telegram;
 </script>
 
 <a
   href="/"
   on:click|preventDefault={async () => {
-    await SearchRequestController.requestRecord(record.youTubeMusicPlaylistUrl, requestType);
-    telegram.WebApp.close();
+    await SearchRequestController.requestRecord(
+      record.youTubeMusicPlaylistUrl,
+      requestType
+    );
   }}
 >
   <img src={record.imageUrl} alt={record.title} />

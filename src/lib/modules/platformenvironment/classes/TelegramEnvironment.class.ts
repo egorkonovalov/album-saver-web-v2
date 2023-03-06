@@ -1,32 +1,33 @@
 import type { PlatformEnvironment } from "../interfaces/PlatformEnvironment.interface";
-import { QueryStringParser } from "$lib/utils/QueryStringParser.utility";
 
 export class
   TelegramEnvironment implements PlatformEnvironment {
   readonly _webApp = Telegram.WebApp
-  readonly _userId: number;
-  readonly _platformName: string;
-  readonly _colorScheme: string;
+  readonly _appData = Telegram.Utils.urlParseQueryString(this._webApp.initData)
+  readonly webAppUser = JSON.parse(this._appData.user)
+  readonly user = { id: this.webAppUser.id, username: this.webAppUser.username };
   constructor() {
-    const data = QueryStringParser.parseString(Telegram.WebApp.initData);
-    const user = QueryStringParser.parseJson(data.user);
-    this._userId = user.id;
-    this._platformName = data.platform;
-    this._colorScheme = Telegram.WebApp.colorScheme;
     this.applyColorScheme();
-    this.applyStyles();
   };
 
   get userId(): number {
-    return this._userId;
+    if (this.user.id) {
+      return this.user.id;
+    } else {
+      throw ("No user id")
+    }
   };
 
   get platformName(): string {
-    return this._platformName;
+    return this._appData.platform;
   };
 
   get colorScheme(): string {
-    return this._colorScheme;
+    return this._webApp.colorScheme;
+  }
+
+  envokeHaptic(type: string): void {
+    this._webApp.HapticFeedback.notificationOccurred("success")
   }
 
   private applyColorScheme() {
@@ -35,11 +36,5 @@ export class
     } else {
       document.documentElement.classList.remove("dark");
     }
-  }
-
-  private applyStyles() {
-    // if (this._platformName) {
-
-    // }
   }
 }
