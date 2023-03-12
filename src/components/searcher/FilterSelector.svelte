@@ -14,6 +14,9 @@
     {
       type: RequestType.Track,
     },
+    {
+      type: RequestType.Artist,
+    }
   ];
   $: {
     dispatch("changeRequestType", {
@@ -22,7 +25,7 @@
   }
 </script>
 
-{#if requestType === RequestType.Album || requestType === RequestType.Track}
+{#if requestType !== RequestType.Release}
   <div class="filter" transition:blur>
     {#each variants as variant}
       <input

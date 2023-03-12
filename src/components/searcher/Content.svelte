@@ -22,7 +22,7 @@
   let newBatch: Record[] = [];
   let loadingMore = false;
   let showPlaceholder = false;
-  let layout = requestType === RequestType.Track ? "track-list" : "album-grid";
+  let layout = requestType === RequestType.Track || requestType === RequestType.Artist ? "track-list" : "album-grid";
 
   $: data = [...data, ...newBatch];
 

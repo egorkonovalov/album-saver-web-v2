@@ -19,9 +19,11 @@
   <img src={record.imageUrl} alt={record.title} />
   <div class="text-[12px]">
     <p class="font-semibold leading-tight">{record.title}</p>
+    {#if requestType !== "artists" }  
     <p class="font-light">
-      {record.author === undefined ? "Various Artists" : record.author}
+       {record.author === undefined ? "Various Artists" : record.author}
     </p>
+    {/if}
     {#if requestType === "albums"}
       <div class="flex gap-1 text-[11px] font-medium">
         {#if record.recordType}

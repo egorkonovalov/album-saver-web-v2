@@ -12,6 +12,7 @@ export class SearchRequestController {
   static getEntityType(requestType: RequestType): number {
     switch (requestType) {
       case RequestType.Track: return 2;
+      case RequestType.Artist: return 3;
       case RequestType.Album:
       case RequestType.Release:
       default: return 1
