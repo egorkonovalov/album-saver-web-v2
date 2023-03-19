@@ -23,7 +23,18 @@ export class SearchRequestController {
     query: MusicQueryRequest,
     requestType: RequestType
   ): Promise<Record[]> {
-    return await new MusicGetterService().getMusicQuery(query, requestType);
+    let queryObject = {}
+    if (requestType === RequestType.ArtistTracks) {
+      queryObject = {
+        channelUrl: query
+      }
+    }
+    else {
+      queryObject = {
+        query: query
+      }
+    }
+    return await new MusicGetterService().getMusicQuery(queryObject, requestType);
   }
 
   static async requestRecord(url: string, requestType: RequestType): Promise<void> {

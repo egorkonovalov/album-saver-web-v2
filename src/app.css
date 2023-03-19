@@ -9,11 +9,13 @@
 }
 
 @layer components {
-  .album-grid {
+  .album-grid,
+  .artist-grid {
     @apply grid grid-cols-2 p-4 gap-4 mt-[min(6rem,25%)];
   }
 
-  .album-grid a {
+  .album-grid a,
+  .artist-grid a {
     @apply flex flex-col gap-2 cursor-pointer;
   }
 
@@ -21,8 +23,16 @@
     @apply w-full rounded-lg;
   }
 
+  .artist-grid img {
+    @apply w-full rounded-full;
+  }
+
   .album-grid p {
     @apply truncate dark:text-white;
+  }
+
+  .artist-grid p {
+    @apply truncate text-center;
   }
 
   .track-list {
@@ -45,7 +55,8 @@
     @apply mt-[min(6rem,25%)] p-4 gap-4 animate-pulse;
   }
 
-  .placeholder.album-grid {
+  .placeholder.album-grid,
+  .placeholder.artist-grid {
     @apply grid grid-cols-2;
   }
 

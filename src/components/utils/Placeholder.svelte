@@ -1,5 +1,6 @@
 <script lang="ts">
-  export let layout: string;
+  import type { Layout } from "../component.types";
+  export let layout: Layout;
 </script>
 
 <div class={`${layout} placeholder`}>

@@ -17,7 +17,7 @@ export class MusicGetterService {
     const endpoint = `/${requestType}`;
     const tokensToSend = get(tokens);
     const response = await createRequest()
-      .get(endpoint, { params: { query: requestQuery, ...tokensToSend } });
+      .get(endpoint, { params: { ...requestQuery, ...tokensToSend } });
     this.setTokens(response.data);
     return response.data.result;
   }

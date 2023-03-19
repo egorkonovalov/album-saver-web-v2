@@ -16,7 +16,7 @@
     },
     {
       type: RequestType.Artist,
-    }
+    },
   ];
   $: {
     dispatch("changeRequestType", {

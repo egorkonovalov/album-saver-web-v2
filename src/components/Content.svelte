@@ -5,13 +5,16 @@
     type MusicQueryRequest,
   } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
-  import RecordCard from "./RecordCard.svelte";
+  import RecordCard from "./elements/RecordCard.svelte";
   import InfiniteScroll from "svelte-infinite-scroll";
-  import Placeholder from "../utils/Placeholder.svelte";
-  import LoadinWheel from "../utils/LoadinWheel.svelte";
+  import Placeholder from "./utils/Placeholder.svelte";
+  import LoadinWheel from "./utils/LoadinWheel.svelte";
   import { onMount } from "svelte";
   import { tokens } from "$lib/stores";
-  import Banner from "./Banner.svelte";
+  import { getLayoutType } from "./utils/Utils";
+  import Banner from "./elements/Banner.svelte";
+  import type { Layout } from "./component.types";
+  import ArtistCard from "./elements/ArtistCard.svelte";
 
   export let query: MusicQueryRequest;
   export let requestType: RequestType;
@@ -22,7 +25,7 @@
   let newBatch: Record[] = [];
   let loadingMore = false;
   let showPlaceholder = false;
-  let layout = requestType === RequestType.Track || requestType === RequestType.Artist ? "track-list" : "album-grid";
+  let layout = getLayoutType(requestType);
 
   $: data = [...data, ...newBatch];
 
@@ -59,7 +62,11 @@
 {:else if data.length}
   <div class={layout}>
     {#each data as record}
-      <RecordCard {record} {requestType} />
+      {#if requestType === RequestType.Artist}
+        <ArtistCard artist={record} />
+      {:else}
+        <RecordCard {record} {requestType} />
+      {/if}
     {/each}
     {#if loadingMore}
       <LoadinWheel stylingClass={"col-span-2 h-4"} />

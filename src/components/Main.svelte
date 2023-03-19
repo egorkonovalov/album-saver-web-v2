@@ -1,11 +1,23 @@
 <script lang="ts">
   import Searchbar from "./searcher/Searchbar.svelte";
-  import Content from "./searcher/Content.svelte";
+  import Content from "./Content.svelte";
   import FilterSelector from "./searcher/FilterSelector.svelte";
   import {
     RequestType,
     type MusicQueryRequest,
   } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
+
+  function isInfinitelyScrollable(requestType: RequestType) {
+    switch (requestType) {
+      case RequestType.Album:
+      case RequestType.Track:
+        return true;
+      case RequestType.Artist:
+      case RequestType.Release:
+      default:
+        return false;
+    }
+  }
 
   function handleSearch() {
     searchQuery = inputQuery;
@@ -64,6 +76,6 @@
   <Content
     query={searchQuery}
     {requestType}
-    infinitelyScrollable={requestType === RequestType.Release ? false : true}
+    infinitelyScrollable={isInfinitelyScrollable(requestType)}
   />
 {/key}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
+  import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
 
@@ -19,10 +19,10 @@
   <img src={record.imageUrl} alt={record.title} />
   <div class="text-[12px]">
     <p class="font-semibold leading-tight">{record.title}</p>
-    {#if requestType !== "artists" }  
-    <p class="font-light">
-       {record.author === undefined ? "Various Artists" : record.author}
-    </p>
+    {#if requestType !== RequestType.Artist}
+      <p class="font-light">
+        {record.author === undefined ? "Various Artists" : record.author}
+      </p>
     {/if}
     {#if requestType === "albums"}
       <div class="flex gap-1 text-[11px] font-medium">
