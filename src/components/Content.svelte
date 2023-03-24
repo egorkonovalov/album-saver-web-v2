@@ -1,9 +1,6 @@
 <script lang="ts">
   import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
-  import {
-    RequestType,
-    type MusicQueryRequest,
-  } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
+  import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import RecordCard from "./elements/RecordCard.svelte";
   import InfiniteScroll from "svelte-infinite-scroll";
@@ -13,10 +10,10 @@
   import { tokens } from "$lib/stores";
   import { getLayoutType } from "./utils/Utils";
   import Banner from "./elements/Banner.svelte";
-  import type { Layout } from "./component.types";
   import ArtistCard from "./elements/ArtistCard.svelte";
 
-  export let query: MusicQueryRequest;
+
+  export let query: string;
   export let requestType: RequestType;
   export let infinitelyScrollable = false;
 

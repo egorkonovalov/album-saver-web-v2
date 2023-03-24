@@ -35,16 +35,26 @@
     @apply truncate text-center;
   }
 
-  .track-list {
+  .track-list,
+  .artist-list {
     @apply flex flex-col p-4 gap-4 mt-[min(6rem,25%)];
   }
 
-  .track-list a {
+  .noscroll {
+    @apply overflow-hidden;
+  }
+
+  .track-list a,
+  .artist-list a {
     @apply flex flex-row gap-2 items-center;
   }
 
   .track-list img {
     @apply rounded-sm w-14 h-14;
+  }
+
+  .artist-list img {
+    @apply rounded-full w-14 h-14;
   }
 
   .track-list p {

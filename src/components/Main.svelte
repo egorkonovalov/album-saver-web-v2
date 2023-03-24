@@ -2,10 +2,12 @@
   import Searchbar from "./searcher/Searchbar.svelte";
   import Content from "./Content.svelte";
   import FilterSelector from "./searcher/FilterSelector.svelte";
-  import {
-    RequestType,
-    type MusicQueryRequest,
-  } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
+  import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
+  import PopUp from "./elements/Popup.svelte";
+  import Artist from "./Artist.svelte";
+  import { popupContentType, popupIsShown } from "$lib/stores";
+
+  $: document.body.classList.toggle("noscroll", $popupIsShown);
 
   function isInfinitelyScrollable(requestType: RequestType) {
     switch (requestType) {
@@ -46,7 +48,7 @@
     }
   }
   let inputQuery = "";
-  let searchQuery: MusicQueryRequest = "";
+  let searchQuery = "";
   let requestType = RequestType.Release;
   let keyObject = {
     searchQuery: searchQuery,
@@ -78,4 +80,11 @@
     {requestType}
     infinitelyScrollable={isInfinitelyScrollable(requestType)}
   />
+  {#if $popupIsShown}
+    <PopUp>
+      {#if $popupContentType === "artist"}
+        <Artist />
+      {/if}
+    </PopUp>
+  {/if}
 {/key}

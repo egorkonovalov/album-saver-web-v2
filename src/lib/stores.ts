@@ -11,3 +11,7 @@ export const artist = writable<Record>({
   year: "",
   recordType: "",
 })
+
+export const popupContentType = writable<"artist" | "album">("album")
+
+export const popupIsShown = writable<boolean>(false)

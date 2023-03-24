@@ -6,7 +6,7 @@ export function getLayoutType(requestType: RequestType): Layout {
     case RequestType.Track:
       return "track-list";
     case RequestType.Artist:
-      return "artist-grid";
+      return "artist-list";
     case RequestType.Album:
     case RequestType.Release:
     default:

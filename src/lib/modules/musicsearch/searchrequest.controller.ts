@@ -20,7 +20,7 @@ export class SearchRequestController {
   }
 
   static async getRecords(
-    query: MusicQueryRequest,
+    query: string,
     requestType: RequestType
   ): Promise<Record[]> {
     let queryObject = {}
