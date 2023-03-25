@@ -30,6 +30,10 @@ export class
     this._webApp.HapticFeedback.notificationOccurred("success")
   }
 
+  closeWebApp(): void {
+    this._webApp.close()
+  }
+
   private applyColorScheme() {
     if (this._webApp.colorScheme === "dark") {
       document.documentElement.classList.add("dark");

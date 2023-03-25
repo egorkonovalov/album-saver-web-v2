@@ -1,11 +1,11 @@
 import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
 import {
-  RequestType,
-  type MusicQueryRequest,
+  RequestType
 } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
 import type { MusicEntryRequest } from "$lib/modules/musicsearch/interfaces/musicentryrequest.interface";
 import { MusicGetterService } from "$lib/modules/musicsearch/searchrequest.service";
 import { PlatformEnvironmentService } from "../platformenvironment/platformenvironment.service";
+import { TelegramEnvironment } from "../platformenvironment/classes/TelegramEnvironment.class";
 
 export class SearchRequestController {
 
@@ -39,6 +39,9 @@ export class SearchRequestController {
 
   static async requestRecord(url: string, requestType: RequestType): Promise<void> {
     const environment = PlatformEnvironmentService.getEnvironment();
+    if (environment instanceof TelegramEnvironment) {
+      environment.closeWebApp()
+    }
     const data: MusicEntryRequest = {
       userId: environment.userId,
       youTubeMusicPlaylistUrl: url,

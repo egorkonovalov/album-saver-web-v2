@@ -4,6 +4,7 @@
 
   const dispatch = createEventDispatcher();
   let value: string;
+
   function searchRecord() {
     dispatch("search", {
       value: value,
@@ -43,11 +44,13 @@
       />
     </label>
     {#if value}
-      <img
-        on:click={() => (value = "")}
-        src="{base}/close.svg"
+      <input
+        type="image"
         alt="close"
-        class="dark:invert"
+        on:click|preventDefault={() => (value = "")}
+        on:keydown|preventDefault={(e) =>
+          e.code !== "13" ? (value = "") : null}
+        src={`${base}/close.svg`}
       />
     {/if}
   </div>
