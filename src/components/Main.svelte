@@ -6,6 +6,7 @@
   import PopUp from "./elements/Popup.svelte";
   import Artist from "./Artist.svelte";
   import { popupContentType, popupIsShown } from "$lib/stores";
+  import { fade } from "svelte/transition";
 
   $: document.body.classList.toggle("noscroll", $popupIsShown);
 
@@ -88,3 +89,6 @@
     </PopUp>
   {/if}
 {/key}
+{#if $popupIsShown}
+  <div transition:fade class="shading" />
+{/if}

@@ -12,7 +12,6 @@
   import Banner from "./elements/Banner.svelte";
   import ArtistCard from "./elements/ArtistCard.svelte";
 
-
   export let query: string;
   export let requestType: RequestType;
   export let infinitelyScrollable = false;
@@ -55,7 +54,7 @@
 </script>
 
 {#if showPlaceholder}
-  <Placeholder {layout} />
+  <Placeholder {layout} cssClass={"content-margin"} />
 {:else if data.length}
   <div class={layout}>
     {#each data as record}

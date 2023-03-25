@@ -8,10 +8,16 @@
   }
 }
 
+@layer utilities {
+  .shading {
+    @apply inset-0 w-full h-full bg-black/50 transition-all fixed bottom-0;
+  }
+}
+
 @layer components {
   .album-grid,
   .artist-grid {
-    @apply grid grid-cols-2 p-4 gap-4 mt-[min(6rem,25%)];
+    @apply grid grid-cols-2 p-4 gap-4 content-margin;
   }
 
   .album-grid a,
@@ -37,7 +43,7 @@
 
   .track-list,
   .artist-list {
-    @apply flex flex-col p-4 gap-4 mt-[min(6rem,25%)];
+    @apply flex flex-col p-4 gap-4 content-margin;
   }
 
   .noscroll {
@@ -61,20 +67,25 @@
     @apply truncate dark:text-white max-w-[60vw];
   }
 
-  .placeholder {
-    @apply mt-[min(6rem,25%)] p-4 gap-4 animate-pulse;
+  .content-margin {
+    @apply mt-[min(6rem,25%)];
   }
 
-  .placeholder.album-grid,
-  .placeholder.artist-grid {
+  .placeholder {
+    @apply p-4 gap-4 animate-pulse;
+  }
+
+  .placeholder.album-grid {
     @apply grid grid-cols-2;
   }
 
-  .placeholder.track-list {
+  .placeholder.track-list,
+  .placeholder.artist-list {
     @apply flex flex-col;
   }
 
-  .placeholder.track-list .entry {
+  .placeholder.track-list .entry,
+  .placeholder.artist-list .entry {
     @apply flex-row;
   }
 
@@ -82,8 +93,22 @@
     @apply flex-col h-48;
   }
 
-  .placeholder.track-list .image {
+  .placeholder.track-list .image,
+  .placeholder.artist-list .image {
     @apply w-14 h-14;
+  }
+
+  .placeholder.track-list .image,
+  .placeholder.artist-list .image {
+    @apply w-14 h-14;
+  }
+
+  .placeholder.artist-list .image {
+    @apply !rounded-full;
+  }
+
+  .placeholder.artist-list .entry .text-container p:nth-child(2) {
+    @apply hidden;
   }
 
   .placeholder.album-grid .image {
@@ -104,6 +129,10 @@
 
   .placeholder .text-container {
     @apply flex flex-col  gap-2 justify-center;
+  }
+
+  .popup {
+    @apply h-2/3 bg-[color:var(--tg-theme-bg-color)] shadow-2xl rounded-t-lg w-full fixed bottom-0 overflow-auto z-10;
   }
 
   .form {

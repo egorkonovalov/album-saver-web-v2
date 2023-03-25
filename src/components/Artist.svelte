@@ -6,10 +6,13 @@
   import { onMount } from "svelte";
   import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
   import { getLayoutType } from "./utils/Utils";
+  import Placeholder from "./utils/Placeholder.svelte";
+
   let artist: Record;
   ArtistStore.subscribe((data) => {
     artist = data;
   });
+  let layout = getLayoutType(RequestType.Track);
   let tracks: Record[] = [];
   async function fetchData() {
     tracks = await SearchRequestController.getRecords(
@@ -23,13 +26,17 @@
   });
 </script>
 
-<div>
+<div class="dark:text-white">
   <div class="m-4">
-    <h1 class="text-xl font-medium">{artist.title}</h1>
+    <h1 class="text-xl font-medium ">{artist.title}</h1>
   </div>
-  <div class={`${getLayoutType(RequestType.Track)} mt-0`}>
-    {#each data as record}
-      <RecordCard requestType={RequestType.Track} {record} />
-    {/each}
-  </div>
+  {#if !data.length}
+    <Placeholder {layout} cssClass={"mt-0"} />
+  {:else}
+    <div class={`${layout} mt-0`}>
+      {#each data as record}
+        <RecordCard requestType={RequestType.Track} {record} />
+      {/each}
+    </div>
+  {/if}
 </div>

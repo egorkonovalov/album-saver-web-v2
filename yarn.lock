@@ -178,10 +178,10 @@
   dependencies:
     import-meta-resolve "^2.2.0"
 
-"@sveltejs/adapter-static@^1.0.0-next.44":
-  version "1.0.0-next.44"
-  resolved "https://registry.npmjs.org/@sveltejs/adapter-static/-/adapter-static-1.0.0-next.44.tgz"
-  integrity sha512-qBtkmIMYGiDv5r2F3AfSG0ABHZim2NC+1PL2YVCa+QYz8IVCm1E/wGQ0RW4KVrANZ3MZk8y52PPajx+8/fwmNw==
+"@sveltejs/adapter-static@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-static/-/adapter-static-2.0.1.tgz#b76f7742ae635e1c063efcab8c6de064255f6292"
+  integrity sha512-o5/q3YwD/ErxYCFlK1v3ydvldyNKk1lh3oeyxn4mhz+Pkbx/uuxhzmbOpytTlp5aVqNHDVsb04xadUzOFCDDzw==
 
 "@sveltejs/kit@next":
   version "1.0.0-next.589"
