@@ -44,13 +44,12 @@
       />
     </label>
     {#if value}
-      <input
-        type="image"
-        alt="close"
+      <button
         on:click|preventDefault={() => (value = "")}
         on:keydown|preventDefault={(e) =>
           e.code !== "13" ? (value = "") : null}
-        src={`${base}/close.svg`}
+        style={`background: url(${base}/close.svg`}
+        class="h-3 w-3"
       />
     {/if}
   </div>
