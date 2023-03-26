@@ -39,9 +39,6 @@ export class SearchRequestController {
 
   static async requestRecord(url: string, requestType: RequestType): Promise<void> {
     const environment = PlatformEnvironmentService.getEnvironment();
-    if (environment instanceof TelegramEnvironment) {
-      environment.closeWebApp()
-    }
     const data: MusicEntryRequest = {
       userId: environment.userId,
       youTubeMusicPlaylistUrl: url,

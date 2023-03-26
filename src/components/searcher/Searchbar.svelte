@@ -44,12 +44,12 @@
       />
     </label>
     {#if value}
-      <button
-        on:click|preventDefault={() => (value = "")}
-        on:keydown|preventDefault={(e) =>
-          e.code !== "13" ? (value = "") : null}
-        style={`background: url(${base}/close.svg`}
-        class="h-3 w-3"
+      <input
+        on:click={() => (value = "")}
+        type="reset"
+        value=""
+        style={`background: url(${base}/close.svg)`}
+        class="w-4 h-4"
       />
     {/if}
   </div>

@@ -2,20 +2,25 @@
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
+  import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
+  import { PlatformEnvironmentService } from "$lib/modules/platformenvironment/platformenvironment.service";
 
+  const environment = PlatformEnvironmentService.getEnvironment();
   export let requestType: RequestType;
   export let record: Record;
-</script>
 
-<a
-  href="/"
-  on:click|preventDefault={async () => {
+  async function handleClick() {
     await SearchRequestController.requestRecord(
       record.youTubeMusicPlaylistUrl,
       requestType
     );
-  }}
->
+    if (environment instanceof TelegramEnvironment) {
+      environment.closeWebApp();
+    }
+  }
+</script>
+
+<a href="/" on:click|preventDefault={async () => handleClick()}>
   <img src={record.imageUrl} alt={record.title} />
   <div class="text-[12px]">
     <p class="font-semibold leading-tight">{record.title}</p>
