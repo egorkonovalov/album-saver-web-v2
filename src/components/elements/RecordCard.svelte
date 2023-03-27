@@ -21,7 +21,7 @@
 </script>
 
 <a href="/" on:click|preventDefault={async () => handleClick()}>
-  <img src={record.imageUrl} alt={record.title} />
+  <img src={record.imageUrl} alt={record.title} class="object-cover" />
   <div class="text-[12px]">
     <p class="font-semibold leading-tight">{record.title}</p>
     {#if requestType !== RequestType.Artist}
