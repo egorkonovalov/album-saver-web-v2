@@ -12,6 +12,15 @@ export const artist = writable<Record>({
   recordType: "",
 })
 
+export const album = writable<Record>({
+  youTubeMusicPlaylistUrl: "",
+  title: "",
+  author: "",
+  imageUrl: "",
+  year: "",
+  recordType: "",
+})
+
 export const popupContentType = writable<"artist" | "album">("album")
 
 export const popupIsShown = writable<boolean>(false)

@@ -5,6 +5,7 @@
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import PopUp from "./elements/Popup.svelte";
   import Artist from "./Artist.svelte";
+  import Album from "./Album.svelte";
   import { popupContentType, popupIsShown } from "$lib/stores";
   import { fade } from "svelte/transition";
 
@@ -85,6 +86,8 @@
     <PopUp>
       {#if $popupContentType === "artist"}
         <Artist />
+      {:else if $popupContentType == "album"}
+        <Album />
       {/if}
     </PopUp>
   {/if}

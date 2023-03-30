@@ -5,7 +5,6 @@ import {
 import type { MusicEntryRequest } from "$lib/modules/musicsearch/interfaces/musicentryrequest.interface";
 import { MusicGetterService } from "$lib/modules/musicsearch/searchrequest.service";
 import { PlatformEnvironmentService } from "../platformenvironment/platformenvironment.service";
-import { TelegramEnvironment } from "../platformenvironment/classes/TelegramEnvironment.class";
 
 export class SearchRequestController {
 
@@ -24,14 +23,18 @@ export class SearchRequestController {
     requestType: RequestType
   ): Promise<Record[]> {
     let queryObject = {}
-    if (requestType === RequestType.ArtistTracks) {
-      queryObject = {
-        channelUrl: query
+
+    switch (requestType) {
+      case RequestType.ArtistTracks: {
+        queryObject = { channelUrl: query }
+        break
       }
-    }
-    else {
-      queryObject = {
-        query: query
+      case RequestType.AlbumTracks: {
+        queryObject = { albumUrl: query }
+        break
+      }
+      default: {
+        queryObject = { query: query }
       }
     }
     return await new MusicGetterService().getMusicQuery(queryObject, requestType);

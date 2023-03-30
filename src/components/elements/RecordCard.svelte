@@ -4,18 +4,41 @@
   import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
   import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
   import { PlatformEnvironmentService } from "$lib/modules/platformenvironment/platformenvironment.service";
+  import {
+    album as albumStore,
+    popupContentType,
+    popupIsShown,
+  } from "$lib/stores";
 
   const environment = PlatformEnvironmentService.getEnvironment();
   export let requestType: RequestType;
   export let record: Record;
 
-  async function handleClick() {
+  function setPopup() {
+    albumStore.set(record);
+    popupContentType.set("album");
+    popupIsShown.update((status) => (status = true));
+  }
+
+  async function request() {
     await SearchRequestController.requestRecord(
       record.youTubeMusicPlaylistUrl,
       requestType
     );
     if (environment instanceof TelegramEnvironment) {
       environment.closeWebApp();
+    }
+  }
+
+  async function handleClick() {
+    switch (requestType) {
+      case RequestType.Album: {
+        setPopup();
+        break;
+      }
+      case RequestType.Track: {
+        request();
+      }
     }
   }
 </script>
