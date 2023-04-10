@@ -5,6 +5,7 @@
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import PopUp from "./elements/Popup.svelte";
   import Artist from "./Artist.svelte";
+  import Album from "./Album.svelte";
   import { popupContentType, popupIsShown } from "$lib/stores";
   import { fade } from "svelte/transition";
 
@@ -82,11 +83,15 @@
     infinitelyScrollable={isInfinitelyScrollable(requestType)}
   />
   {#if $popupIsShown}
-    <PopUp>
-      {#if $popupContentType === "artist"}
+    {#if $popupContentType === "artist"}
+      <PopUp>
         <Artist />
-      {/if}
-    </PopUp>
+      </PopUp>
+    {:else if $popupContentType == "album"}
+      <PopUp mainButtonText="Download Album">
+        <Album />
+      </PopUp>
+    {/if}
   {/if}
 {/key}
 {#if $popupIsShown}

@@ -3,7 +3,7 @@ import { tokens } from "$lib/stores";
 import { get } from 'svelte/store';
 import type { RequestType } from "./interfaces/musicqueryrequest.interface";
 import type { Record } from "./interfaces/record.interface";
-import type { MusicEntryRequest } from "./interfaces/musicentryrequest.interface";
+import type { MusicEntryRequest, MusicSetRequest } from "./interfaces/musicentryrequest.interface";
 import type { MusicQueryRequest } from "./interfaces/musicqueryrequest.interface"
 
 export class MusicGetterService {
@@ -29,5 +29,9 @@ export class MusicGetterService {
           ...requestQuery
         }
       })
+  }
+
+  static async requestMusicSet(requestQuery: MusicSetRequest): Promise<void> {
+    await createRequest().post("/download-set", requestQuery)
   }
 };

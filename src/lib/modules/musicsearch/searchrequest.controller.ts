@@ -2,7 +2,7 @@ import type { Record } from "$lib/modules/musicsearch/interfaces/record.interfac
 import {
   RequestType
 } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
-import type { MusicEntryRequest } from "$lib/modules/musicsearch/interfaces/musicentryrequest.interface";
+import type { MusicEntryRequest, MusicSetRequest } from "$lib/modules/musicsearch/interfaces/musicentryrequest.interface";
 import { MusicGetterService } from "$lib/modules/musicsearch/searchrequest.service";
 import { PlatformEnvironmentService } from "../platformenvironment/platformenvironment.service";
 import { TelegramEnvironment } from "../platformenvironment/classes/TelegramEnvironment.class";
@@ -45,5 +45,11 @@ export class SearchRequestController {
       entityType: this.getEntityType(requestType),
     };
     return await MusicGetterService.requestMusicEntry(data);
+  }
+
+  static async requestSet(urls: string[]): Promise<void> {
+    const environment = PlatformEnvironmentService.getEnvironment();
+    const data: MusicSetRequest = { userId: environment.userId, urls }
+    return await MusicGetterService.requestMusicSet(data);
   }
 }

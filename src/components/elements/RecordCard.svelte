@@ -2,26 +2,48 @@
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
-  import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
-  import { PlatformEnvironmentService } from "$lib/modules/platformenvironment/platformenvironment.service";
+  import {
+    album as albumStore,
+    popupContentType,
+    popupIsShown,
+    Environment as EnvironmentStore,
+  } from "$lib/stores";
+  import { get } from "svelte/store";
 
-  const environment = PlatformEnvironmentService.getEnvironment();
+  const environment = get(EnvironmentStore);
   export let requestType: RequestType;
   export let record: Record;
 
-  async function handleClick() {
+  async function request() {
     await SearchRequestController.requestRecord(
       record.youTubeMusicPlaylistUrl,
       requestType
     );
-    if (environment instanceof TelegramEnvironment) {
-      environment.closeWebApp();
+    environment.close();
+  }
+
+  async function handleClick() {
+    switch (requestType) {
+      case RequestType.Album: {
+        setPopup();
+        break;
+      }
+      case RequestType.Track:
+      case RequestType.Release: {
+        request();
+      }
     }
+  }
+
+  function setPopup() {
+    albumStore.set(record);
+    popupContentType.set("album");
+    popupIsShown.set(true);
   }
 </script>
 
 <a href="/" on:click|preventDefault={async () => handleClick()}>
-  <img src={record.imageUrl} alt={record.title} class="object-cover" />
+  <img src={record.imageUrl} alt={record.title} class="object-cover cover" />
   <div class="text-[12px]">
     <p class="font-semibold leading-tight">{record.title}</p>
     {#if requestType !== RequestType.Artist}
