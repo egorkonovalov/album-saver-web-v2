@@ -14,7 +14,7 @@
 </script>
 
 <a href="/" on:click|preventDefault={() => setPopup()} class="dark:text-white">
-  <img src={artist.imageUrl} alt={artist.title} />
+  <img src={artist.imageUrl} alt={artist.title} class="cover" />
   <div class="text-[12px]">
     <p class="font-semibold leading-tight">{artist.title}</p>
   </div>
