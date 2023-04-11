@@ -1,26 +1,20 @@
 <script lang="ts">
   import RecordCard from "./elements/RecordCard.svelte";
+  import Placeholder from "./utils/Placeholder.svelte";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
-  import { album as AlbumStore } from "$lib/stores";
+  import {
+    album as AlbumStore,
+    Environment as EnvironmentStore,
+    mainButtonText,
+  } from "$lib/stores";
+  import { get } from "svelte/store";
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import { onMount } from "svelte";
   import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
   import { getLayoutType } from "./utils/Utils";
-  import Placeholder from "./utils/Placeholder.svelte";
-  import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
-  import { PlatformEnvironmentService } from "$lib/modules/platformenvironment/platformenvironment.service";
+  import { base } from "$app/paths";
 
-  const environment = PlatformEnvironmentService.getEnvironment();
-
-  async function request() {
-    await SearchRequestController.requestRecord(
-      album.youTubeMusicPlaylistUrl,
-      RequestType.Album
-    );
-    if (environment instanceof TelegramEnvironment) {
-      environment.closeWebApp();
-    }
-  }
+  const environment = get(EnvironmentStore);
 
   let album: Record;
   AlbumStore.subscribe((data) => {
@@ -28,33 +22,69 @@
   });
   let layout = getLayoutType(RequestType.Track);
   let tracks: Record[] = [];
+  let selected: string[] = [];
+
+  function addOrRemove(url: string) {
+    if (!selected.includes(url)) {
+      selected = [...selected, url];
+    } else {
+      selected.splice(selected.indexOf(url), 1);
+      selected = selected;
+    }
+  }
+
   async function fetchData() {
     tracks = await SearchRequestController.getRecords(
       album.youTubeMusicPlaylistUrl,
       RequestType.AlbumTracks
     );
   }
+
+  async function request() {
+    if (selected.length > 0) {
+      await SearchRequestController.requestSet(selected);
+    } else {
+      await SearchRequestController.requestRecord(
+        get(AlbumStore).youTubeMusicPlaylistUrl,
+        RequestType.Album
+      );
+    }
+    environment.close();
+  }
+
+  $: if (selected.length > 0) {
+    environment.setMainButtonText(`Download Tracks (${selected.length})`);
+  } else {
+    environment.setMainButtonText(get(mainButtonText));
+  }
   $: data = [...tracks];
   onMount(async () => {
+    environment.setMainButtonCallback(request);
     await fetchData();
   });
 </script>
 
 <div class="dark:text-white">
-  <div class="m-4 flex items-start justify-between">
-    <h1 class="text-l font-medium ">
+  <div class="m-4 flex items-start justify-start">
+    <h1 class="text-l font-medium">
       {album.author} - {album.title}
     </h1>
-    <button on:click|preventDefault={request} class="text-blue-700"
-      >Download</button
-    >
   </div>
   {#if !data.length}
     <Placeholder {layout} cssClass={"mt-0"} />
   {:else}
     <div class={`${layout} mt-0`}>
       {#each data as record}
-        <RecordCard requestType={RequestType.Track} {record} />
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div
+          class="flex justify-between items-center"
+          on:click={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
+        >
+          <RecordCard requestType={RequestType.Track} {record} />
+          {#if selected.includes(record.youTubeMusicPlaylistUrl)}
+            <img src={`${base}/check-circle.svg`} alt="check" class="h-5 w-5" />
+          {/if}
+        </div>
       {/each}
     </div>
   {/if}

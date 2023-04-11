@@ -83,13 +83,15 @@
     infinitelyScrollable={isInfinitelyScrollable(requestType)}
   />
   {#if $popupIsShown}
-    <PopUp>
-      {#if $popupContentType === "artist"}
+    {#if $popupContentType === "artist"}
+      <PopUp>
         <Artist />
-      {:else if $popupContentType == "album"}
+      </PopUp>
+    {:else if $popupContentType == "album"}
+      <PopUp mainButtonText="Download Album">
         <Album />
-      {/if}
-    </PopUp>
+      </PopUp>
+    {/if}
   {/if}
 {/key}
 {#if $popupIsShown}

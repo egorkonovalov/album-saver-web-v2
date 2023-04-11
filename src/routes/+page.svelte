@@ -2,10 +2,13 @@
   import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
   import { PlatformEnvironmentService } from "$lib/modules/platformenvironment/platformenvironment.service";
   import Main from "../components/Main.svelte";
+  import { Environment as EnvironmentStore } from "$lib/stores";
   import { isDev } from "$lib/utils/IsDev";
 
   async function getEnvironment() {
-    return PlatformEnvironmentService.getEnvironment();
+    let environment = PlatformEnvironmentService.getEnvironment();
+    EnvironmentStore.set(environment);
+    return environment;
   }
 </script>
 

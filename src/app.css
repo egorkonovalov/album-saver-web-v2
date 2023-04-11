@@ -55,11 +55,11 @@
     @apply flex flex-row gap-2 items-center;
   }
 
-  .track-list img {
+  .track-list .cover {
     @apply rounded-sm w-14 h-14;
   }
 
-  .artist-list img {
+  .artist-list .cover {
     @apply rounded-full w-14 h-14;
   }
 
@@ -132,7 +132,7 @@
   }
 
   .popup {
-    @apply h-2/3 bg-[color:var(--tg-theme-bg-color)] shadow-2xl rounded-t-lg w-full fixed bottom-0 overflow-auto z-10;
+    @apply h-full bg-[color:var(--tg-theme-bg-color)] shadow-2xl rounded-t-lg w-full fixed bottom-0 overflow-auto z-10;
   }
 
   .form {

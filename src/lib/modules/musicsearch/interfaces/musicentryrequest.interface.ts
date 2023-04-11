@@ -3,3 +3,8 @@ export interface MusicEntryRequest {
   youTubeMusicPlaylistUrl: string;
   entityType: number;
 }
+
+export interface MusicSetRequest {
+  userId: number,
+  urls: string[]
+}
