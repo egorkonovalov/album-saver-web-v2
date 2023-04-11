@@ -28,10 +28,10 @@
 
 <div class="dark:text-white">
   <div class="m-4">
-    <h1 class="text-xl font-medium ">{artist.title}</h1>
+    <h1 class="text-xl font-medium">{artist.title}</h1>
   </div>
   {#if !data.length}
-    <Placeholder {layout} cssClass={"mt-0"} />
+    <Placeholder {layout} _class={"mt-0"} />
   {:else}
     <div class={`${layout} mt-0`}>
       {#each data as record}

@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { Layout } from "../component.types";
   export let layout: Layout;
-  export let cssClass = "";
+  export let _class = "";
 </script>
 
-<div class={`${layout} ${cssClass} placeholder`}>
+<div class={`${layout} ${_class} placeholder`}>
   {#each Array(8) as _}
     <div class="entry">
       <div class="image" />

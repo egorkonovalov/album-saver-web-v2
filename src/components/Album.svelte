@@ -31,6 +31,7 @@
       selected.splice(selected.indexOf(url), 1);
       selected = selected;
     }
+    environment.envokeHaptic();
   }
 
   async function fetchData() {
@@ -71,7 +72,7 @@
     </h1>
   </div>
   {#if !data.length}
-    <Placeholder {layout} cssClass={"mt-0"} />
+    <Placeholder {layout} _class={"mt-0"} />
   {:else}
     <div class={`${layout} mt-0`}>
       {#each data as record}
@@ -80,7 +81,7 @@
           class="flex justify-between items-center"
           on:click={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
         >
-          <RecordCard requestType={RequestType.Track} {record} />
+          <RecordCard requestType={RequestType.Track} {record} _class="pointer-events-none" />
           {#if selected.includes(record.youTubeMusicPlaylistUrl)}
             <img src={`${base}/check-circle.svg`} alt="check" class="h-5 w-5" />
           {/if}

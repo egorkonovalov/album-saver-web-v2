@@ -6,10 +6,12 @@
   let value: string;
 
   function searchRecord() {
+    input.blur();
     dispatch("search", {
       value: value,
     });
   }
+
   let input: HTMLElement;
   let inFocuse = false;
   $: {
@@ -24,11 +26,7 @@
   }
 </script>
 
-<form
-  on:submit|preventDefault={searchRecord}
-  on:submit|preventDefault={input.blur}
-  class="form"
->
+<form on:submit|preventDefault={searchRecord} class="form">
   <div class="w-full searchbar flex items-center">
     <label class="w-full">
       <input

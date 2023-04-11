@@ -39,8 +39,8 @@ export class
     this._backButton.onClick(callback);
   }
 
-  envokeHaptic(type: string): void {
-    this._webApp.HapticFeedback.notificationOccurred("success")
+  envokeHaptic(style: string): void {
+    this._webApp.HapticFeedback.impactOccurred(style);
   }
 
   close(): void {

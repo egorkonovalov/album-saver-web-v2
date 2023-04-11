@@ -13,6 +13,7 @@
   const environment = get(EnvironmentStore);
   export let requestType: RequestType;
   export let record: Record;
+  export let _class = "";
 
   async function request() {
     await SearchRequestController.requestRecord(
@@ -42,7 +43,7 @@
   }
 </script>
 
-<a href="/" on:click|preventDefault={async () => handleClick()}>
+<a href="/" on:click|preventDefault={async () => handleClick()} class={_class}>
   <img src={record.imageUrl} alt={record.title} class="object-cover cover" />
   <div class="text-[12px]">
     <p class="font-semibold leading-tight">{record.title}</p>
