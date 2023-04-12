@@ -23,6 +23,7 @@
 
   onDestroy(() => {
     environment.hideMainButton();
+    environment.hideBackButton();
   });
 </script>
 

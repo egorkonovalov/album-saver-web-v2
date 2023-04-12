@@ -31,7 +31,7 @@
       selected.splice(selected.indexOf(url), 1);
       selected = selected;
     }
-    environment.envokeHaptic();
+    environment.envokeHaptic("light");
   }
 
   async function fetchData() {
@@ -81,7 +81,11 @@
           class="flex justify-between items-center"
           on:click={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
         >
-          <RecordCard requestType={RequestType.Track} {record} _class="pointer-events-none" />
+          <RecordCard
+            requestType={RequestType.Track}
+            {record}
+            _class="pointer-events-none"
+          />
           {#if selected.includes(record.youTubeMusicPlaylistUrl)}
             <img src={`${base}/check-circle.svg`} alt="check" class="h-5 w-5" />
           {/if}

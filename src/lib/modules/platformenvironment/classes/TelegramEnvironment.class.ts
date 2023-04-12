@@ -40,7 +40,11 @@ export class
   }
 
   envokeHaptic(style: string): void {
-    this._webApp.HapticFeedback.impactOccurred(style);
+    try {
+      this._webApp.HapticFeedback.impactOccurred(style)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   close(): void {
