@@ -17,7 +17,7 @@
 @layer components {
   .album-grid,
   .artist-grid {
-    @apply grid grid-cols-2 p-4 gap-4 content-margin;
+    @apply grid grid-cols-2 p-4 gap-4;
   }
 
   .album-grid a,
@@ -43,7 +43,7 @@
 
   .track-list,
   .artist-list {
-    @apply flex flex-col p-4 gap-4 content-margin;
+    @apply flex flex-col p-4 gap-4;
   }
 
   .noscroll {
@@ -65,10 +65,6 @@
 
   .track-list p {
     @apply truncate dark:text-white max-w-[60vw];
-  }
-
-  .content-margin {
-    @apply mt-[min(6rem,25%)];
   }
 
   .placeholder {
@@ -144,7 +140,7 @@
   }
 
   .filter {
-    @apply px-4 flex gap-3;
+    @apply px-4 flex gap-3 my-2;
   }
 
   .filter-button {
@@ -160,7 +156,6 @@
   }
 
   .top-bar {
-    @apply flex flex-col z-10 fixed inset-0 w-screen bg-[color:var(--tg-theme-bg-color)] bg-opacity-90 backdrop-blur-xl justify-start;
-    height: min(6rem, 25%);
+    @apply flex flex-col z-10 fixed inset-0 bg-[color:var(--tg-theme-bg-color)] bg-opacity-90 backdrop-blur-xl justify-start h-fit;
   }
 }

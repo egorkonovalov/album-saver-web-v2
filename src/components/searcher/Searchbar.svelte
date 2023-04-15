@@ -51,9 +51,4 @@
       />
     {/if}
   </div>
-  <button
-    type="submit"
-    class="px-2.5 text-sm bg-blue-700 font-semibold text-white rounded-lg"
-    >Search</button
-  >
 </form>

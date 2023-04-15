@@ -50,6 +50,7 @@
         RequestType.Album
       );
     }
+    environment.envokeHaptic("heavy")
     environment.close();
   }
 

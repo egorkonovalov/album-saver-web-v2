@@ -54,7 +54,7 @@
 </script>
 
 {#if showPlaceholder}
-  <Placeholder {layout} _class={"content-margin"} />
+  <Placeholder {layout} />
 {:else if data.length}
   <div class={layout}>
     {#each data as record}

@@ -28,6 +28,7 @@
   function changeRequestType(type: RequestType) {
     requestType = type;
   }
+
   function handleInputFocusChange(focus: boolean) {
     if (focus) {
       requestType === RequestType.Release
@@ -48,6 +49,7 @@
       requestType = RequestType.Album;
     }
   }
+  let h;
   let inputQuery = "";
   let searchQuery = "";
   let requestType = RequestType.Release;
@@ -63,12 +65,16 @@
   }
 </script>
 
-<div class="top-bar">
-  <Searchbar
-    on:search={() => handleSearch()}
-    on:inputQueryChange={(event) => handleInputValueChange(event.detail.value)}
-    on:inputFocuseChange={(event) => handleInputFocusChange(event.detail.value)}
-  />
+<div class="top-bar" bind:clientHeight={h}>
+  <div class="flex">
+    <Searchbar
+      on:search={() => handleSearch()}
+      on:inputQueryChange={(event) =>
+        handleInputValueChange(event.detail.value)}
+      on:inputFocuseChange={(event) =>
+        handleInputFocusChange(event.detail.value)}
+    />
+  </div>
   <FilterSelector
     on:changeRequestType={(event) => changeRequestType(event.detail.value)}
     {requestType}
@@ -76,20 +82,22 @@
 </div>
 
 {#key keyObject}
-  <Content
-    query={searchQuery}
-    {requestType}
-    infinitelyScrollable={isInfinitelyScrollable(requestType)}
-  />
-  {#if $popupIsShown}
-    {#if $popupContentType === "artist"}
-      <PopUp>
-        <Artist />
-      </PopUp>
-    {:else if $popupContentType == "album"}
-      <PopUp mainButtonText="Download Album">
-        <Album />
-      </PopUp>
+  <div class="content" style={`margin-top: ${h}px`}>
+    <Content
+      query={searchQuery}
+      {requestType}
+      infinitelyScrollable={isInfinitelyScrollable(requestType)}
+    />
+    {#if $popupIsShown}
+      {#if $popupContentType === "artist"}
+        <PopUp>
+          <Artist />
+        </PopUp>
+      {:else if $popupContentType == "album"}
+        <PopUp mainButtonText="Download Album">
+          <Album />
+        </PopUp>
+      {/if}
     {/if}
-  {/if}
+  </div>
 {/key}
