@@ -33,7 +33,7 @@
         on:focus={() => (inFocuse = true)}
         on:blur={() => (inFocuse = false)}
         bind:this={input}
-        type="text"
+        type="search"
         bind:value
         id="search_record"
         class="bg-transparent w-full border-none outline-0"

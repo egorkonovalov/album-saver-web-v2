@@ -6,6 +6,9 @@
   body {
     @apply w-full h-full bg-[color:var(--tg-theme-bg-color)];
   }
+  input:focus {
+    @apply outline-none;
+   }
 }
 
 @layer utilities {
