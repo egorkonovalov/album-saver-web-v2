@@ -25,14 +25,13 @@
 
   async function handleClick() {
     switch (requestType) {
-      case RequestType.Album: {
+      case RequestType.Album:
+      case RequestType.Release: {
         setPopup();
         break;
       }
       case RequestType.Track:
-      case RequestType.Release: {
         request();
-      }
     }
   }
 
