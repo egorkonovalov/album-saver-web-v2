@@ -7,18 +7,26 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    env:
-      VITE_API_BASE_URL = "https://ytmusicdownloaderwebapi.azurewebsites.net/"
+
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Set-up Node
         uses: actions/setup-node@v1
         with:
           node-version: 18
-      - run: npm install yarn@latest
-      - run: yarn install
-      - run: yarn build
+
+      - name: Install dependencies
+        run: npm install yarn@latest
+        run: yarn install
+
+      - name: Build
+        env:
+          VITE_API_BASE_URL: https://ytmusicdownloaderwebapi.azurewebsites.net/
+        run: yarn build
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
