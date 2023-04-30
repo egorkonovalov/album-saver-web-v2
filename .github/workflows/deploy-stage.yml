@@ -5,10 +5,10 @@ on:
       - main
 
 jobs:
-  build-test-deploy:
+  build-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    env:
+      VITE_API_BASE_URL = https://ytmusicdownloaderwebapi.azurewebsites.net/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
