@@ -183,34 +183,34 @@
   resolved "https://registry.yarnpkg.com/@sveltejs/adapter-static/-/adapter-static-2.0.1.tgz#b76f7742ae635e1c063efcab8c6de064255f6292"
   integrity sha512-o5/q3YwD/ErxYCFlK1v3ydvldyNKk1lh3oeyxn4mhz+Pkbx/uuxhzmbOpytTlp5aVqNHDVsb04xadUzOFCDDzw==
 
-"@sveltejs/kit@next":
-  version "1.0.0-next.589"
-  resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-1.0.0-next.589.tgz"
-  integrity sha512-5ABRw46z9B+cCe/YWhcx+I/azNZg1NCDEkVJifZn8ToFoJ3a1eP0OexNIrvMEWpllMbNMPcJm2TC9tnz9oPfWQ==
+"@sveltejs/kit@^1.15.9":
+  version "1.15.9"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.15.9.tgz#3a8107a0ed0d56cd47363ddb9512cf9bc66103be"
+  integrity sha512-Og+4WlguPVPS0PmAHefp4KxvTVZfyDN09aORVXIdKSzqzodSJiLs7Fhi/Q0z0YjmcoNLWF24tI0a6mTusL6Yfg==
   dependencies:
-    "@sveltejs/vite-plugin-svelte" "^2.0.0"
+    "@sveltejs/vite-plugin-svelte" "^2.1.1"
     "@types/cookie" "^0.5.1"
     cookie "^0.5.0"
-    devalue "^4.2.0"
+    devalue "^4.3.0"
     esm-env "^1.0.0"
     kleur "^4.1.5"
-    magic-string "^0.27.0"
+    magic-string "^0.30.0"
     mime "^3.0.0"
     sade "^1.8.1"
     set-cookie-parser "^2.5.1"
     sirv "^2.0.2"
     tiny-glob "^0.2.9"
-    undici "5.14.0"
+    undici "~5.22.0"
 
-"@sveltejs/vite-plugin-svelte@^2.0.0":
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/@sveltejs/vite-plugin-svelte/-/vite-plugin-svelte-2.0.3.tgz"
-  integrity sha512-o+cguBFdwIGtRbNkYOyqTM7KvRUffxh5bfK4oJsWKG2obu+v/cbpT03tJrGl58C7tRXo/aEC0/axN5FVHBj0nA==
+"@sveltejs/vite-plugin-svelte@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@sveltejs/vite-plugin-svelte/-/vite-plugin-svelte-2.1.1.tgz#df08dba9094208a2048968e329237be6893cf66d"
+  integrity sha512-7YeBDt4us0FiIMNsVXxyaP4Hwyn2/v9x3oqStkHU3ZdIc5O22pGwUwH33wUqYo+7Itdmo8zxJ45Qvfm3H7UUjQ==
   dependencies:
     debug "^4.3.4"
-    deepmerge "^4.3.0"
+    deepmerge "^4.3.1"
     kleur "^4.1.5"
-    magic-string "^0.29.0"
+    magic-string "^0.30.0"
     svelte-hmr "^0.15.1"
     vitefu "^0.2.4"
 
@@ -484,10 +484,10 @@ debug@^4.3.4:
   dependencies:
     ms "2.1.2"
 
-deepmerge@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.npmjs.org/deepmerge/-/deepmerge-4.3.0.tgz"
-  integrity sha512-z2wJZXrmeHdvYJp/Ux55wIjqo81G5Bp4c+oELTW+7ar6SogWHajt5a9gO3s3IDaGSAXjDk0vlQKN3rms8ab3og==
+deepmerge@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.3.1.tgz#44b5f2147cd3b00d4b56137685966f26fd25dd4a"
+  integrity sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==
 
 defined@^1.0.0:
   version "1.0.0"
@@ -513,9 +513,9 @@ detective@^5.2.1:
     defined "^1.0.0"
     minimist "^1.2.6"
 
-devalue@^4.2.0:
+devalue@^4.3.0:
   version "4.3.0"
-  resolved "https://registry.npmjs.org/devalue/-/devalue-4.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/devalue/-/devalue-4.3.0.tgz#d86db8fee63a70317c2355be0d3d1b4d8f89a44e"
   integrity sha512-n94yQo4LI3w7erwf84mhRUkUJfhLoCZiLyoOZ/QFsDbcWNZePrLwbQpvZBUG2TNxwV3VjCKPxkiiQA6pe3TrTA==
 
 didyoumean@^1.2.2:
@@ -855,17 +855,10 @@ magic-string@^0.25.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
-magic-string@^0.27.0:
-  version "0.27.0"
-  resolved "https://registry.npmjs.org/magic-string/-/magic-string-0.27.0.tgz"
-  integrity sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==
-  dependencies:
-    "@jridgewell/sourcemap-codec" "^1.4.13"
-
-magic-string@^0.29.0:
-  version "0.29.0"
-  resolved "https://registry.npmjs.org/magic-string/-/magic-string-0.29.0.tgz"
-  integrity sha512-WcfidHrDjMY+eLjlU+8OvwREqHwpgCeKVBUpQ3OhYYuvfaYCUgcbuBzappNzZvg/v8onU3oQj+BYpkOJe9Iw4Q==
+magic-string@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.0.tgz#fd58a4748c5c4547338a424e90fa5dd17f4de529"
+  integrity sha512-LA+31JYDJLs82r2ScLrlz1GjSgu66ZV518eyWT+S8VhyQn/JL0u9MeBOvQMGYiPk1DBiSN9DDMOcXvigJZaViQ==
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.13"
 
@@ -1394,10 +1387,10 @@ typescript@*, typescript@^4.7.4:
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.8.4.tgz"
   integrity sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==
 
-undici@5.14.0:
-  version "5.14.0"
-  resolved "https://registry.npmjs.org/undici/-/undici-5.14.0.tgz"
-  integrity sha512-yJlHYw6yXPPsuOH0x2Ib1Km61vu4hLiRRQoafs+WUgX1vO64vgnxiCEN9dpIrhZyHFsai3F0AEj4P9zy19enEQ==
+undici@~5.22.0:
+  version "5.22.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.22.0.tgz#5e205d82a5aecc003fc4388ccd3d2c6e8674a0ad"
+  integrity sha512-fR9RXCc+6Dxav4P9VV/sp5w3eFiSdOjJYsbtWfd4s5L5C4ogyuVpdKIVHeW0vV1MloM65/f7W45nR9ZxwVdyiA==
   dependencies:
     busboy "^1.6.0"
 
