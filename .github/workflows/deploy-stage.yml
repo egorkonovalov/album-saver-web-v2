@@ -22,4 +22,4 @@ jobs:
         with:
           publish_branch: gh-pages
           publish_dir: build
-          github_token: ${{ secrets.GITHUB_REPO_TOKEN }}
+          github_token: ${{ secrets.DEPLOY_SECRET }}
