@@ -1,51 +1,26 @@
-name: CI and CD
-
+name: Node.js CI
 on:
   push:
     branches:
       - main
 
 jobs:
-  build:
-    name: Build
+  build-test-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Setup Node
+      - name: Set-up Node
         uses: actions/setup-node@v1
         with:
           node-version: 18
-
-      - name: Install dependencies
-        uses: npm install yarn && yarn install
-
-      - name: Build project
-        run: yarn build
-
-      - name: Upload production-ready build files
-        uses: actions/upload-artifact@v2
-        with:
-          name: production-files
-          path: ./build
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: production-files
-          path: ./build
-
-      - name: Deploy to GitHub Pages
+      - run: npm install yarn@latest
+      - run: yarn install
+      - run: yarn build
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          target_branch: gh-pages
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_REPO_TOKEN }}
