@@ -5,20 +5,28 @@ on:
       - main
 
 jobs:
-  build-test-deploy:
+  build-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    environment: github-pages
+
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Set-up Node
         uses: actions/setup-node@v1
         with:
           node-version: 18
-      - run: npm install yarn@latest
-      - run: yarn install
-      - run: yarn build
+
+      - name: Install dependencies
+        run: |
+          npm install yarn@latest
+          yarn install
+
+      - name: Build
+        run: yarn build
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
