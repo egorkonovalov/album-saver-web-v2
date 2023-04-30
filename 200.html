@@ -6,22 +6,32 @@
     <link rel="icon" href="/album-saver-web-v2/favicon.png" />
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="content-security-policy" content="">
-		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/start-8bc5f865.js">
-		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/chunks/index-29be2e37.js">
-		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/chunks/singletons-20d393ff.js">
-		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/chunks/paths-9ddf025a.js">
+		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/entry/start.35cf4c87.js">
+		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/chunks/index.ef0fbd68.js">
+		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/chunks/singletons.5bfd4e1e.js">
+		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/chunks/paths.bd10c0ac.js">
+		<link rel="modulepreload" href="/album-saver-web-v2/internal/immutable/entry/app.714516d8.js">
   </head>
   <body>
     <div>
-		<script type="module" data-sveltekit-hydrate="45h">
-			import { start } from "/album-saver-web-v2/internal/immutable/start-8bc5f865.js";
+			<script>
+				{
+					__sveltekit_gtixlj = {
+						assets: "/album-saver-web-v2",
+						base: "/album-saver-web-v2",
+						env: {}
+					};
 
-			start({
-				env: {},
-				paths: {"base":"/album-saver-web-v2","assets":"/album-saver-web-v2"},
-				target: document.querySelector('[data-sveltekit-hydrate="45h"]').parentNode,
-				version: "1682851973709"
-			});
-		</script></div>
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/album-saver-web-v2/internal/immutable/entry/start.35cf4c87.js"),
+						import("/album-saver-web-v2/internal/immutable/entry/app.714516d8.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
   </body>
 </html>
