@@ -8,7 +8,7 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     env:
-      VITE_API_BASE_URL = https://ytmusicdownloaderwebapi.azurewebsites.net/
+      VITE_API_BASE_URL = "https://ytmusicdownloaderwebapi.azurewebsites.net/"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
