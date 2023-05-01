@@ -24,8 +24,6 @@ jobs:
           yarn install
 
       - name: Build
-        env:
-          VITE_API_BASE_URL: https://ytmusicdownloaderwebapi.azurewebsites.net/
         run: yarn build
 
       - name: Deploy
