@@ -1,34 +1,49 @@
-name: Node.js CI
+name: Github Pages
+run-name: ${{ github.actor }} is deploying the application.
 on:
   push:
     branches:
       - main
 
 jobs:
-  build-deploy:
+
+  setup:
     runs-on: ubuntu-latest
-    environment: github-pages
-
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
+      - name: Set-up Node & Checkout
+        uses: actions/checkout@v3
       - name: Set-up Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
       - name: Install dependencies
         run: |
           npm install yarn@latest
           yarn install
-
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Build
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
         run: yarn build
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
