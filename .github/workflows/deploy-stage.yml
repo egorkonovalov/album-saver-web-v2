@@ -7,7 +7,8 @@ on:
 
 jobs:
 
-  setup:
+  setup-build:
+    environment: github-pages
     runs-on: ubuntu-latest
     steps:
       - name: Set-up Node & Checkout
@@ -16,12 +17,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-  build:
-    runs-on: ubuntu-latest
-    needs: setup
-    environment: github-pages
-    steps:
       - name: Install dependencies
         run: |
           npm install yarn@latest
@@ -33,7 +28,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: setup-build
     steps:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
