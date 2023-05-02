@@ -19,8 +19,8 @@ jobs:
           cache: 'npm'
 
   build:
-    needs: setup
     runs-on: ubuntu-latest
+    needs: setup
     environment: github-pages
     steps:
       - name: Install dependencies
