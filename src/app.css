@@ -134,8 +134,16 @@
         @apply w-full h-full;
       }
     }
-    &.track-list,
-    .artist-list {
+    &.track-list {
+      @apply flex flex-col;
+      & .image {
+        @apply w-14 h-14;
+      }
+      & .entry {
+        @apply flex-row;
+      }
+    }
+    &.artist-list {
       @apply flex flex-col;
       & .image {
         @apply w-14 h-14;
