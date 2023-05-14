@@ -106,62 +106,66 @@
 
   .placeholder {
     @apply p-4 gap-4 animate-pulse;
-  }
+    & .entry {
+      @apply flex gap-2 w-full;
+    }
+    & .image {
+      @apply bg-[color:var(--tg-theme-secondary-bg-color)] rounded;
+    }
+    & .text-line {
+      @apply bg-[color:var(--tg-theme-secondary-bg-color)] h-2 rounded;
+    }
+    & .text-line-sm {
+      @apply w-24;
+    }
+    & .text-line-md {
+      @apply w-16;
+    }
+    & .text-container {
+      @apply flex flex-col  gap-2 justify-center;
+    }
 
-  .placeholder.album-grid {
-    @apply grid grid-cols-2;
-  }
-
-  .placeholder.track-list,
-  .placeholder.artist-list {
-    @apply flex flex-col;
-  }
-
-  .placeholder.track-list .entry,
-  .placeholder.artist-list .entry {
-    @apply flex-row;
-  }
-
-  .placeholder.album-grid .entry {
-    @apply flex-col h-48;
-  }
-
-  .placeholder.track-list .image,
-  .placeholder.artist-list .image {
-    @apply w-14 h-14;
-  }
-
-  .placeholder.track-list .image,
-  .placeholder.artist-list .image {
-    @apply w-14 h-14;
-  }
-
-  .placeholder.artist-list .image {
-    @apply !rounded-full;
-  }
-
-  .placeholder.artist-list .entry .text-container p:nth-child(2) {
-    @apply hidden;
-  }
-
-  .placeholder.album-grid .image {
-    @apply w-full h-full;
-  }
-
-  .placeholder .entry {
-    @apply flex gap-2 w-full;
-  }
-
-  .placeholder .image {
-    @apply bg-[color:var(--tg-theme-secondary-bg-color)] rounded;
-  }
-
-  .placeholder .text-line {
-    @apply bg-[color:var(--tg-theme-secondary-bg-color)] h-2 rounded;
-  }
-
-  .placeholder .text-container {
-    @apply flex flex-col  gap-2 justify-center;
+    &.album-grid {
+      @apply grid grid-cols-2;
+      & .entry {
+        @apply flex-col h-48;
+      }
+      & .image {
+        @apply w-full h-full;
+      }
+    }
+    &.track-list,
+    .artist-list {
+      @apply flex flex-col;
+      & .image {
+        @apply w-14 h-14;
+      }
+      & .entry {
+        @apply flex-row;
+      }
+    }
+    &.artist-list {
+      & .image {
+        @apply !rounded-full;
+      }
+      & .entry .text-container p:nth-child(2) {
+        @apply hidden;
+      }
+    }
+    &.track-list.album-entry {
+      & .image {
+        @apply hidden;
+      }
+      & .text-line-sm {
+        @apply hidden;
+      }
+      & .entry {
+        @apply p-2;
+        & p {
+          @apply h-2;
+        }
+      }
+    }
   }
 
   .popup {

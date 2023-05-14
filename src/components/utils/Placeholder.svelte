@@ -9,8 +9,8 @@
     <div class="entry">
       <div class="image" />
       <div class="text-container">
-        <p class="text-line w-24" />
-        <p class="text-line w-16" />
+        <p class="text-line text-line-md" />
+        <p class="text-line text-line-sm" />
       </div>
     </div>
   {/each}
