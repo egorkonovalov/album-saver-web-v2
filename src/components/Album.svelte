@@ -50,7 +50,7 @@
         RequestType.Album
       );
     }
-    environment.envokeHaptic("heavy")
+    environment.envokeHaptic("heavy");
     environment.close();
   }
 
@@ -66,22 +66,25 @@
   });
 </script>
 
-<div class="dark:text-white">
-  <div class="m-4 flex items-start justify-start">
-    <h1 class="text-l font-medium">
-      {album.author} - {album.title}
-    </h1>
+<div class="dark:text-white flex flex-col">
+  <img
+    class="w-2/3 self-center rounded-lg shadow-lg"
+    src={album.imageUrl}
+    alt="cover"
+  />
+  <div class="m-4 grid text-center">
+    <h3 class="text-l font-medium">
+      {album.title}
+    </h3>
+    <p>{album.author}</p>
   </div>
   {#if !data.length}
     <Placeholder {layout} _class={"mt-0"} />
   {:else}
-    <div class={`${layout} mt-0`}>
+    <ul class={`${layout} album`}>
       {#each data as record}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div
-          class="flex justify-between items-center"
-          on:click={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
-        >
+        <li on:click={() => addOrRemove(record.youTubeMusicPlaylistUrl)}>
           <RecordCard
             requestType={RequestType.Track}
             {record}
@@ -90,8 +93,8 @@
           {#if selected.includes(record.youTubeMusicPlaylistUrl)}
             <img src={`${base}/check-circle.svg`} alt="check" class="h-5 w-5" />
           {/if}
-        </div>
+        </li>
       {/each}
-    </div>
+    </ul>
   {/if}
 </div>

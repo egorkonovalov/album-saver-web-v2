@@ -3,12 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+  }
+
   body {
     @apply w-full h-full bg-[color:var(--tg-theme-bg-color)];
   }
   input:focus {
     @apply outline-none;
-   }
+  }
 }
 
 @layer utilities {
@@ -23,25 +27,29 @@
     @apply grid grid-cols-2 p-4 gap-4;
   }
 
-  .album-grid a,
-  .artist-grid a {
-    @apply flex flex-col gap-2 cursor-pointer;
+  .album-grid,
+  .artist-grid {
+    & a {
+      @apply flex flex-col gap-2 cursor-pointer;
+    }
   }
 
-  .album-grid img {
-    @apply w-full rounded-lg;
+  .album-grid {
+    & img {
+      @apply w-full rounded-lg;
+    }
+    & p {
+      @apply truncate dark:text-white;
+    }
   }
 
-  .artist-grid img {
-    @apply w-full rounded-full;
-  }
-
-  .album-grid p {
-    @apply truncate dark:text-white;
-  }
-
-  .artist-grid p {
-    @apply truncate text-center;
+  .artist-grid {
+    & img {
+      @apply w-full rounded-full;
+    }
+    & p {
+      @apply truncate text-center;
+    }
   }
 
   .track-list,
@@ -53,9 +61,11 @@
     @apply overflow-hidden;
   }
 
-  .track-list a,
-  .artist-list a {
-    @apply flex flex-row gap-2 items-center;
+  .track-list,
+  .artist-list {
+    & a {
+      @apply flex flex-row gap-2 items-center;
+    }
   }
 
   .track-list .cover {
@@ -66,8 +76,32 @@
     @apply rounded-full w-14 h-14;
   }
 
-  .track-list p {
-    @apply truncate dark:text-white max-w-[60vw];
+  .track-list {
+    & p {
+      @apply truncate dark:text-white max-w-[60vw];
+    }
+    &.album {
+      @apply mt-0;
+      counter-reset: track;
+      & .cover,
+      .record__artist {
+        @apply hidden;
+      }
+      & li {
+        @apply flex justify-between items-center p-2;
+        &:nth-child(2n + 2) {
+          @apply bg-[color:var(--tg-theme-secondary-bg-color)] rounded-md;
+        }
+        & a {
+          @apply h-5;
+          &:before {
+            @apply text-[12px] text-center;
+            counter-increment: track;
+            content: counter(track);
+          }
+        }
+      }
+    }
   }
 
   .placeholder {
@@ -160,5 +194,16 @@
 
   .top-bar {
     @apply flex flex-col z-10 fixed inset-0 bg-[color:var(--tg-theme-bg-color)] bg-opacity-90 backdrop-blur-xl justify-start h-fit;
+  }
+
+  .record__title-container {
+    @apply text-[12px];
+  }
+  .record__name {
+    @apply font-semibold leading-tight;
+  }
+
+  .record__artist {
+    @apply font-light;
   }
 }

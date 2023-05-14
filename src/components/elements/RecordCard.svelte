@@ -42,12 +42,16 @@
   }
 </script>
 
-<a href="/" on:click|preventDefault={async () => handleClick()} class={_class}>
+<a
+  href="/"
+  on:click|preventDefault={async () => handleClick()}
+  class={_class + " record"}
+>
   <img src={record.imageUrl} alt={record.title} class="object-cover cover" />
-  <div class="text-[12px]">
-    <p class="font-semibold leading-tight">{record.title}</p>
+  <div class="record__title-container">
+    <p class="record__name">{record.title}</p>
     {#if requestType !== RequestType.Artist}
-      <p class="font-light">
+      <p class="record__artist">
         {record.author === undefined ? "Various Artists" : record.author}
       </p>
     {/if}
