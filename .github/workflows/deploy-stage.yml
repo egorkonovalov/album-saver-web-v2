@@ -6,7 +6,6 @@ on:
       - main
 
 jobs:
-
   setup-build:
     environment: github-pages
     runs-on: ubuntu-latest
@@ -17,7 +16,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
       - name: Install dependencies
         run: |
           npm install yarn@latest
