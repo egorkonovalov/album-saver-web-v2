@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
+  import searchRequestController from "$lib/modules/musicsearch/searchrequest.controller";
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import RecordCard from "./elements/RecordCard.svelte";
@@ -11,6 +11,10 @@
   import { getLayoutType } from "./utils/Utils";
   import Banner from "./elements/Banner.svelte";
   import ArtistCard from "./elements/ArtistCard.svelte";
+  import artistsController from "$lib/modules/artists/artists.controller";
+  import albumsController from "$lib/modules/albums/albums.controller";
+  import tracksController from "$lib/modules/tracks/tracks.controller";
+  import releasesController from "$lib/modules/releases/releases.controller";
 
   export let query: string;
   export let requestType: RequestType;
@@ -26,29 +30,29 @@
   $: data = [...data, ...newBatch];
 
   async function fetchData() {
-    if (requestType === RequestType.Release) {
-      newBatch = await SearchRequestController.getRecords(
-        queryCopy,
-        requestType
-      );
-    } else if (queryCopy) {
-      newBatch = await SearchRequestController.getRecords(
-        queryCopy,
-        requestType
-      );
-      loadingMore = false;
+    switch (requestType) {
+      case RequestType.Artist:
+        return await artistsController.getArtists(queryCopy);
+      case RequestType.Album:
+        return await albumsController.getAlbums(queryCopy);
+      case RequestType.Track:
+        return await tracksController.getTracks(queryCopy);
+      case RequestType.Release:
+        return await releasesController.getReleases();
     }
+    return [];
   }
 
-  function handleLoadMore() {
+  async function handleLoadMore() {
     loadingMore = true;
-    fetchData();
+    newBatch = await fetchData();
+    loadingMore = false;
   }
 
   onMount(async () => {
     showPlaceholder = true;
     tokens.set({});
-    await fetchData();
+    newBatch = await fetchData();
     showPlaceholder = false;
   });
 </script>

@@ -10,7 +10,7 @@
   import { get } from "svelte/store";
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import { onMount } from "svelte";
-  import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
+  import searchRequestController from "$lib/modules/musicsearch/searchrequest.controller";
   import { getLayoutType } from "./utils/Utils";
   import { base } from "$app/paths";
 
@@ -35,7 +35,7 @@
   }
 
   async function fetchData() {
-    tracks = await SearchRequestController.getRecords(
+    tracks = await searchRequestController.getRecords(
       album.youTubeMusicPlaylistUrl,
       RequestType.AlbumTracks
     );
@@ -43,9 +43,9 @@
 
   async function request() {
     if (selected.length > 0) {
-      await SearchRequestController.requestSet(selected);
+      await searchRequestController.requestSet(selected);
     } else {
-      await SearchRequestController.requestRecord(
+      await searchRequestController.requestRecord(
         get(AlbumStore).youTubeMusicPlaylistUrl,
         RequestType.Album
       );

@@ -27,6 +27,10 @@
   });
 </script>
 
-<div use:clickOutside transition:fly={{ y: 500, duration: 300 }} class="popup">
+<div
+  use:clickOutside
+  transition:fly={{ y: 500, duration: 300 }}
+  class={"popup"}
+>
   <slot />
 </div>

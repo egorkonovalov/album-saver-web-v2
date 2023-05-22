@@ -1,7 +1,7 @@
 <script lang="ts">
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
-  import { SearchRequestController } from "$lib/modules/musicsearch/searchrequest.controller";
+  import searchRequestController  from "$lib/modules/musicsearch/searchrequest.controller";
   import {
     album as albumStore,
     popupContentType,
@@ -16,7 +16,7 @@
   export let _class = "";
 
   async function request() {
-    await SearchRequestController.requestRecord(
+    await searchRequestController.requestRecord(
       record.youTubeMusicPlaylistUrl,
       requestType
     );
