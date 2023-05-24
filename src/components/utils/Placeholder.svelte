@@ -2,10 +2,11 @@
   import type { Layout } from "../component.types";
   export let layout: Layout;
   export let _class = "";
+  export let count: number;
 </script>
 
 <div class={`${layout} ${_class} placeholder`}>
-  {#each Array(8) as _}
+  {#each Array(count) as _}
     <div class="entry">
       <div class="image" />
       <div class="text-container">

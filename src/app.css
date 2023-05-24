@@ -176,6 +176,15 @@
     }
   }
 
+  .btn {
+    &.btn--icon {
+      @apply flex items-center text-sm font-medium;
+      & svg {
+        @apply w-4 h-4;
+      }
+    }
+  }
+
   .popup {
     @apply h-full bg-[color:var(--tg-theme-bg-color)] shadow-2xl rounded-t-lg w-full fixed bottom-0 overflow-auto z-10;
   }

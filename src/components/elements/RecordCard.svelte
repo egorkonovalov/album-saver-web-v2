@@ -1,7 +1,7 @@
 <script lang="ts">
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
-  import searchRequestController  from "$lib/modules/musicsearch/searchrequest.controller";
+  import searchRequestController from "$lib/modules/musicsearch/searchrequest.controller";
   import {
     album as albumStore,
     popupContentType,
@@ -47,7 +47,11 @@
   on:click|preventDefault={async () => handleClick()}
   class={_class + " record"}
 >
-  <img src={record.imageUrl} alt={record.title} class="object-cover cover" />
+  <img
+    src={record.imageUrl}
+    alt={record.title}
+    class={`${requestType} object-cover cover`}
+  />
   <div class="record__title-container">
     <p class="record__name">{record.title}</p>
     {#if requestType !== RequestType.Artist}

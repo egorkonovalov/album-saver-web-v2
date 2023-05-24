@@ -8,6 +8,7 @@
   import Placeholder from "./utils/Placeholder.svelte";
   import artistsController from "$lib/modules/artists/artists.controller";
   import { tokens } from "$lib/stores";
+  import { ChevronRight } from "./icons/Icons";
 
   let artist: Record;
   ArtistStore.subscribe((data) => {
@@ -36,26 +37,24 @@
     <h1 class="text-xl font-medium">{artist.title}</h1>
   </div>
   <section>
-    <div class="mx-4 flex">
-      <button>Top tracks ></button>
-    </div>
+    <button class="px-4 btn btn--icon">Top tracks{@html ChevronRight}</button>
     {#if !tracks.length}
-      <Placeholder {layout} _class={"mt-0"} />
+      <Placeholder count={5} {layout} _class={"mt-0"} />
     {:else}
       <ul class="track-list artist">
         {#each tracks as record}
           <li>
-            <RecordCard requestType={RequestType.Track} {record} />
+            <RecordCard requestType={RequestType.ArtistTracks} {record} />
           </li>
         {/each}
       </ul>
     {/if}
   </section>
   <section>
-    <button>Top albums ></button>
+    <button class="px-4 btn btn--icon">Top albums{@html ChevronRight}</button>
     <div class="album-grid">
       {#each albums as record}
-        <RecordCard requestType={RequestType.Album} {record} />
+        <RecordCard requestType={RequestType.ArtistAlbums} {record} />
       {/each}
     </div>
   </section>
