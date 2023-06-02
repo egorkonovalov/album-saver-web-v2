@@ -93,7 +93,7 @@
         <PopUp>
           <Artist />
         </PopUp>
-      {:else if $popupContentType == "album"}
+      {:else if $popupContentType === "album"}
         <PopUp mainButtonText="Download Album">
           <Album />
         </PopUp>

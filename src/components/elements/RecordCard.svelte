@@ -23,7 +23,7 @@
     environment.close();
   }
 
-  async function handleClick() {
+  function handleClick() {
     switch (requestType) {
       case RequestType.Album:
       case RequestType.Release: {
@@ -42,11 +42,7 @@
   }
 </script>
 
-<a
-  href="/"
-  on:click|preventDefault={async () => handleClick()}
-  class={_class + " record"}
->
+<a href="/" on:click|preventDefault={handleClick} class={_class + " record"}>
   <img
     src={record.imageUrl}
     alt={record.title}

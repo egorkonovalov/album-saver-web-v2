@@ -1,27 +1,29 @@
 import type { PlatformEnvironment } from "../interfaces/PlatformEnvironment.interface";
 
-export class
-  TelegramEnvironment implements PlatformEnvironment {
+export class TelegramEnvironment implements PlatformEnvironment {
   readonly _webApp = Telegram.WebApp;
   readonly _backButton = Telegram.WebApp.BackButton;
   readonly _appData = Telegram.Utils.urlParseQueryString(this._webApp.initData);
   readonly webAppUser = JSON.parse(this._appData.user);
-  readonly user = { id: this.webAppUser.id, username: this.webAppUser.username };
+  readonly user = {
+    id: this.webAppUser.id,
+    username: this.webAppUser.username,
+  };
   constructor() {
     this.applyColorScheme();
-  };
+  }
 
   get userId(): number {
     if (this.user.id) {
       return this.user.id;
     } else {
-      throw ("No user id")
+      throw "No user id";
     }
-  };
+  }
 
   get platformName(): string {
     return this._appData.platform;
-  };
+  }
 
   get colorScheme(): string {
     return this._webApp.colorScheme;
@@ -41,14 +43,14 @@ export class
 
   envokeHaptic(style: string): void {
     try {
-      this._webApp.HapticFeedback.impactOccurred(style)
+      this._webApp.HapticFeedback.impactOccurred(style);
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
   close(): void {
-    this._webApp.close()
+    this._webApp.close();
   }
 
   showMainButton(text: string): void {
@@ -61,8 +63,7 @@ export class
   }
 
   setMainButtonCallback(callback: Function): void {
-    this._webApp.MainButton.onClick(callback)
-    console.log("callback is set", callback)
+    this._webApp.MainButton.onClick(callback);
   }
 
   hideMainButton(): void {

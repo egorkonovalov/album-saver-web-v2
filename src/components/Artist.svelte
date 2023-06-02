@@ -37,7 +37,9 @@
     <h1 class="text-xl font-medium">{artist.title}</h1>
   </div>
   <section>
-    <button class="px-4 btn btn--icon">Top tracks{@html ChevronRight}</button>
+    <a href="/album" class="px-4 btn btn--icon"
+      >Top tracks{@html ChevronRight}</a
+    >
     {#if !tracks.length}
       <Placeholder count={5} {layout} _class={"mt-0"} />
     {:else}

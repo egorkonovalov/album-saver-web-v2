@@ -11,7 +11,7 @@
     "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.15.9",
+    "@sveltejs/kit": "^1.20.1",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "postcss-nesting": "^11.2.2",
