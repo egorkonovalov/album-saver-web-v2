@@ -2,18 +2,18 @@
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import RecordCard from "../../../components/elements/RecordCard.svelte";
   import Placeholder from "../../../components/utils/Placeholder.svelte";
-  import type { PageData } from "./$types";
+  import type { PageData } from "../albums/$types";
 
   export let data: PageData;
 </script>
 
-{#await data.streamed.tracks}
-  <Placeholder count={10} _class={"mt-0 track-list artist"} />
+{#await data.streamed.albums}
+  <Placeholder count={10} _class={"mt-0 album-grid"} />
 {:then value}
-  <ul class="artist track-list">
+  <ul class="album-grid">
     {#each value as record}
       <li>
-        <RecordCard requestType={RequestType.ArtistTracks} {record} />
+        <RecordCard requestType={RequestType.AlbumTracks} {record} />
       </li>
     {/each}
   </ul>

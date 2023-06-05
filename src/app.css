@@ -35,8 +35,8 @@
   }
 
   .album-grid {
-    & img {
-      @apply w-full rounded-lg;
+    & .cover {
+      @apply w-[10.5rem] h-[10.5rem] rounded-lg bg-cover;
     }
     & p {
       @apply truncate dark:text-white;
@@ -69,38 +69,46 @@
   }
 
   .track-list .cover {
-    @apply rounded-sm w-14 h-14;
+    @apply rounded-sm w-14 h-14 bg-cover;
   }
 
   .artist-list .cover {
     @apply rounded-full w-14 h-14;
   }
 
-  .track-list {
-    & p {
-      @apply truncate dark:text-white max-w-[60vw];
+  .cover {
+    background-position: center center;
+  }
+
+  .artist {
+    scrollbar-width: none; /* Firefox */
+    &.track-list {
+      &.conveyer {
+        @apply grid grid-flow-col grid-rows-3 overflow-auto;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        & li {
+          @apply w-screen;
+          width: calc(100vw - 4rem);
+        }
+      }
+      & .cover {
+        background-size: 100px;
+      }
     }
-    &.album {
-      @apply mt-0;
-      counter-reset: track;
-      & .cover,
-      .record__artist {
-        @apply hidden;
-      }
-      & li {
-        @apply flex justify-between items-center p-2;
-        &:nth-child(2n + 2) {
-          @apply bg-[color:var(--tg-theme-secondary-bg-color)] rounded-md;
-        }
-        & a {
-          @apply h-5;
-          &:before {
-            @apply text-[12px] text-center;
-            counter-increment: track;
-            content: counter(track);
-          }
-        }
-      }
+  }
+  .albums-conveyer {
+    @apply grid grid-flow-col gap-3 p-4 overflow-auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    & .cover {
+      @apply w-32 h-32 rounded-md object-cover;
+      background-size: 128px;
+    }
+    & .record {
+      @apply flex flex-col gap-2;
     }
   }
 
@@ -181,6 +189,37 @@
       @apply flex items-center text-sm font-medium;
       & svg {
         @apply w-4 h-4;
+      }
+    }
+  }
+
+  .album-entry {
+    @apply dark:text-white flex flex-col;
+    & .headings {
+      @apply m-4 grid text-center;
+      & .title {
+        @apply text-lg font-medium;
+      }
+    }
+    & .artwork {
+      @apply w-2/3 self-center rounded-lg shadow-lg mt-3;
+    }
+    & .track-list {
+      @apply mt-0;
+      counter-reset: track;
+      & li {
+        @apply flex justify-between items-center p-2;
+        &:nth-child(2n + 2) {
+          @apply bg-[color:var(--tg-theme-secondary-bg-color)] rounded-md;
+        }
+        & .track {
+          @apply h-5 flex items-center text-sm gap-3 w-full;
+          &:before {
+            @apply text-center h-full;
+            counter-increment: track;
+            content: counter(track);
+          }
+        }
       }
     }
   }

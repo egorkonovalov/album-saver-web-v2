@@ -7,7 +7,7 @@ class ArtistsController {
   async getTracks(channelUrl: string, takeCount?: number) {
     return await artistsService.getTracks(channelUrl, takeCount);
   }
-  async getAlbums(channelUrl: string, takeCount: number) {
+  async getAlbums(channelUrl: string, takeCount?: number) {
     return await artistsService.getAlbums(channelUrl, takeCount);
   }
 }

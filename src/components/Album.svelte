@@ -79,7 +79,7 @@
     <p>{album.author}</p>
   </div>
   {#if !data.length}
-    <Placeholder count={8} {layout} _class={"album-entry mt-0"} />
+    <Placeholder count={8} _class={`album-entry mt-0 ${layout}`} />
   {:else}
     <ul class={`${layout} album`}>
       {#each data as record}

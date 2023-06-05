@@ -1,0 +1,25 @@
+import { error } from "@sveltejs/kit";
+import type { PageLoad } from "./$types";
+import albumsController from "$lib/modules/albums/albums.controller";
+import { album as AlbumStore, mainButtonText } from "$lib/stores";
+
+import { get } from "svelte/store";
+
+function getParams(url: URL, key: string) {
+  let value = url.searchParams.get(key);
+  if (value) return value;
+  throw error(500, `The value for the parameter "${key}" was not provided.`);
+}
+
+export const load = (async ({ url, parent }) => {
+  const albumUrl = getParams(url, "albumUrl");
+  const { environment } = await parent();
+  return {
+    environment,
+    mainButtonText: get(mainButtonText),
+    albumStore: get(AlbumStore),
+    streamed: {
+      tracks: albumsController.getAlbumTracks(albumUrl),
+    },
+  };
+}) satisfies PageLoad;

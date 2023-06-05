@@ -2,10 +2,9 @@
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import searchRequestController from "$lib/modules/musicsearch/searchrequest.controller";
+  import { goto } from "$app/navigation";
   import {
     album as albumStore,
-    popupContentType,
-    popupIsShown,
     Environment as EnvironmentStore,
   } from "$lib/stores";
   import { get } from "svelte/store";
@@ -26,28 +25,19 @@
   function handleClick() {
     switch (requestType) {
       case RequestType.Album:
-      case RequestType.Release: {
-        setPopup();
+      case RequestType.Release:
+      case RequestType.AlbumTracks:
+        albumStore.set(record);
+        goto(`/album?albumUrl=${record.youTubeMusicPlaylistUrl}`);
         break;
-      }
       case RequestType.Track:
         request();
     }
   }
-
-  function setPopup() {
-    albumStore.set(record);
-    popupContentType.set("album");
-    popupIsShown.set(true);
-  }
 </script>
 
 <a href="/" on:click|preventDefault={handleClick} class={_class + " record"}>
-  <img
-    src={record.imageUrl}
-    alt={record.title}
-    class={`${requestType} object-cover cover`}
-  />
+  <div class="cover" style={`background-image: url(${record.imageUrl})`} />
   <div class="record__title-container">
     <p class="record__name">{record.title}</p>
     {#if requestType !== RequestType.Artist}

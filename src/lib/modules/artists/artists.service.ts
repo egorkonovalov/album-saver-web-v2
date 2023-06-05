@@ -10,11 +10,10 @@ class ArtistsService {
     if (takeCount) query.takeCount = takeCount;
     return await musicGetterService.getMusicQuery(API_ARTISTS_TRACKS, query);
   }
-  async getAlbums(channelUrl: string, takeCount: number) {
-    return await musicGetterService.getMusicQuery(API_ARTISTS_ALBUMS, {
-      channelUrl,
-      takeCount,
-    });
+  async getAlbums(channelUrl: string, takeCount?: number) {
+    let query: { [key: string]: string | number } = { channelUrl };
+    if (takeCount) query.takeCount = takeCount;
+    return await musicGetterService.getMusicQuery(API_ARTISTS_ALBUMS, query);
   }
 }
 

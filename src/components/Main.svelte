@@ -3,12 +3,6 @@
   import Content from "./Content.svelte";
   import FilterSelector from "./searcher/FilterSelector.svelte";
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
-  import PopUp from "./elements/Popup.svelte";
-  import Artist from "./Artist.svelte";
-  import Album from "./Album.svelte";
-  import { popupContentType, popupIsShown } from "$lib/stores";
-
-  $: document.body.classList.toggle("noscroll", $popupIsShown);
 
   function isInfinitelyScrollable(requestType: RequestType) {
     switch (requestType) {
@@ -88,16 +82,5 @@
       {requestType}
       infinitelyScrollable={isInfinitelyScrollable(requestType)}
     />
-    {#if $popupIsShown}
-      {#if $popupContentType === "artist"}
-        <PopUp>
-          <Artist />
-        </PopUp>
-      {:else if $popupContentType === "album"}
-        <PopUp mainButtonText="Download Album">
-          <Album />
-        </PopUp>
-      {/if}
-    {/if}
   </div>
 {/key}

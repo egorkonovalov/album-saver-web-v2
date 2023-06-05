@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Layout } from "../component.types";
-  export let layout: Layout;
+  // import type { Layout } from "../component.types";
+  // export let layout: Layout;
   export let _class = "";
   export let count: number;
 </script>
 
-<div class={`${layout} ${_class} placeholder`}>
+<div class={`${_class} placeholder`}>
   {#each Array(count) as _}
     <div class="entry">
       <div class="image" />

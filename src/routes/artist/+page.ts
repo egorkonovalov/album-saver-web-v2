@@ -1,22 +1,20 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 import artistsController from "$lib/modules/artists/artists.controller";
-import { tokens } from "$lib/stores";
 
 export const load = (async ({ url }) => {
   const artistId = url.searchParams.get("artist_id");
+  const artistName = url.searchParams.get("artist_name");
 
-  if (artistId) {
-    const tracks = await artistsController.getTracks(artistId, 5);
-    tokens.set({});
-    const albums = await artistsController.getAlbums(artistId, 5);
-    tokens.set({});
-    if (tracks && albums) {
-      return {
-        tracks,
-        albums,
-      };
-    }
+  if (artistId && artistName) {
+    return {
+      artistId,
+      artistName,
+      streamed: {
+        tracks: artistsController.getTracks(artistId, 9),
+        albums: artistsController.getAlbums(artistId, 6),
+      },
+    };
   }
 
   throw error(404, "Not found");

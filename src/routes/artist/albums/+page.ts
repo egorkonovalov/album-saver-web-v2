@@ -5,11 +5,10 @@ import { tokens } from "$lib/stores";
 
 export const load = (async ({ url }) => {
   const artistId = url.searchParams.get("artist_id");
-
   if (artistId) {
     return {
       streamed: {
-        tracks: artistsController.getTracks(artistId),
+        albums: artistsController.getAlbums(artistId),
       },
     };
   }

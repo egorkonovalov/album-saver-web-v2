@@ -58,7 +58,7 @@
 </script>
 
 {#if showPlaceholder}
-  <Placeholder count={4} {layout} />
+  <Placeholder count={4} _class={layout} />
 {:else if data.length}
   <div class={layout}>
     {#each data as record}
