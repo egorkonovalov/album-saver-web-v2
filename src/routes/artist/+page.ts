@@ -3,9 +3,8 @@ import type { PageLoad } from "./$types";
 import artistsController from "$lib/modules/artists/artists.controller";
 
 export const load = (async ({ url }) => {
-  const artistId = url.searchParams.get("artist_id");
-  const artistName = url.searchParams.get("artist_name");
-
+  const artistId = url.searchParams.get("artistId");
+  const artistName = url.searchParams.get("artistName");
   if (artistId && artistName) {
     return {
       artistId,

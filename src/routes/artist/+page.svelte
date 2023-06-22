@@ -8,13 +8,13 @@
   export let data: PageData;
 </script>
 
-<div class="dark:text-white">
+
   <div class="m-4">
     <h1 class="text-xl font-medium">{data.artistName}</h1>
   </div>
   <section>
     <a
-      href={`/artist/tracks?artist_id=${data.artistId}`}
+      href={`/artist/tracks?artistId=${data.artistId}`}
       class="text-xl px-4 btn btn--icon">Top Tracks{@html ChevronRight}</a
     >
     {#await data.streamed.tracks}
@@ -31,7 +31,7 @@
   </section>
   <section>
     <a
-      href={`/artist/albums?artist_id=${data.artistId}`}
+      href={`/artist/albums?artistId=${data.artistId}`}
       class="px-4 btn btn--icon">Albums{@html ChevronRight}</a
     >
     {#await data.streamed.albums}
@@ -46,4 +46,3 @@
       </ul>
     {/await}
   </section>
-</div>

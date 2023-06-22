@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 import albumsController from "$lib/modules/albums/albums.controller";
-import { album as AlbumStore, mainButtonText } from "$lib/stores";
+import { album as AlbumStore } from "$lib/stores";
 
 import { get } from "svelte/store";
 
@@ -16,7 +16,6 @@ export const load = (async ({ url, parent }) => {
   const { environment } = await parent();
   return {
     environment,
-    mainButtonText: get(mainButtonText),
     albumStore: get(AlbumStore),
     streamed: {
       tracks: albumsController.getAlbumTracks(albumUrl),

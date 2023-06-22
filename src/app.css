@@ -213,7 +213,7 @@
           @apply bg-[color:var(--tg-theme-secondary-bg-color)] rounded-md;
         }
         & .track {
-          @apply h-5 flex items-center text-sm gap-3 w-full;
+          @apply h-5 flex items-center text-sm gap-3 truncate w-full;
           &:before {
             @apply text-center h-full;
             counter-increment: track;

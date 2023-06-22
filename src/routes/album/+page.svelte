@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
   import Placeholder from "../../components/utils/Placeholder.svelte";
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import searchRequestController from "$lib/modules/musicsearch/searchrequest.controller";
   import { base } from "$app/paths";
 
@@ -32,13 +32,19 @@
     data.environment.close();
   }
 
-  // $: if (selected.length > 0) {
-  //   data.environment.setMainButtonText(`Download Tracks (${selected.length})`);
-  // } else {
-  //   data.environment.setMainButtonText(data.mainButtonText);
-  // }
+  $: if (selected.length > 0) {
+    data.environment.setMainButtonText(`Download Tracks (${selected.length})`);
+  } else {
+    data.environment.setMainButtonText("Download Album");
+  }
+
   onMount(() => {
+    data.environment.showMainButton("Download Album");
     data.environment.setMainButtonCallback(request);
+  });
+
+  onDestroy(() => {
+    data.environment.hideMainButton();
   });
 </script>
 

@@ -1,7 +1,10 @@
 import platformEnvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
 import type { LayoutLoad } from "./$types";
-export const prerender = false;
+export const ssr = false;
 
-export const load = (() => {
-  return { environment: platformEnvironmentService.getEnvironment() };
+export const load = (({ route }) => {
+  const environment = platformEnvironmentService.getEnvironment()
+  if (route.id === '/') environment.hideBackButton();
+  else environment.showBackButton()
+  return { environment };
 }) satisfies LayoutLoad;

@@ -4,7 +4,7 @@ import artistsController from "$lib/modules/artists/artists.controller";
 import { tokens } from "$lib/stores";
 
 export const load = (async ({ url }) => {
-  const artistId = url.searchParams.get("artist_id");
+  const artistId = url.searchParams.get("artistId");
 
   if (artistId) {
     return {
