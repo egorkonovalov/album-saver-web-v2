@@ -5,10 +5,10 @@ export interface PlatformEnvironment {
   close(): void;
   showBackButton(): void;
   hideBackButton(): void;
-  onBackButtonClick(callback: Function): void;
+  onBackButtonClick(callback: () => void): void;
   showMainButton(text: string): void;
   hideMainButton(): void;
   setMainButtonText(text: string): void;
-  setMainButtonCallback(callback: Function): void;
+  setMainButtonCallback(callback: () => void): void;
   envokeHaptic(style: "light" | "medium" | "heavy" | "rigid" | "soft"): void
 }

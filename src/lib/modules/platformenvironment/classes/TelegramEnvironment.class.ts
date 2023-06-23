@@ -37,7 +37,7 @@ export class TelegramEnvironment implements PlatformEnvironment {
     this._backButton.hide();
   }
 
-  onBackButtonClick(callback: Function): void {
+  onBackButtonClick(callback: () => void): void {
     this._backButton.onClick(callback);
   }
 
@@ -62,7 +62,7 @@ export class TelegramEnvironment implements PlatformEnvironment {
     this._webApp.MainButton.setText(text);
   }
 
-  setMainButtonCallback(callback: Function): void {
+  setMainButtonCallback(callback: () => void): void {
     this._webApp.MainButton.onClick(callback);
   }
 

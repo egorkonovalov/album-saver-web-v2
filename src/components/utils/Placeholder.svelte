@@ -1,6 +1,4 @@
 <script lang="ts">
-  // import type { Layout } from "../component.types";
-  // export let layout: Layout;
   export let _class = "";
   export let count: number;
 </script>

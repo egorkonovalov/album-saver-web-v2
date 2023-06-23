@@ -13,9 +13,9 @@ function getParams(url: URL, key: string) {
 
 export const load = (async ({ url, parent }) => {
   const albumUrl = getParams(url, "albumUrl");
-  const { environment } = await parent();
+  const { environmentStore } = await parent()
   return {
-    environment,
+    environmentStore,
     albumStore: get(AlbumStore),
     streamed: {
       tracks: albumsController.getAlbumTracks(albumUrl),

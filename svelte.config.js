@@ -14,6 +14,10 @@ const config = {
 			base: dev ? '' : '/album-saver-web-v2',
 		},
 		appDir: 'internal',
+		alias: {
+			// this will match a file
+			'$components': './src/components',
+		}
 	}
 };
 

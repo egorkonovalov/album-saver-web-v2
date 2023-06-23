@@ -1,7 +1,7 @@
 <script lang="ts">
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
-  import RecordCard from "../../../components/elements/RecordCard.svelte";
-  import Placeholder from "../../../components/utils/Placeholder.svelte";
+  import RecordCard from "$components/elements/RecordCard.svelte";
+  import Placeholder from "$components/utils/Placeholder.svelte";
   import type { PageData } from "./$types";
 
   export let data: PageData;

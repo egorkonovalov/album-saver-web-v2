@@ -1,12 +1,13 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import Placeholder from "../../components/utils/Placeholder.svelte";
+  import Placeholder from "$components/utils/Placeholder.svelte";
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import { onDestroy, onMount } from "svelte";
   import searchRequestController from "$lib/modules/musicsearch/searchrequest.controller";
   import { base } from "$app/paths";
 
   export let data: PageData;
+
   let selected: string[] = [];
 
   function addOrRemove(url: string) {
@@ -16,7 +17,7 @@
       selected.splice(selected.indexOf(url), 1);
       selected = selected;
     }
-    data.environment.envokeHaptic("light");
+    data.environmentStore.envokeHaptic("light");
   }
 
   async function request() {
@@ -28,23 +29,25 @@
         RequestType.Album
       );
     }
-    data.environment.envokeHaptic("heavy");
-    data.environment.close();
+    data.environmentStore.envokeHaptic("heavy");
+    data.environmentStore.close();
   }
 
   $: if (selected.length > 0) {
-    data.environment.setMainButtonText(`Download Tracks (${selected.length})`);
+    data.environmentStore.setMainButtonText(
+      `Download Tracks (${selected.length})`
+    );
   } else {
-    data.environment.setMainButtonText("Download Album");
+    data.environmentStore.setMainButtonText("Download Album");
   }
 
   onMount(() => {
-    data.environment.showMainButton("Download Album");
-    data.environment.setMainButtonCallback(request);
+    data.environmentStore.showMainButton("Download Album");
+    data.environmentStore.setMainButtonCallback(request);
   });
 
   onDestroy(() => {
-    data.environment.hideMainButton();
+    data.environmentStore.hideMainButton();
   });
 </script>
 
@@ -57,11 +60,10 @@
     <p>{data.albumStore.author}</p>
   </div>
   {#await data.streamed.tracks}
-    <Placeholder count={8} _class="album-entry mt-0" />
+    <Placeholder count={8} _class="album-entry track-list mt-0" />
   {:then tracks}
     <ul class="track-list">
       {#each tracks as record}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <li>
           <button
             class="track"

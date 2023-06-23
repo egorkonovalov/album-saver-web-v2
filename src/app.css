@@ -3,12 +3,19 @@
 @tailwind utilities;
 
 @layer base {
+
+  :root {
+    --record-cover-side-lg: 10.5rem;
+    --record-cover-side-md: 8rem;
+    --record-cover-side-sm: 3.5rem;
+  }
+
   input[type="search"]::-webkit-search-cancel-button {
     display: none;
   }
 
   body {
-    @apply w-full h-full bg-[color:var(--tg-theme-bg-color)];
+    @apply w-full h-full bg-[color:var(--tg-theme-bg-color)] text-[var(--tg-theme-text-color)];
   }
   input:focus {
     @apply outline-none;
@@ -36,10 +43,7 @@
 
   .album-grid {
     & .cover {
-      @apply w-[10.5rem] h-[10.5rem] rounded-lg bg-cover;
-    }
-    & p {
-      @apply truncate dark:text-white;
+      @apply w-[var(--record-cover-side-lg)] h-[var(--record-cover-side-lg)] rounded-lg bg-cover;
     }
   }
 
@@ -69,11 +73,11 @@
   }
 
   .track-list .cover {
-    @apply rounded-sm w-14 h-14 bg-cover;
+    @apply rounded-sm w-[var(--record-cover-side-sm)] h-[var(--record-cover-side-sm)] bg-cover;
   }
 
   .artist-list .cover {
-    @apply rounded-full w-14 h-14;
+    @apply rounded-full w-[var(--record-cover-side-sm)] h-[var(--record-cover-side-sm)];
   }
 
   .cover {
@@ -98,13 +102,13 @@
       }
     }
   }
-  .albums-conveyer {
-    @apply grid grid-flow-col gap-3 p-4 overflow-auto;
+  .album-grid.conveyer {
+    @apply grid-flow-col grid-cols-none gap-3 p-4 overflow-auto;
     &::-webkit-scrollbar {
       display: none;
     }
     & .cover {
-      @apply w-32 h-32 rounded-md object-cover;
+      @apply w-[var(--record-cover-side-md)] h-[var(--record-cover-side-md)] rounded-md object-cover;
       background-size: 128px;
     }
     & .record {
@@ -140,6 +144,14 @@
       }
       & .image {
         @apply w-full h-full;
+      }
+      &.conveyer {
+        @apply grid-cols-none;
+        & .entry {
+          & .image {
+            @apply h-32 w-32;
+          }
+        }
       }
     }
     &.track-list {
@@ -177,8 +189,11 @@
       }
       & .entry {
         @apply p-2;
+        & .text-container {
+          @apply w-full;
+        }
         & p {
-          @apply h-2;
+          @apply w-full h-5;
         }
       }
     }
@@ -194,7 +209,7 @@
   }
 
   .album-entry {
-    @apply dark:text-white flex flex-col;
+    @apply flex flex-col;
     & .headings {
       @apply m-4 grid text-center;
       & .title {
@@ -260,10 +275,9 @@
     @apply text-[12px];
   }
   .record__name {
-    @apply font-semibold leading-tight;
+    @apply font-semibold leading-tight line-clamp-2;
   }
-
   .record__artist {
-    @apply font-light;
+    @apply dark:text-stone-400;
   }
 }

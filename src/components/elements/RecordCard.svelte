@@ -8,6 +8,7 @@
     Environment as EnvironmentStore,
   } from "$lib/stores";
   import { get } from "svelte/store";
+  import { onDestroy } from "svelte";
 
   const environment = get(EnvironmentStore);
   export let requestType: RequestType;
@@ -31,9 +32,12 @@
         goto(`/album?albumUrl=${record.youTubeMusicPlaylistUrl}`);
         break;
       case RequestType.Track:
+      case RequestType.ArtistTracks:
         request();
     }
   }
+
+  onDestroy(() => albumStore.update(() => ({} as Record)));
 </script>
 
 <a href="/" on:click|preventDefault={handleClick} class={_class + " record"}>

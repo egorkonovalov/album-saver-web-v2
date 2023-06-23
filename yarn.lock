@@ -269,15 +269,20 @@
   resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.5.1.tgz#b29aa1f91a59f35e29ff8f7cb24faf1a3a750554"
   integrity sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==
 
-"@types/node@^20.2.5":
-  version "20.2.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.2.5.tgz#26d295f3570323b2837d322180dfbf1ba156fefb"
-  integrity sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==
+"@types/node@^20.3.1":
+  version "20.3.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.1.tgz#e8a83f1aa8b649377bb1fb5d7bac5cb90e784dfe"
+  integrity sha512-EhcH/wvidPy1WeML3TtYFGR83UzjxeWRen9V402T8aUGYsCHOmfoisV3ZSg03gAFIbLq8TnWOJ0f4cALtnSEUg==
 
 "@types/pug@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@types/pug/-/pug-2.0.6.tgz#f830323c88172e66826d0bde413498b61054b5a6"
   integrity sha512-SnHmG9wN1UVmagJOnyo/qkk0Z7gejYxOYYmaAwr5u2yFYfsupN3sg10kyzN8Hep/2zbHxCnsumxOoRIRMBwKCg==
+
+"@types/telegram-web-app@^6.7.0":
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/@types/telegram-web-app/-/telegram-web-app-6.7.0.tgz#85cd0b0de24eab53f8d47c19214a80aa45980e30"
+  integrity sha512-ill31jBCQW6bo4k0GjsUVNKP0MY336p7ZUxmMi+WofAbO7Reb366jsnqNIrqNtxcIB4kKEpMUHVniArcXSML6g==
 
 "@vitejs/plugin-basic-ssl@^1.0.1":
   version "1.0.1"
@@ -1173,11 +1178,6 @@ tailwindcss@^3.3.2:
     postcss-value-parser "^4.2.0"
     resolve "^1.22.2"
     sucrase "^3.32.0"
-
-telegram-webapps-types@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/telegram-webapps-types/-/telegram-webapps-types-1.0.5.tgz#35eee9b690cc8a8127b4d68ec6e8b2b40b33847b"
-  integrity sha512-QLBBjEgdGdJZmnSshq2jVUrqwolRBiM7e0YPsUpHOFxA2W9nkUYI5yBFd3vGyCqFlNoJw8S6k2Q7lxVffzUwlw==
 
 thenify-all@^1.0.0:
   version "1.6.0"
