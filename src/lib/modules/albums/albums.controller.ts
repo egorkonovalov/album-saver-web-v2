@@ -4,8 +4,8 @@ class AlbumsController {
   async getAlbums(query: string) {
     return await albumsService.getAlbums(query);
   }
-  async getAlbumTracks(albumUrl: string) {
-    return await albumsService.getAlbumTracks(albumUrl);
+  async getAlbum(albumUrl: string) {
+    return await albumsService.getAlbum(albumUrl);
   }
 }
 

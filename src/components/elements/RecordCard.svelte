@@ -41,7 +41,7 @@
 </script>
 
 <a href="/" on:click|preventDefault={handleClick} class={_class + " record"}>
-  <div class="cover" style={`background-image: url(${record.imageUrl})`} />
+  <div class="cover" style="background-image: url({record.imageUrl})" />
   <div class="record__title-container">
     <p class="record__name">{record.title}</p>
     {#if requestType !== RequestType.Artist}

@@ -8,9 +8,11 @@
   export let data: PageData;
 </script>
 
-<div class="m-4">
-  <h1 class="text-xl font-medium">{data.artistName}</h1>
-</div>
+{#await data.streamed.artistImage then value}
+  <div class="artist-header" style="background-image: url({value})">
+    <h1 class="name">{data.artistName}</h1>
+  </div>
+{/await}
 <section>
   <a
     href={`/artist/tracks?artistId=${data.artistId}`}

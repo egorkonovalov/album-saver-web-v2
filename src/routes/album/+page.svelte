@@ -43,7 +43,7 @@
 
   onMount(() => {
     data.environmentStore.showMainButton("Download Album");
-    data.environmentStore.setMainButtonCallback(request);
+    data.environmentStore.onMainButtonClick(request);
   });
 
   onDestroy(() => {
@@ -52,18 +52,23 @@
 </script>
 
 <div class="album-entry">
-  <img class="artwork" src={data.albumStore.imageUrl} alt="cover" />
-  <div class="headings">
-    <h3 class="title">
-      {data.albumStore.title}
-    </h3>
-    <p>{data.albumStore.author}</p>
-  </div>
-  {#await data.streamed.tracks}
+  {#await data.streamed.album then value}
+    <img class="artwork" src={value.albumImage} alt="cover" />
+    <div class="headings">
+      <h3 class="title">
+        {value.albumTitle}
+      </h3>
+      <a
+        href="/artist?artistId={value.channelUrl}&artistName={value.artistName}"
+        >{value.artistName}</a
+      >
+    </div>
+  {/await}
+  {#await data.streamed.album}
     <Placeholder count={8} _class="album-entry track-list mt-0" />
-  {:then tracks}
+  {:then value}
     <ul class="track-list">
-      {#each tracks as record}
+      {#each value.result as record}
         <li>
           <button
             class="track"

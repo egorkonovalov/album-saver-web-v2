@@ -76,7 +76,7 @@
 </div>
 
 {#key keyObject}
-  <div class="content" style={`margin-top: ${h}px`}>
+  <div class="content" style="margin-top: {h}px">
     <Content
       query={searchQuery}
       {requestType}

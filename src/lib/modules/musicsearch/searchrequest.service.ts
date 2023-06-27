@@ -33,6 +33,13 @@ class MusicGetterService {
     return response.data.result;
   }
 
+  async getData<T, U>(url: string, query: T): Promise<U> {
+    const tokensToSend = get(tokens);
+    const response = await createRequest().get(url, { params: { ...query, ...tokensToSend } })
+    this.setTokens(response.data);
+    return response.data
+  }
+
   async requestMusicEntry(requestQuery: MusicEntryRequest): Promise<void> {
     await createRequest().post(
       "/download",

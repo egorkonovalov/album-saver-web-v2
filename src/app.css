@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   :root {
     --record-cover-side-lg: 10.5rem;
     --record-cover-side-md: 8rem;
@@ -82,6 +81,20 @@
 
   .cover {
     background-position: center center;
+  }
+
+  .artist-header {
+    @apply flex mb-4;
+    min-height: 10rem;
+    background-position: top;
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-size: cover;
+    & .name {
+      @apply m-4 text-xl font-medium self-end;
+      filter: invert(1);
+      mix-blend-mode: difference;
+    }
   }
 
   .artist {

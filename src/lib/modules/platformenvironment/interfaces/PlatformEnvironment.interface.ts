@@ -9,6 +9,6 @@ export interface PlatformEnvironment {
   showMainButton(text: string): void;
   hideMainButton(): void;
   setMainButtonText(text: string): void;
-  setMainButtonCallback(callback: () => void): void;
+  onMainButtonClick(callback: () => void): void;
   envokeHaptic(style: "light" | "medium" | "heavy" | "rigid" | "soft"): void
 }

@@ -12,6 +12,7 @@ export const load = (async ({ url }) => {
       streamed: {
         tracks: artistsController.getTracks(artistId, 9),
         albums: artistsController.getAlbums(artistId, 6),
+        artistImage: artistsController.getImage(artistId)
       },
     };
   }

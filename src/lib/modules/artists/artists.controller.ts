@@ -10,6 +10,9 @@ class ArtistsController {
   async getAlbums(channelUrl: string, takeCount?: number) {
     return await artistsService.getAlbums(channelUrl, takeCount);
   }
+  async getImage(channelUrl: string) {
+    return await artistsService.getImage(channelUrl)
+  }
 }
 
 export default new ArtistsController();

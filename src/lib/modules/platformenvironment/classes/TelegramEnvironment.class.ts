@@ -62,7 +62,7 @@ export class TelegramEnvironment implements PlatformEnvironment {
     this._webApp.MainButton.setText(text);
   }
 
-  setMainButtonCallback(callback: () => void): void {
+  onMainButtonClick(callback: () => void): void {
     this._webApp.MainButton.onClick(callback);
   }
 

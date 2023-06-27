@@ -18,7 +18,7 @@
   on:click|preventDefault={handleClick}
   class={_class + " record"}
 >
-  <div class="cover" style={`background-image: url(${album.imageUrl})`} />
+  <div class="cover" style="background-image: url({album.imageUrl})" />
   <div class="record__title-container">
     <p class="record__name">{album.title}</p>
     <p class="record__artist">

@@ -46,7 +46,7 @@
         on:click={() => (value = "")}
         type="reset"
         value=""
-        style={`background: url(${base}/close.svg)`}
+        style="background: url({base}/close.svg)"
         class="w-4 h-4"
       />
     {/if}

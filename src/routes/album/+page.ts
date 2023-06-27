@@ -18,7 +18,7 @@ export const load = (async ({ url, parent }) => {
     environmentStore,
     albumStore: get(AlbumStore),
     streamed: {
-      tracks: albumsController.getAlbumTracks(albumUrl),
+      album: albumsController.getAlbum(albumUrl),
     },
   };
 }) satisfies PageLoad;
