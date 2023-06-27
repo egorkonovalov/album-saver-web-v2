@@ -6,7 +6,7 @@ export const API_RELEASES = "/releases";
 export const API_DOWNLOAD = "/download";
 export const API_DOWNLOADSET = "/download-set";
 
-export const API_ALBUM_TRACKS = "/album/tracks";
+export const API_ALBUM = "/album/tracks";
 
 export const API_ARTISTS = "/artists";
 export const API_ARTISTS_TRACKS = "/artist/tracks";

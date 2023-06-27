@@ -1,5 +1,4 @@
 <script lang="ts">
-  import searchRequestController from "$lib/modules/musicsearch/searchrequest.controller";
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import RecordCard from "./elements/RecordCard.svelte";
@@ -7,7 +6,6 @@
   import Placeholder from "./utils/Placeholder.svelte";
   import LoadinWheel from "./utils/LoadinWheel.svelte";
   import { onMount } from "svelte";
-  import { tokens } from "$lib/stores";
   import { getLayoutType } from "./utils/Utils";
   import Banner from "./elements/Banner.svelte";
   import ArtistCard from "./elements/ArtistCard.svelte";
@@ -15,6 +13,8 @@
   import albumsController from "$lib/modules/albums/albums.controller";
   import tracksController from "$lib/modules/tracks/tracks.controller";
   import releasesController from "$lib/modules/releases/releases.controller";
+  import tokensController from "$lib/modules/tokens/tokens.controller";
+  import { TOKEN_NAMES } from "$lib/constants";
 
   export let query: string;
   export let requestType: RequestType;
@@ -50,10 +50,12 @@
   }
 
   onMount(async () => {
-    showPlaceholder = true;
-    tokens.set({});
-    newBatch = await fetchData();
-    showPlaceholder = false;
+    tokensController.clearTokens(TOKEN_NAMES);
+    if (requestType === RequestType.Release || queryCopy !== "") {
+      showPlaceholder = true;
+      if (requestType === RequestType.Release) newBatch = await fetchData();
+      showPlaceholder = false;
+    }
   });
 </script>
 

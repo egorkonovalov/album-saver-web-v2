@@ -1,23 +1,13 @@
-import { API_ALBUMS, API_ALBUM_TRACKS } from "$lib/api";
-import musicGetterService from "../musicsearch/searchrequest.service";
-import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface"
-
-type Album = {
-  result: Record[]
-  albumTitle: string
-  albumImage: string
-  channelUrl: string
-  artistName: string
-}
+import { API_ALBUMS, API_ALBUM } from "$lib/api";
+import { get } from "$lib/modules/httprequest/httprequest.service";
+import type { Album, Albums } from "./albums.type";
 
 class AlbumsService {
   async getAlbums(query: string) {
-    return await musicGetterService.getMusicQuery(API_ALBUMS, { query });
+    return (await get<Albums>(API_ALBUMS, { params: { query } })).result;
   }
   async getAlbum(albumUrl: string) {
-    return await musicGetterService.getData<{ albumUrl: string }, Album>(API_ALBUM_TRACKS, {
-      albumUrl,
-    });
+    return await get<Album>(API_ALBUM, { params: { albumUrl } })
   }
 }
 

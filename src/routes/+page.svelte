@@ -1,18 +1,81 @@
 <script lang="ts">
-  import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
-  import Main from "$components/Main.svelte";
-  import { isDev } from "$lib/utils/IsDev";
-  import type { PageData } from "./$types";
-  export let data: PageData;
+  import Searchbar from "$components/searcher/Searchbar.svelte";
+  import FilterSelector from "$components/searcher/FilterSelector.svelte";
+  import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
+  import Releases from "$components/Releases.svelte";
+  import Albums from "$components/Albums.svelte";
+  import Tracks from "$components/Tracks.svelte";
+  import Artists from "$components/Artists.svelte";
+
+  function changeRequestType(type: RequestType) {
+    requestType = type;
+  }
+
+  function handleInputFocusChange(focus: boolean) {
+    if (focus) {
+      requestType === RequestType.Release
+        ? changeRequestType(RequestType.Album)
+        : null;
+    } else {
+      searchQuery === undefined || ""
+        ? requestType === RequestType.Release
+        : null;
+    }
+  }
+  function handleInputValueChange(inputValue: string) {
+    inputQuery = inputValue;
+    if (!inputQuery) {
+      searchQuery = "";
+      requestType = RequestType.Release;
+    } else if (requestType === RequestType.Release) {
+      requestType = RequestType.Album;
+    }
+  }
+
+  let h;
+  let inputQuery = "";
+  let searchQuery = "";
+  let requestType = RequestType.Release;
+  let keyObject = {
+    searchQuery: searchQuery,
+    requestType: RequestType.Release,
+  };
+
+  $: {
+    keyObject.searchQuery = searchQuery;
+    keyObject.requestType = requestType;
+    keyObject = keyObject;
+  }
 </script>
 
-{#if data.environmentStore instanceof TelegramEnvironment || isDev()}
-  <Main />
-{:else}
-  <p class="w-full text-center p-10 font-semibold leading-loose">
-    You can use this website only with a<br /><a
-      class="text-blue-700 underline"
-      href={import.meta.env.VITE_API_TG_URL}>Telegram bot</a
-    >
-  </p>
-{/if}
+<div class="top-bar" bind:clientHeight={h}>
+  <div class="flex">
+    <Searchbar
+      on:search={(event) => (searchQuery = event.detail.value)}
+      on:inputQueryChange={(event) =>
+        handleInputValueChange(event.detail.value)}
+      on:inputFocuseChange={(event) =>
+        handleInputFocusChange(event.detail.value)}
+    />
+  </div>
+  <FilterSelector
+    on:changeRequestType={(event) => changeRequestType(event.detail.value)}
+    {requestType}
+  />
+</div>
+
+{#key keyObject}
+  <div class="content" style="margin-top: {h}px">
+    {#if keyObject.searchQuery !== ""}
+      {#if keyObject.requestType === RequestType.Album}
+        <Albums query={keyObject.searchQuery} />
+      {:else if keyObject.requestType === RequestType.Track}
+        <Tracks query={keyObject.searchQuery} />
+      {:else if keyObject.requestType === RequestType.Artist}
+        <Artists query={keyObject.searchQuery} />
+      {/if}
+    {:else if keyObject.requestType === RequestType.Release}
+      <Releases />
+    {/if}
+  </div>
+{/key}

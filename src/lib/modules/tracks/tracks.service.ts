@@ -1,9 +1,10 @@
 import { API_TRACKS } from "$lib/api";
-import musicGetterService from "../musicsearch/searchrequest.service";
+import { get } from "$lib/modules/httprequest/httprequest.service";
+import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
 
 class TracksService {
   async getTracks(query: string) {
-    return await musicGetterService.getMusicQuery(API_TRACKS, { query });
+    return (await get<{ result: Record[] }>(API_TRACKS, { params: { query } })).result;
   }
 }
 

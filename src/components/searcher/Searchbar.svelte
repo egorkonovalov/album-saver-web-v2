@@ -2,27 +2,21 @@
   import { base } from "$app/paths";
   import { createEventDispatcher } from "svelte";
 
-  const dispatch = createEventDispatcher();
-  let value: string;
-
   function searchRecord() {
     input.blur();
-    dispatch("search", {
-      value: value,
-    });
+    dispatch("search", { value });
   }
 
+  const dispatch = createEventDispatcher();
+  let value: string;
   let input: HTMLElement;
   let inFocuse = false;
+
   $: {
-    dispatch("inputQueryChange", {
-      value: value,
-    });
+    dispatch("inputQueryChange", { value });
   }
   $: {
-    dispatch("inputFocuseChange", {
-      value: inFocuse,
-    });
+    dispatch("inputFocuseChange", { value: inFocuse });
   }
 </script>
 
