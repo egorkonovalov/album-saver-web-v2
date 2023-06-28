@@ -9,15 +9,15 @@ class ArtistsService {
   async getTracks(channelUrl: string, takeCount?: number) {
     let query: { [key: string]: string } = { channelUrl };
     if (takeCount) query.takeCount = takeCount.toString();
-    return await get<ArtistRecords>(API_ARTISTS_TRACKS, query);
+    return (await get<ArtistRecords>(API_ARTISTS_TRACKS, { params: query })).result;
   }
   async getAlbums(channelUrl: string, takeCount?: number) {
     let query: { [key: string]: string } = { channelUrl };
     if (takeCount) query.takeCount = takeCount.toString();
-    return await get<ArtistRecords>(API_ARTISTS_ALBUMS, { params: { ...query, continuation: 'true' } });
+    return (await get<ArtistRecords>(API_ARTISTS_ALBUMS, { params: query })).result;
   }
   async getImage(channelUrl: string) {
-    return await get<string>(API_ARTISTS_IMAGE, { params: { channelUrl } })
+    return (await get<{ url: string }>(API_ARTISTS_IMAGE, { params: { channelUrl } })).url
   }
 }
 

@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import Placeholder from "$components/utils/Placeholder.svelte";
-  import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import { onDestroy, onMount } from "svelte";
-  import searchRequestController from "$lib/modules/musicsearch/searchrequest.controller";
   import { base } from "$app/paths";
+  import AlbumPlaceholder from "$components/utils/AlbumPlaceholder.svelte";
+  import downloaderController from "$lib/modules/downloader/downloader.controller";
 
   export let data: PageData;
 
@@ -20,14 +20,11 @@
     data.environmentStore.envokeHaptic("light");
   }
 
-  async function request() {
+  async function download(url?: string) {
     if (selected.length > 0) {
-      await searchRequestController.requestSet(selected);
-    } else {
-      await searchRequestController.requestRecord(
-        data.albumStore.youTubeMusicPlaylistUrl,
-        RequestType.Album
-      );
+      await downloaderController.downloadSet(selected);
+    } else if (url) {
+      await downloaderController.download(url, 1);
     }
     data.environmentStore.envokeHaptic("heavy");
     data.environmentStore.close();
@@ -37,13 +34,15 @@
     data.environmentStore.setMainButtonText(
       `Download Tracks (${selected.length})`
     );
+    data.environmentStore.onMainButtonClick(() => download());
   } else {
     data.environmentStore.setMainButtonText("Download Album");
+    data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
   }
 
-  onMount(() => {
+  onMount(async () => {
     data.environmentStore.showMainButton("Download Album");
-    data.environmentStore.onMainButtonClick(request);
+    data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
   });
 
   onDestroy(() => {
@@ -52,16 +51,19 @@
 </script>
 
 <div class="album-entry">
-  {#await data.streamed.album then value}
+  {#await data.streamed.album}
+    <AlbumPlaceholder />
+  {:then value}
     <img class="artwork" src={value.albumImage} alt="cover" />
     <div class="headings">
       <h3 class="title">
         {value.albumTitle}
       </h3>
-      <a
+      <!-- <a
         href="/artist?artistId={value.channelUrl}&artistName={value.artistName}"
         >{value.artistName}</a
-      >
+      > -->
+      <p>{value.artistName}</p>
     </div>
   {/await}
   {#await data.streamed.album}

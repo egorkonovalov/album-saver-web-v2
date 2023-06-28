@@ -5,10 +5,19 @@
   import Placeholder from "$components/utils/Placeholder.svelte";
   import type { PageData } from "./$types";
   import AlbumCard from "$components/elements/AlbumCard.svelte";
+  import downloaderController from "$lib/modules/downloader/downloader.controller";
   export let data: PageData;
+
+  async function download(url: string) {
+    await downloaderController.download(url, 2);
+    data.environmentStore.envokeHaptic("heavy");
+    data.environmentStore.close();
+  }
 </script>
 
-{#await data.streamed.artistImage then value}
+{#await data.streamed.artistImage}
+  <div class="h-[10rem] animate-pulse bg-stone-200 w-full mb-4" />
+{:then value}
   <div class="artist-header" style="background-image: url({value})">
     <h1 class="name">{data.artistName}</h1>
   </div>
@@ -23,8 +32,14 @@
   {:then value}
     <ul class="artist track-list conveyer">
       {#each value as record}
-        <li>
-          <RecordCard requestType={RequestType.ArtistTracks} {record} />
+        <li class="record">
+          <a
+            href="/"
+            on:click|preventDefault={() =>
+              download(record.youTubeMusicPlaylistUrl)}
+          >
+            <RecordCard requestType={RequestType.ArtistTracks} {record} />
+          </a>
         </li>
       {/each}
     </ul>
@@ -38,12 +53,14 @@
   {#await data.streamed.albums}
     <Placeholder count={6} _class={"album-grid conveyer"} />
   {:then value}
-    <ul class="album-grid conveyer">
-      {#each value as album}
-        <li>
-          <AlbumCard {album} />
-        </li>
-      {/each}
-    </ul>
+    {#if value.length}
+      <ul class="album-grid conveyer">
+        {#each value as album}
+          <li>
+            <AlbumCard {album} />
+          </li>
+        {/each}
+      </ul>
+    {/if}
   {/await}
 </section>

@@ -13,7 +13,12 @@
   <ul class="album-grid">
     {#each value as record}
       <li>
-        <RecordCard requestType={RequestType.AlbumTracks} {record} />
+        <a
+          href="/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
+          class="record"
+        >
+          <RecordCard requestType={RequestType.AlbumTracks} {record} />
+        </a>
       </li>
     {/each}
   </ul>

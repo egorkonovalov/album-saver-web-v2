@@ -6,6 +6,12 @@
   import Albums from "$components/Albums.svelte";
   import Tracks from "$components/Tracks.svelte";
   import Artists from "$components/Artists.svelte";
+  import tokensController from "$lib/modules/tokens/tokens.controller";
+  import { TOKEN_NAMES } from "$lib/constants";
+  import { onDestroy } from "svelte";
+  import type { PageData } from "./$types";
+
+  export let data: PageData;
 
   function changeRequestType(type: RequestType) {
     requestType = type;
@@ -42,10 +48,12 @@
   };
 
   $: {
+    tokensController.clearTokens(TOKEN_NAMES);
     keyObject.searchQuery = searchQuery;
     keyObject.requestType = requestType;
     keyObject = keyObject;
   }
+  onDestroy(() => tokensController.clearTokens(TOKEN_NAMES));
 </script>
 
 <div class="top-bar" bind:clientHeight={h}>
@@ -70,7 +78,10 @@
       {#if keyObject.requestType === RequestType.Album}
         <Albums query={keyObject.searchQuery} />
       {:else if keyObject.requestType === RequestType.Track}
-        <Tracks query={keyObject.searchQuery} />
+        <Tracks
+          query={keyObject.searchQuery}
+          environment={data.environmentStore}
+        />
       {:else if keyObject.requestType === RequestType.Artist}
         <Artists query={keyObject.searchQuery} />
       {/if}

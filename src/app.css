@@ -100,13 +100,15 @@
   .artist {
     scrollbar-width: none; /* Firefox */
     &.track-list {
+      & .record {
+        @apply flex items-center gap-2;
+      }
       &.conveyer {
         @apply grid grid-flow-col grid-rows-3 overflow-auto;
         &::-webkit-scrollbar {
           display: none;
         }
-        & li {
-          @apply w-screen;
+        & .record {
           width: calc(100vw - 4rem);
         }
       }
