@@ -3,6 +3,7 @@ import type { LayoutLoad } from "./$types";
 import { Environment } from "$lib/stores";
 import { get } from "svelte/store";
 export const ssr = false;
+export const prerender = true
 
 export const load = (({ route }) => {
   Environment.set(platformEnvironmentService.getEnvironment())
