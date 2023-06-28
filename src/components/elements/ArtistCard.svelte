@@ -5,7 +5,7 @@
 </script>
 
 <a
-  href="${base}/artist?artistId=${artist.youTubeMusicUrl}&artistName=${artist.title}""
+  href="${base}/artist?artistId=${artist.youTubeMusicUrl}&artistName=${artist.title}"
 >
   <img src={artist.imageUrl} alt={artist.title} class="cover" />
   <div class="text-[12px]">
