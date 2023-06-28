@@ -79,7 +79,7 @@
             <p>{record.title}</p>
           </button>
           {#if selected.includes(record.youTubeMusicPlaylistUrl)}
-            <img src={`${base}/check-circle.svg`} alt="check" class="h-5 w-5" />
+            <img src="{base}/check-circle.svg" alt="check" class="h-5 w-5" />
           {/if}
         </li>
       {/each}

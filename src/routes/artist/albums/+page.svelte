@@ -15,7 +15,7 @@
     {#each value as record}
       <li>
         <a
-          href="${base}/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
+          href="{base}/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
           class="record"
         >
           <RecordCard requestType={RequestType.AlbumTracks} {record} />

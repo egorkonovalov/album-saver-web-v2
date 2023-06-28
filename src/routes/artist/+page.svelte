@@ -26,7 +26,7 @@
 {/await}
 <section>
   <a
-    href="${base}/artist/tracks?artistId=${data.artistId}"
+    href="{base}/artist/tracks?artistId=${data.artistId}"
     class="text-xl px-4 btn btn--icon">Top Tracks{@html ChevronRight}</a
   >
   {#await data.streamed.tracks}
@@ -49,7 +49,7 @@
 </section>
 <section>
   <a
-    href="${base}/artist/albums?artistId=${data.artistId}"
+    href="{base}/artist/albums?artistId=${data.artistId}"
     class="px-4 btn btn--icon">Albums{@html ChevronRight}</a
   >
   {#await data.streamed.albums}
