@@ -189,7 +189,7 @@
     if (eventHandlers[eventType] === undefined) {
       return;
     }
-    var index = eventHandlers[eventType].indexOf(callback);
+    var index = eventHandlers[eventType].findIndex(x => x.name === callback.name);
     if (index === -1) {
       return;
     }

@@ -46,6 +46,7 @@
   });
 
   onDestroy(() => {
+    data.environmentStore.offMainButtonClick(() => download(data.albumUrl));
     data.environmentStore.hideMainButton();
   });
 </script>

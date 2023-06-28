@@ -65,6 +65,9 @@ export class TelegramEnvironment implements PlatformEnvironment {
   onMainButtonClick(callback: () => void): void {
     this._webApp.MainButton.onClick(callback);
   }
+  offMainButtonClick(callback: () => void): void {
+    this._webApp.MainButton.offClick(callback)
+  }
 
   hideMainButton(): void {
     this._webApp.MainButton.hide();
