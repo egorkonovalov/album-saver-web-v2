@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="../telegram-web-app.js"></script>
+    <meta charset="utf-8" />
+    <link rel="icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    
+		<link rel="modulepreload" href="../internal/immutable/entry/start.13d6308a.js">
+		<link rel="modulepreload" href="../internal/immutable/chunks/scheduler.fb79c3ec.js">
+		<link rel="modulepreload" href="../internal/immutable/chunks/singletons.511c3aa2.js">
+		<link rel="modulepreload" href="../internal/immutable/chunks/index.f6f3ae47.js">
+		<link rel="modulepreload" href="../internal/immutable/chunks/paths.2beb0206.js">
+		<link rel="modulepreload" href="../internal/immutable/chunks/control.f5b05b5f.js">
+		<link rel="modulepreload" href="../internal/immutable/entry/app.f4c33ad1.js">
+		<link rel="modulepreload" href="../internal/immutable/chunks/index.bb4217d0.js">
+  </head>
+  <body>
+    <div>
+			<script>
+				{
+					__sveltekit_1iwsj07 = {
+						assets: "/album-saver-web-v2",
+						base: new URL("..", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../internal/immutable/entry/start.13d6308a.js"),
+						import("../internal/immutable/entry/app.f4c33ad1.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+  </body>
+</html>
