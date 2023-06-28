@@ -2,10 +2,11 @@
   import { goto } from "$app/navigation";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import { album as albumStore } from "$lib/stores";
+  import { base } from "$app/paths";
 
   export let album: Record;
   export let _class = "";
-  const albumLink = `/album?albumUrl=${album.youTubeMusicPlaylistUrl}`;
+  const albumLink = `${base}/album?albumUrl=${album.youTubeMusicPlaylistUrl}`;
 
   function handleClick() {
     albumStore.set(album);

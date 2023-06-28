@@ -4,6 +4,7 @@
   import releasesController from "$lib/modules/releases/releases.controller";
   import RecordCard from "./elements/RecordCard.svelte";
   import Placeholder from "./utils/Placeholder.svelte";
+  import { base } from "$app/paths";
 
   async function fetchData() {
     return await releasesController.getReleases();
@@ -16,7 +17,7 @@
   <div class="album-grid">
     {#each value as record}
       <a
-        href="/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
+        href="${base}/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
         class="record"
       >
         <RecordCard {record} requestType={RequestType.Release} />

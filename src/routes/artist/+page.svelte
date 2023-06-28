@@ -6,6 +6,8 @@
   import type { PageData } from "./$types";
   import AlbumCard from "$components/elements/AlbumCard.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
+  import { base } from "$app/paths";
+
   export let data: PageData;
 
   async function download(url: string) {
@@ -24,7 +26,7 @@
 {/await}
 <section>
   <a
-    href={`/artist/tracks?artistId=${data.artistId}`}
+    href="${base}/artist/tracks?artistId=${data.artistId}"
     class="text-xl px-4 btn btn--icon">Top Tracks{@html ChevronRight}</a
   >
   {#await data.streamed.tracks}
@@ -47,7 +49,7 @@
 </section>
 <section>
   <a
-    href={`/artist/albums?artistId=${data.artistId}`}
+    href="${base}/artist/albums?artistId=${data.artistId}"
     class="px-4 btn btn--icon">Albums{@html ChevronRight}</a
   >
   {#await data.streamed.albums}

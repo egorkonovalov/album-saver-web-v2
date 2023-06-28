@@ -7,6 +7,7 @@
   import { onMount } from "svelte";
   import InfiniteScroll from "svelte-infinite-scroll";
   import LoadinWheel from "./utils/LoadinWheel.svelte";
+  import { base } from "$app/paths";
 
   export let query: string;
 
@@ -39,7 +40,7 @@
   <div class="album-grid">
     {#each data as record}
       <a
-        href="/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
+        href="${base}/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
         class="record"
       >
         <RecordCard {record} requestType={RequestType.Release} />

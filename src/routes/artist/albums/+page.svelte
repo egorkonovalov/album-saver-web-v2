@@ -3,6 +3,7 @@
   import RecordCard from "$components/elements/RecordCard.svelte";
   import Placeholder from "$components/utils/Placeholder.svelte";
   import type { PageData } from "./$types";
+  import { base } from "$app/paths";
 
   export let data: PageData;
 </script>
@@ -14,7 +15,7 @@
     {#each value as record}
       <li>
         <a
-          href="/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
+          href="${base}/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
           class="record"
         >
           <RecordCard requestType={RequestType.AlbumTracks} {record} />
