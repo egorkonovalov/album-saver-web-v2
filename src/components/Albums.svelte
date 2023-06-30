@@ -2,7 +2,7 @@
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import RecordCard from "./elements/RecordCard.svelte";
   import Placeholder from "./utils/Placeholder.svelte";
-  import albumsController from "$lib/modules/albums/albums.controller";
+  import MusicLibrary from "music-library-service";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import { onMount } from "svelte";
   import InfiniteScroll from "svelte-infinite-scroll";
@@ -11,7 +11,7 @@
   export let query: string;
 
   async function fetchData() {
-    return await albumsController.getAlbums(query);
+    return await MusicLibrary.albums.getAlbums(query);
   }
 
   async function handleLoadMore() {

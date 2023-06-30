@@ -1,11 +1,14 @@
 <script lang="ts">
   import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
-  import { isDev } from "$lib/utils/IsDev";
   import "../app.css";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
 
   export let data: LayoutData;
+
+  function isDev() {
+    return process.env.NODE_ENV === "development";
+  }
 
   onMount(() => {
     data.environmentStore.onBackButtonClick(() => window.history.back());

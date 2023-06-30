@@ -1,12 +1,11 @@
-import { API_DOWNLOAD, API_DOWNLOADSET } from "$lib/api"
-import { post } from "$lib/modules/httprequest/httprequest.service"
+import MusicLibrary from "music-library-service"
 
 class DownloaderService {
   async download(query: Record<string, string>) {
-    return await post<void>(API_DOWNLOAD, { params: { ...query } })
+    return await MusicLibrary.http.post<void>("/download", { params: { ...query } })
   }
   async downloadSet(body: Record<string, any>) {
-    return await post<void>(API_DOWNLOADSET, { body })
+    return await MusicLibrary.http.post<void>("/download-set", { body })
   }
 }
 

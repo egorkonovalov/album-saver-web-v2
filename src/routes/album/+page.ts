@@ -1,6 +1,6 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
-import albumsController from "$lib/modules/albums/albums.controller";
+import MusicLibrary from "music-library-service";
 
 function getParams(url: URL, key: string) {
   let value = url.searchParams.get(key);
@@ -15,7 +15,7 @@ export const load = (async ({ url, parent }) => {
     environmentStore,
     albumUrl,
     streamed: {
-      album: albumsController.getAlbum(albumUrl),
+      album: MusicLibrary.albums.getAlbum(albumUrl),
     },
   };
 }) satisfies PageLoad;

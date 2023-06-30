@@ -1,14 +1,9 @@
-export const API_SEARCH = "/search";
-export const API_ALBUMS = "/albums";
-export const API_TRACKS = "/tracks";
-export const API_RELEASES = "/releases";
+import MusicLibrary from "music-library-service"
 
-export const API_DOWNLOAD = "/download";
-export const API_DOWNLOADSET = "/download-set";
+export async function getAlbums(query: string) {
+  return await MusicLibrary.albums.getAlbums(query)
+}
 
-export const API_ALBUM = "/album/tracks";
-
-export const API_ARTISTS = "/artists";
-export const API_ARTISTS_TRACKS = "/artist/tracks";
-export const API_ARTISTS_ALBUMS = "/artists/albums";
-export const API_ARTISTS_IMAGE = "/artists/image";
+export async function getReleases() {
+  return await MusicLibrary.releases.getReleases()
+}

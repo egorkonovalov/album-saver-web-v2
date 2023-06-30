@@ -6,7 +6,7 @@
   import Albums from "$components/Albums.svelte";
   import Tracks from "$components/Tracks.svelte";
   import Artists from "$components/Artists.svelte";
-  import tokensController from "$lib/modules/tokens/tokens.controller";
+  import MusicLibrary from "music-library-service";
   import { TOKEN_NAMES } from "$lib/constants";
   import { onDestroy } from "svelte";
   import type { PageData } from "./$types";
@@ -38,7 +38,7 @@
     }
   }
 
-  let h;
+  let topBarHeight;
   let inputQuery = "";
   let searchQuery = "";
   let requestType = RequestType.Release;
@@ -48,15 +48,15 @@
   };
 
   $: {
-    tokensController.clearTokens(TOKEN_NAMES);
+    MusicLibrary.tokens.clearTokens(TOKEN_NAMES);
     keyObject.searchQuery = searchQuery;
     keyObject.requestType = requestType;
     keyObject = keyObject;
   }
-  onDestroy(() => tokensController.clearTokens(TOKEN_NAMES));
+  onDestroy(() => MusicLibrary.tokens.clearTokens(TOKEN_NAMES));
 </script>
 
-<div class="top-bar" bind:clientHeight={h}>
+<div class="top-bar" bind:clientHeight={topBarHeight}>
   <div class="flex">
     <Searchbar
       on:search={(event) => (searchQuery = event.detail.value)}
@@ -73,7 +73,7 @@
 </div>
 
 {#key keyObject}
-  <div class="content" style="margin-top: {h}px">
+  <div class="content" style="margin-top: {topBarHeight}px">
     {#if keyObject.searchQuery !== ""}
       {#if keyObject.requestType === RequestType.Album}
         <Albums query={keyObject.searchQuery} />

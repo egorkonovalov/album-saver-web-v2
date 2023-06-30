@@ -42,7 +42,7 @@
 
   .album-grid {
     & .cover {
-      @apply w-[var(--record-cover-side-lg)] h-[var(--record-cover-side-lg)] rounded-lg bg-cover;
+      @apply w-[var(--record-cover-side-lg)] aspect-square rounded-lg bg-cover;
     }
   }
 
@@ -72,11 +72,11 @@
   }
 
   .track-list .cover {
-    @apply rounded-sm w-[var(--record-cover-side-sm)] h-[var(--record-cover-side-sm)] bg-cover;
+    @apply rounded-sm w-[var(--record-cover-side-sm)] aspect-square bg-cover;
   }
 
   .artist-list .cover {
-    @apply rounded-full w-[var(--record-cover-side-sm)] h-[var(--record-cover-side-sm)];
+    @apply rounded-full w-[var(--record-cover-side-sm)] aspect-square;
   }
 
   .cover {

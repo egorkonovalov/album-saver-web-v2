@@ -1,12 +1,12 @@
 <script lang="ts">
   import Placeholder from "./utils/Placeholder.svelte";
-  import artistsController from "$lib/modules/artists/artists.controller";
+  import MusicLibrary from "music-library-service";
   import ArtistCard from "./elements/ArtistCard.svelte";
 
   export let query: string;
 
   async function fetchData() {
-    return await artistsController.getArtists(query);
+    return await MusicLibrary.artists.getArtists(query);
   }
 </script>
 

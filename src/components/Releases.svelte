@@ -1,12 +1,12 @@
 <script lang="ts">
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
-  import releasesController from "$lib/modules/releases/releases.controller";
+  import { getReleases } from "$lib/api";
   import RecordCard from "./elements/RecordCard.svelte";
   import Placeholder from "./utils/Placeholder.svelte";
 
   async function fetchData() {
-    return await releasesController.getReleases();
+    return await getReleases();
   }
 </script>
 
