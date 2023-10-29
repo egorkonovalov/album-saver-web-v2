@@ -18,7 +18,7 @@ const getRequestUrl: GetRequestUrl = (url, data) => {
 
 const createRequest: CreateRequest = (url, method, data) => {
   const requestUrl = getRequestUrl(url, data)
-  return new Request(BASE_URL + requestUrl, { method, body: JSON.stringify(data?.body), headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning" : "" } })
+  return new Request(BASE_URL + requestUrl, { method, body: JSON.stringify(data?.body), headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning" : "true" } })
 }
 
 const fetchData = async (request: Request) => {
