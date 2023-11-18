@@ -1,1 +1,0 @@
-import{g as s,b as r,c as l}from"./Placeholder.2d8e19df.js";class u{async getAlbums(a){return(await s(r,{params:{query:a}})).result}async getAlbum(a){return await s(l,{params:{albumUrl:a}})}}const t=new u;class m{async getAlbums(a){return await t.getAlbums(a)}async getAlbum(a){return await t.getAlbum(a)}}const A=new m;export{A as a};
