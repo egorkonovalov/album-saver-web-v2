@@ -42,7 +42,7 @@
 
   .album-grid {
     & .cover {
-      @apply w-[var(--record-cover-side-lg)] h-[var(--record-cover-side-lg)] rounded-lg bg-cover;
+      @apply aspect-square rounded-lg bg-cover;
     }
   }
 
@@ -127,7 +127,7 @@
       background-size: 128px;
     }
     & .record {
-      @apply flex flex-col gap-2;
+      @apply flex flex-col w-fit;
     }
   }
 
@@ -232,7 +232,7 @@
       }
     }
     & .artwork {
-      @apply w-2/3 self-center rounded-lg shadow-lg mt-3;
+      @apply w-2/3 self-center rounded-lg shadow-lg mt-3 aspect-square object-cover;
     }
     & .track-list {
       @apply mt-0;
@@ -287,7 +287,7 @@
   }
 
   .record__title-container {
-    @apply text-[12px];
+    @apply text-[12px] w-fit;
   }
   .record__name {
     @apply font-semibold leading-tight line-clamp-2;
