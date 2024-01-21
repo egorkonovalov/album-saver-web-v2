@@ -292,10 +292,10 @@
   resolved "https://registry.npmjs.org/@types/pug/-/pug-2.0.6.tgz"
   integrity sha512-SnHmG9wN1UVmagJOnyo/qkk0Z7gejYxOYYmaAwr5u2yFYfsupN3sg10kyzN8Hep/2zbHxCnsumxOoRIRMBwKCg==
 
-"@types/telegram-web-app@^6.7.0":
-  version "6.7.0"
-  resolved "https://registry.npmjs.org/@types/telegram-web-app/-/telegram-web-app-6.7.0.tgz"
-  integrity sha512-ill31jBCQW6bo4k0GjsUVNKP0MY336p7ZUxmMi+WofAbO7Reb366jsnqNIrqNtxcIB4kKEpMUHVniArcXSML6g==
+"@types/telegram-web-app@^6.9.3":
+  version "6.9.3"
+  resolved "https://registry.yarnpkg.com/@types/telegram-web-app/-/telegram-web-app-6.9.3.tgz#33c577567fbd19d8ea828fb84a8b34446478f097"
+  integrity sha512-2ud9mtXCwqRIY/CHXCTv4wJ9+Uo7RwqrYVVKAPedMwuabWoINoGkH7i2cJQ6IECiod+EMpGtFkaJkpxaPMUSGw==
 
 acorn-walk@^8.1.1:
   version "8.2.0"

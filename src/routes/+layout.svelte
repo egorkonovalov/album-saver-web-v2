@@ -1,6 +1,5 @@
 <script lang="ts">
   import { TelegramEnvironment } from "$lib/modules/platformenvironment/classes/TelegramEnvironment.class";
-  import { isDev } from "$lib/utils/IsDev";
   import "../app.css";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
@@ -12,7 +11,7 @@
   });
 </script>
 
-{#if data.environmentStore instanceof TelegramEnvironment || isDev()}
+{#if data.environmentStore instanceof TelegramEnvironment}
   <slot />
 {:else}
   <p class="w-full text-center p-10 font-semibold leading-loose">

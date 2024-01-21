@@ -14,9 +14,9 @@
     {
       type: RequestType.Track,
     },
-    {
-      type: RequestType.Artist,
-    },
+    // {
+    //   type: RequestType.Artist,
+    // },
   ];
   $: {
     dispatch("changeRequestType", {
