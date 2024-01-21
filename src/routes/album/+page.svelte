@@ -32,9 +32,9 @@
 
   $: if (selected.length > 0) {
     data.environmentStore.setMainButtonText(
-      `Download Tracks (${selected.length})`
+      `Download Tracks (${selected.length})`,
     );
-    data.environmentStore.onMainButtonClick(() => download());
+    data.environmentStore.onMainButtonClick(download);
   } else {
     data.environmentStore.setMainButtonText("Download Album");
     data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
