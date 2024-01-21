@@ -184,7 +184,7 @@
     }
     var index = eventHandlers[eventType].indexOf(callback);
     if (index === -1) {
-      eventHandlers[eventType].push(callback);
+      eventHandlers[eventType] = [callback]; // this was changed cause we need just a single callback for the main button
     }
   };
 
