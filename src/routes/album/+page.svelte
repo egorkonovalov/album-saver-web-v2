@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { PageData } from "./$types";
   import Placeholder from "$components/utils/Placeholder.svelte";
   import { onDestroy, onMount } from "svelte";
@@ -6,9 +8,13 @@
   import AlbumPlaceholder from "$components/utils/AlbumPlaceholder.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  let selected: string[] = [];
+  let { data }: Props = $props();
+
+  let selected: string[] = $state([]);
 
   function addOrRemove(url: string) {
     if (!selected.includes(url)) {
@@ -30,15 +36,17 @@
     data.environmentStore.close();
   }
 
-  $: if (selected.length > 0) {
-    data.environmentStore.setMainButtonText(
-      `Download Tracks (${selected.length})`,
-    );
-    data.environmentStore.onMainButtonClick(download);
-  } else {
-    data.environmentStore.setMainButtonText("Download Album");
-    data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
-  }
+  $effect(() => {
+    if (selected.length > 0) {
+      data.environmentStore.setMainButtonText(
+        `Download Tracks (${selected.length})`,
+      );
+      data.environmentStore.onMainButtonClick(download);
+    } else {
+      data.environmentStore.setMainButtonText("Download Album");
+      data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
+    }
+  });
 
   onMount(async () => {
     data.environmentStore.showMainButton("Download Album");
@@ -75,7 +83,7 @@
         <li>
           <button
             class="track"
-            on:click={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
+            onclick={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
           >
             <p>{record.title}</p>
           </button>

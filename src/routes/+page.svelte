@@ -11,11 +11,13 @@
   import { onDestroy } from "svelte";
   import type { PageData } from "./$types";
 
-  export let data: PageData;
-
-  function changeRequestType(type: RequestType) {
-    requestType = type;
+  interface Props {
+    data: PageData;
   }
+
+  const { data }: Props = $props();
+
+  const changeRequestType = (type: RequestType) => (requestType = type);
 
   function handleInputFocusChange(focus: boolean) {
     if (focus) {
@@ -23,69 +25,56 @@
         ? changeRequestType(RequestType.Album)
         : null;
     } else {
-      searchQuery === undefined || ""
-        ? requestType === RequestType.Release
-        : null;
+      query === undefined || "" ? requestType === RequestType.Release : null;
     }
   }
   function handleInputValueChange(inputValue: string) {
     inputQuery = inputValue;
     if (!inputQuery) {
-      searchQuery = "";
+      query = "";
       requestType = RequestType.Release;
     } else if (requestType === RequestType.Release) {
       requestType = RequestType.Album;
     }
   }
 
-  let h;
+  let height = $state();
   let inputQuery = "";
-  let searchQuery = "";
-  let requestType = RequestType.Release;
-  let keyObject = {
-    searchQuery: searchQuery,
-    requestType: RequestType.Release,
-  };
+  let query = $state("");
+  let requestType = $state(RequestType.Release);
 
-  $: {
+  $effect(() => {
+    inputQuery = inputQuery;
+    requestType = requestType;
     tokensController.clearTokens(TOKEN_NAMES);
-    keyObject.searchQuery = searchQuery;
-    keyObject.requestType = requestType;
-    keyObject = keyObject;
-  }
+  });
   onDestroy(() => tokensController.clearTokens(TOKEN_NAMES));
 </script>
 
-<div class="top-bar" bind:clientHeight={h}>
+<div class="top-bar" bind:clientHeight={height}>
   <div class="flex">
     <Searchbar
-      on:search={(event) => (searchQuery = event.detail.value)}
-      on:inputQueryChange={(event) =>
-        handleInputValueChange(event.detail.value)}
-      on:inputFocuseChange={(event) =>
-        handleInputFocusChange(event.detail.value)}
+      search={(value: string) => (query = value)}
+      changeInputQuery={handleInputValueChange}
+      changeInputFocuse={handleInputFocusChange}
     />
   </div>
-  <FilterSelector
-    on:changeRequestType={(event) => changeRequestType(event.detail.value)}
-    {requestType}
-  />
+  <FilterSelector {changeRequestType} {requestType} />
 </div>
 
-{#key keyObject}
-  <div class="content" style="margin-top: {h}px">
-    {#if keyObject.searchQuery !== ""}
-      {#if keyObject.requestType === RequestType.Album}
-        <Albums query={keyObject.searchQuery} />
-      {:else if keyObject.requestType === RequestType.Track}
-        <Tracks
-          query={keyObject.searchQuery}
-          environment={data.environmentStore}
-        />
-      {:else if keyObject.requestType === RequestType.Artist}
-        <Artists query={keyObject.searchQuery} />
+{#key () => {
+  return { query, requestType };
+}}
+  <div class="content" style="margin-top: {height}px">
+    {#if query !== ""}
+      {#if requestType === RequestType.Album}
+        <Albums {query} />
+      {:else if requestType === RequestType.Track}
+        <Tracks {query} environment={data.environmentStore} />
+      {:else if requestType === RequestType.Artist}
+        <Artists {query} />
       {/if}
-    {:else if keyObject.requestType === RequestType.Release}
+    {:else if requestType === RequestType.Release}
       <Releases />
     {/if}
   </div>

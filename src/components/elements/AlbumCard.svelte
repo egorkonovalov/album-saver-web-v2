@@ -4,8 +4,12 @@
   import { album as albumStore } from "$lib/stores";
   import { base } from "$app/paths";
 
-  export let album: Record;
-  export let _class = "";
+  interface Props {
+    album: Record;
+    _class?: string;
+  }
+
+  let { album, _class = "" }: Props = $props();
   const albumLink = `${base}/album?albumUrl=${album.youTubeMusicPlaylistUrl}`;
 
   function handleClick() {
@@ -16,10 +20,13 @@
 
 <a
   href={albumLink}
-  on:click|preventDefault={handleClick}
+  onclick={(event) => {
+    event.preventDefault();
+    handleClick();
+  }}
   class={_class + " record"}
 >
-  <div class="cover" style="background-image: url({album.imageUrl})" />
+  <div class="cover" style="background-image: url({album.imageUrl})"></div>
   <div class="record__title-container">
     <p class="record__name">{album.title}</p>
     <p class="record__artist">

@@ -11,7 +11,11 @@
     data.environmentStore.close();
   }
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 </script>
 
 {#await data.streamed.tracks}
@@ -22,8 +26,10 @@
       <li class="record">
         <a
           href="/"
-          on:click|preventDefault={() =>
-            download(record.youTubeMusicPlaylistUrl)}
+          onclick={(event) => {
+            event.preventDefault();
+            download(record.youTubeMusicPlaylistUrl);
+          }}
         >
           <RecordCard requestType={RequestType.ArtistTracks} {record} />
         </a>

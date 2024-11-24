@@ -1,31 +1,27 @@
 <script lang="ts">
   import { base } from "$app/paths";
-  import { createEventDispatcher } from "svelte";
 
-  function searchRecord() {
-    input.blur();
-    dispatch("search", { value });
-  }
+  const { changeInputQuery, changeInputFocuse, search } = $props();
 
-  const dispatch = createEventDispatcher();
-  let value: string;
-  let input: HTMLElement;
-  let inFocuse = false;
+  const searchRecord = () => {
+    input?.blur();
+    search(value);
+  };
 
-  $: {
-    dispatch("inputQueryChange", { value });
-  }
-  $: {
-    dispatch("inputFocuseChange", { value: inFocuse });
-  }
+  let value = $state("");
+  let input: HTMLElement | undefined = $state();
+  let inFocuse = $state(false);
+
+  $effect(() => changeInputQuery(value));
+  $effect(() => changeInputFocuse(inFocuse));
 </script>
 
-<form on:submit|preventDefault={searchRecord} class="form">
+<form onsubmit={searchRecord} class="form">
   <div class="w-full searchbar flex items-center">
     <label class="w-full">
       <input
-        on:focus={() => (inFocuse = true)}
-        on:blur={() => (inFocuse = false)}
+        onfocus={() => (inFocuse = true)}
+        onblur={() => (inFocuse = false)}
         bind:this={input}
         type="search"
         bind:value
@@ -37,7 +33,7 @@
     </label>
     {#if value}
       <input
-        on:click={() => (value = "")}
+        onclick={() => (value = "")}
         type="reset"
         value=""
         style="background: url({base}/close.svg)"

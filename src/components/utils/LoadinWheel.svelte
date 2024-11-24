@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let stylingClass: string;
+  interface Props {
+    stylingClass: string;
+  }
+
+  let { stylingClass }: Props = $props();
 </script>
 
 <div class={`${stylingClass} flex justify-center`}>
