@@ -5,7 +5,7 @@ import albumsController from "$lib/modules/albums/albums.controller";
 function getParams(url: URL, key: string) {
   let value = url.searchParams.get(key);
   if (value) return value;
-  throw error(500, `The value for the parameter "${key}" was not provided.`);
+  error(500, `The value for the parameter "${key}" was not provided.`);
 }
 
 export const load = (async ({ url, parent }) => {
