@@ -1,6 +1,7 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
+
   interface Props {
     artist: Record;
   }

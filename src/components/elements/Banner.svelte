@@ -1,7 +1,12 @@
-<script>
+<script lang="ts">
   import { base } from "$app/paths";
-  /** @type {{hasIcon?: boolean, children?: import('svelte').Snippet}} */
-  let { hasIcon = false, children } = $props();
+
+  interface Props {
+    hasIcon?: boolean;
+    children?: import("svelte").Snippet;
+  }
+
+  let { hasIcon = false, children }: Props = $props();
 </script>
 
 <div class="content-in-center flex flex-col gap-3 dark:text-white">

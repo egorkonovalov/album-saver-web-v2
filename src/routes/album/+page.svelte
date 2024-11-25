@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import type { PageData } from "./$types";
   import Placeholder from "$components/utils/Placeholder.svelte";
   import { onDestroy, onMount } from "svelte";
@@ -39,7 +37,7 @@
   $effect(() => {
     if (selected.length > 0) {
       data.environmentStore.setMainButtonText(
-        `Download Tracks (${selected.length})`,
+        `Download Tracks (${selected.length})`
       );
       data.environmentStore.onMainButtonClick(download);
     } else {

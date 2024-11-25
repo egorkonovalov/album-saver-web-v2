@@ -10,6 +10,7 @@
   }
 
   let { album, _class = "" }: Props = $props();
+
   const albumLink = `${base}/album?albumUrl=${album.youTubeMusicPlaylistUrl}`;
 
   function handleClick() {
