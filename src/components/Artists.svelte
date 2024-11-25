@@ -3,11 +3,11 @@
   import artistsController from "$lib/modules/artists/artists.controller";
   import ArtistCard from "./elements/ArtistCard.svelte";
 
-  export let query: string;
-
-  async function fetchData() {
-    return await artistsController.getArtists(query);
+  interface Props {
+    query: string;
   }
+  let { query }: Props = $props();
+  const fetchData = async () => await artistsController.getArtists(query);
 </script>
 
 {#await fetchData()}

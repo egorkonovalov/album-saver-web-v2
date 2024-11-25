@@ -4,7 +4,12 @@
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
 
-  export let data: LayoutData;
+  interface Props {
+    data: LayoutData;
+    children?: import('svelte').Snippet;
+  }
+
+  let { data, children }: Props = $props();
 
   onMount(() => {
     data.environmentStore.onBackButtonClick(() => window.history.back());
@@ -12,7 +17,7 @@
 </script>
 
 {#if data.environmentStore instanceof TelegramEnvironment}
-  <slot />
+  {@render children?.()}
 {:else}
   <p class="w-full text-center p-10 font-semibold leading-loose">
     You can use this website only with a<br /><a

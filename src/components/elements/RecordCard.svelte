@@ -4,12 +4,16 @@
   import { album as albumStore } from "$lib/stores";
   import { onDestroy } from "svelte";
 
-  export let requestType: RequestType;
-  export let record: Record;
+  interface Props {
+    requestType: RequestType;
+    record: Record;
+  }
+
+  let { requestType, record }: Props = $props();
   onDestroy(() => albumStore.update(() => ({} as Record)));
 </script>
 
-<div class="cover" style="background-image: url({record.imageUrl})" />
+<div class="cover" style="background-image: url({record.imageUrl})"></div>
 <div class="record__title-container">
   <p class="record__name">{record.title}</p>
   {#if requestType !== RequestType.Artist}

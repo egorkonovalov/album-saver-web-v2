@@ -8,7 +8,11 @@
   import downloaderController from "$lib/modules/downloader/downloader.controller";
   import { base } from "$app/paths";
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
@@ -18,7 +22,7 @@
 </script>
 
 {#await data.streamed.artistImage}
-  <div class="h-[10rem] animate-pulse bg-stone-200 w-full mb-4" />
+  <div class="h-[10rem] animate-pulse bg-stone-200 w-full mb-4"></div>
 {:then value}
   <div class="artist-header" style="background-image: url({value})">
     <h1 class="name">{data.artistName}</h1>
@@ -37,8 +41,10 @@
         <li class="record">
           <a
             href="/"
-            on:click|preventDefault={() =>
-              download(record.youTubeMusicPlaylistUrl)}
+            onclick={(event) => {
+              event.preventDefault();
+              download(record.youTubeMusicPlaylistUrl);
+            }}
           >
             <RecordCard requestType={RequestType.ArtistTracks} {record} />
           </a>
