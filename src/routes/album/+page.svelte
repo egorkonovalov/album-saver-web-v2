@@ -5,19 +5,23 @@
   import { base } from "$app/paths";
   import AlbumPlaceholder from "$components/utils/AlbumPlaceholder.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
+  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  let selected: string[] = [];
+  let { data }: Props = $props();
+
+  let selected: string[] = $state([]);
 
   function addOrRemove(url: string) {
     if (!selected.includes(url)) {
-      selected = [...selected, url];
+      selected = selected.concat(url);
     } else {
       selected.splice(selected.indexOf(url), 1);
-      selected = selected;
     }
-    data.environmentStore.envokeHaptic("light");
+    platformenvironmentService.envokeHaptic("light");
   }
 
   async function download(url?: string) {
@@ -26,28 +30,33 @@
     } else if (url) {
       await downloaderController.download(url, 1);
     }
-    data.environmentStore.envokeHaptic("heavy");
-    data.environmentStore.close();
+    platformenvironmentService.closeWith("success");
   }
 
-  $: if (selected.length > 0) {
-    data.environmentStore.setMainButtonText(
-      `Download Tracks (${selected.length})`,
-    );
-    data.environmentStore.onMainButtonClick(download);
-  } else {
-    data.environmentStore.setMainButtonText("Download Album");
-    data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
-  }
+  $effect(() => {
+    if (selected.length > 0) {
+      platformenvironmentService.setMainButtonText(
+        `Download Tracks (${selected.length})`
+      );
+      platformenvironmentService.onMainButtonClick(download);
+    } else {
+      platformenvironmentService.setMainButtonText("Download Album");
+      platformenvironmentService.onMainButtonClick(() =>
+        download(data.albumUrl)
+      );
+    }
+  });
 
   onMount(async () => {
-    data.environmentStore.showMainButton("Download Album");
-    data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
+    platformenvironmentService.showMainButton("Download Album");
+    platformenvironmentService.onMainButtonClick(() => download(data.albumUrl));
   });
 
   onDestroy(() => {
-    data.environmentStore.offMainButtonClick(() => download(data.albumUrl));
-    data.environmentStore.hideMainButton();
+    platformenvironmentService.offMainButtonClick(() =>
+      download(data.albumUrl)
+    );
+    platformenvironmentService.hideMainButton();
   });
 </script>
 
@@ -75,7 +84,7 @@
         <li>
           <button
             class="track"
-            on:click={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
+            onclick={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
           >
             <p>{record.title}</p>
           </button>

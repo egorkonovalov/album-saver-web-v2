@@ -7,36 +7,35 @@
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import { onMount } from "svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
-  import type { PlatformEnvironment } from "$lib/modules/platformenvironment/interfaces/PlatformEnvironment.interface";
+  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
 
-  export let query: string;
-  export let environment: PlatformEnvironment;
+  interface Props {
+    query: string;
+  }
+
+  let { query }: Props = $props();
+  let newBatch: Record[] = $state([]);
+  let data: Record[] = $state([]);
+  let loadingMore = false;
+  let showPlaceholder = $state(false);
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
-    environment.envokeHaptic("heavy");
-    environment.close();
+    platformenvironmentService.closeWith("success");
   }
 
-  async function fetchData() {
-    return await tracksController.getTracks(query);
-  }
+  const fetchData = async () => await tracksController.getTracks(query);
 
   async function handleLoadMore() {
     loadingMore = true;
     newBatch = await fetchData();
+    data = data.concat(newBatch);
     loadingMore = false;
   }
 
-  let newBatch: Record[] = [];
-  let data: Record[] = [];
-  let loadingMore = false;
-  let showPlaceholder = false;
-  $: data = [...data, ...newBatch];
-
   onMount(async () => {
     showPlaceholder = true;
-    data = await fetchData();
+    await handleLoadMore();
     showPlaceholder = false;
   });
 </script>
@@ -48,7 +47,10 @@
     {#each data as record}
       <a
         href="/"
-        on:click|preventDefault={() => download(record.youTubeMusicPlaylistUrl)}
+        onclick={(event) => {
+          event.preventDefault();
+          download(record.youTubeMusicPlaylistUrl);
+        }}
         class="record"
       >
         <RecordCard {record} requestType={RequestType.Track} />

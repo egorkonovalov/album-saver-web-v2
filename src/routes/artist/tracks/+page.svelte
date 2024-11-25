@@ -3,15 +3,19 @@
   import RecordCard from "$components/elements/RecordCard.svelte";
   import Placeholder from "$components/utils/Placeholder.svelte";
   import type { PageData } from "./$types";
+  import platformEnvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
-    data.environmentStore.envokeHaptic("heavy");
-    data.environmentStore.close();
+    platformEnvironmentService.closeWith("success");
   }
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 </script>
 
 {#await data.streamed.tracks}
@@ -22,8 +26,10 @@
       <li class="record">
         <a
           href="/"
-          on:click|preventDefault={() =>
-            download(record.youTubeMusicPlaylistUrl)}
+          onclick={(event) => {
+            event.preventDefault();
+            download(record.youTubeMusicPlaylistUrl);
+          }}
         >
           <RecordCard requestType={RequestType.ArtistTracks} {record} />
         </a>

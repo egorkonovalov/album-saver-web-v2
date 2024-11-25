@@ -3,9 +3,11 @@ import downloaderService from "./downloader.service"
 
 class DownloaderController {
   async download(youTubeMusicPlaylistUrl: string, entityType: 1 | 2) {
+    const id = platformEnvironmentService.getInitData().user?.id.toString()
+    if (!id) throw "No user id"
     return await downloaderService.download({
       youTubeMusicPlaylistUrl,
-      userId: platformEnvironmentService.getEnvironment().userId.toString(),
+      userId: id,
       entityType: entityType.toString()
     })
   }
@@ -13,7 +15,7 @@ class DownloaderController {
   async downloadSet(urls: string[]) {
     return await downloaderService.downloadSet({
       urls,
-      userId: platformEnvironmentService.getEnvironment().userId.toString()
+      userId: platformEnvironmentService.getInitData()?.user?.id.toString()
     })
   }
 }

@@ -9,27 +9,29 @@
   import LoadinWheel from "./utils/LoadinWheel.svelte";
   import { base } from "$app/paths";
 
-  export let query: string;
-
-  async function fetchData() {
-    return await albumsController.getAlbums(query);
+  interface Props {
+    query: string;
   }
+
+  let { query }: Props = $props();
+
+  const fetchData = async () => await albumsController.getAlbums(query);
 
   async function handleLoadMore() {
     loadingMore = true;
     newBatch = await fetchData();
+    data.push(...newBatch);
     loadingMore = false;
   }
 
-  let newBatch: Record[] = [];
-  let data: Record[] = [];
-  let loadingMore = false;
-  let showPlaceholder = false;
-  $: data = [...data, ...newBatch];
+  let newBatch: Record[] = $state([]);
+  let data: Record[] = $state([]);
+  let loadingMore = $state(false);
+  let showPlaceholder = $state(false);
 
   onMount(async () => {
     showPlaceholder = true;
-    data = await fetchData();
+    await handleLoadMore();
     showPlaceholder = false;
   });
 </script>
