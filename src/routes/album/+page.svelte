@@ -5,6 +5,7 @@
   import { base } from "$app/paths";
   import AlbumPlaceholder from "$components/utils/AlbumPlaceholder.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
+  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
 
   interface Props {
     data: PageData;
@@ -16,12 +17,11 @@
 
   function addOrRemove(url: string) {
     if (!selected.includes(url)) {
-      selected = [...selected, url];
+      selected = selected.concat(url);
     } else {
       selected.splice(selected.indexOf(url), 1);
-      selected = selected;
     }
-    data.environmentStore.envokeHaptic("light");
+    platformenvironmentService.envokeHaptic("light");
   }
 
   async function download(url?: string) {
@@ -30,30 +30,33 @@
     } else if (url) {
       await downloaderController.download(url, 1);
     }
-    data.environmentStore.envokeHaptic("heavy");
-    data.environmentStore.close();
+    platformenvironmentService.closeWith("success");
   }
 
   $effect(() => {
     if (selected.length > 0) {
-      data.environmentStore.setMainButtonText(
+      platformenvironmentService.setMainButtonText(
         `Download Tracks (${selected.length})`
       );
-      data.environmentStore.onMainButtonClick(download);
+      platformenvironmentService.onMainButtonClick(download);
     } else {
-      data.environmentStore.setMainButtonText("Download Album");
-      data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
+      platformenvironmentService.setMainButtonText("Download Album");
+      platformenvironmentService.onMainButtonClick(() =>
+        download(data.albumUrl)
+      );
     }
   });
 
   onMount(async () => {
-    data.environmentStore.showMainButton("Download Album");
-    data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
+    platformenvironmentService.showMainButton("Download Album");
+    platformenvironmentService.onMainButtonClick(() => download(data.albumUrl));
   });
 
   onDestroy(() => {
-    data.environmentStore.offMainButtonClick(() => download(data.albumUrl));
-    data.environmentStore.hideMainButton();
+    platformenvironmentService.offMainButtonClick(() =>
+      download(data.albumUrl)
+    );
+    platformenvironmentService.hideMainButton();
   });
 </script>
 

@@ -9,13 +9,6 @@
   import tokensController from "$lib/modules/tokens/tokens.controller";
   import { TOKEN_NAMES } from "$lib/constants";
   import { onDestroy } from "svelte";
-  import type { PageData } from "./$types";
-
-  interface Props {
-    data: PageData;
-  }
-
-  const { data }: Props = $props();
 
   const changeRequestType = (type: RequestType) => (requestType = type);
 
@@ -70,7 +63,7 @@
       {#if requestType === RequestType.Album}
         <Albums {query} />
       {:else if requestType === RequestType.Track}
-        <Tracks {query} environment={data.environmentStore} />
+        <Tracks {query} />
       {:else if requestType === RequestType.Artist}
         <Artists {query} />
       {/if}

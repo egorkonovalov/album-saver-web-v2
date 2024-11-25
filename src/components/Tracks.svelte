@@ -7,14 +7,13 @@
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import { onMount } from "svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
-  import type { PlatformEnvironment } from "$lib/modules/platformenvironment/interfaces/PlatformEnvironment.interface";
+  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
 
   interface Props {
     query: string;
-    environment: PlatformEnvironment;
   }
 
-  let { query, environment }: Props = $props();
+  let { query }: Props = $props();
   let newBatch: Record[] = $state([]);
   let data: Record[] = $state([]);
   let loadingMore = false;
@@ -22,8 +21,7 @@
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
-    environment.envokeHaptic("heavy");
-    environment.close();
+    platformenvironmentService.closeWith("success");
   }
 
   const fetchData = async () => await tracksController.getTracks(query);
