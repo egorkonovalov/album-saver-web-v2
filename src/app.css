@@ -232,7 +232,7 @@
       }
     }
     & .artwork {
-      @apply w-2/3 self-center rounded-lg shadow-lg mt-3 aspect-square object-cover;
+      @apply w-2/3 self-center rounded-xl shadow-2xl mt-3 aspect-square object-cover;
     }
     & .track-list {
       @apply mt-0;

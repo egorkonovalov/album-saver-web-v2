@@ -1,6 +1,10 @@
-import { type ImpactHapticFeedbackStyle, closeMiniApp, hapticFeedbackNotificationOccurred, miniApp, retrieveLaunchParams, init, backButton, setMainButtonParams, onMainButtonClick, offMainButtonClick, hapticFeedback, isMainButtonVisible, mainButton } from "@telegram-apps/sdk-svelte";
+import {
+  type ImpactHapticFeedbackStyle, closeMiniApp,
+  hapticFeedbackNotificationOccurred, miniApp, cloudStorage,
+  retrieveLaunchParams, init, backButton, hapticFeedback, mainButton
+} from "@telegram-apps/sdk-svelte";
 
-export class PlatformEnvironmentService {
+export class TelegramService {
 
   closeWith(status: "success") {
     hapticFeedbackNotificationOccurred(status);
@@ -21,37 +25,33 @@ export class PlatformEnvironmentService {
   }
 
   init(routeId: string | null) {
-
     init()
-
     backButton.mount()
     mainButton.mount()
     if (routeId === '/') backButton.hide()
     else backButton.show()
     backButton.onClick(() => window.history.back())
-
-
   }
 
   setMainButtonText(text: string) {
-    setMainButtonParams({ text })
+    mainButton.setParams({ text })
   }
 
   onMainButtonClick(callback: (...args: any) => Promise<any> | any) {
-    onMainButtonClick(callback)
+    mainButton.onClick(callback)
   }
 
   showMainButton(text: string) {
     this.setMainButtonText(text)
-    setMainButtonParams({ isVisible: true })
+    mainButton.setParams({ isVisible: true })
   }
 
   offMainButtonClick(callback: (...args: any) => Promise<any> | any) {
-    offMainButtonClick(callback)
+    mainButton.offClick(callback)
   }
 
   hideMainButton() {
-    setMainButtonParams({ isVisible: false })
+    mainButton.setParams({ isVisible: false })
   }
 
   envokeHaptic(type: ImpactHapticFeedbackStyle) {
@@ -59,6 +59,18 @@ export class PlatformEnvironmentService {
       hapticFeedback.impactOccurred(type);
     }
   }
+
+  async addToStorage(key: string, value: string) {
+    if (cloudStorage.setItem.isAvailable()) {
+      await cloudStorage.setItem(key, value);
+    }
+  }
+
+  async getKeys() {
+    if (cloudStorage.getKeys.isAvailable()) {
+      return await cloudStorage.getKeys();
+    }
+  }
 }
 
-export default new PlatformEnvironmentService();
+export default new TelegramService();

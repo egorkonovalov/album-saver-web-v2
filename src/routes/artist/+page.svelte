@@ -7,7 +7,7 @@
   import AlbumCard from "$components/elements/AlbumCard.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
   import { base } from "$app/paths";
-  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
+  import telegramService from "$lib/modules/platformenvironment/telegram.service";
 
   interface Props {
     data: PageData;
@@ -17,7 +17,7 @@
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
-    platformenvironmentService.closeWith("success");
+    telegramService.closeWith("success");
   }
 </script>
 
