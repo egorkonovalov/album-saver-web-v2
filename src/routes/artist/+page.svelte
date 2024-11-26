@@ -7,6 +7,7 @@
   import AlbumCard from "$components/elements/AlbumCard.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
   import { base } from "$app/paths";
+  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
 
   interface Props {
     data: PageData;
@@ -16,8 +17,7 @@
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
-    data.environmentStore.envokeHaptic("heavy");
-    data.environmentStore.close();
+    platformenvironmentService.closeWith("success");
   }
 </script>
 
