@@ -1,12 +1,16 @@
 <script lang="ts">
   import { blur } from "svelte/transition";
-  import { createEventDispatcher } from "svelte";
-  const dispatch = createEventDispatcher();
   import { RequestType } from "$lib/modules/musicsearch/interfaces/musicqueryrequest.interface";
+
   interface Selector {
     type: RequestType;
   }
-  export let requestType: RequestType;
+  interface Props {
+    requestType: RequestType;
+    changeRequestType: (value: RequestType) => void;
+  }
+
+  let { changeRequestType, requestType = $bindable() }: Props = $props();
   let variants: Selector[] = [
     {
       type: RequestType.Album,
@@ -18,11 +22,7 @@
     //   type: RequestType.Artist,
     // },
   ];
-  $: {
-    dispatch("changeRequestType", {
-      value: requestType,
-    });
-  }
+  $effect(() => changeRequestType(requestType));
 </script>
 
 {#if requestType !== RequestType.Release}

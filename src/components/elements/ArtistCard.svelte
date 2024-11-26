@@ -1,7 +1,12 @@
 <script lang="ts">
   import { base } from "$app/paths";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
-  export let artist: Record;
+
+  interface Props {
+    artist: Record;
+  }
+
+  let { artist }: Props = $props();
 </script>
 
 <a
