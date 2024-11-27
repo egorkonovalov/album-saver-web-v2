@@ -1,14 +1,14 @@
 <script lang="ts">
-  import telegramService from "$lib/modules/platformenvironment/telegram.service";
-  import { onMount } from "svelte";
+  import AlbumGrid from "$components/elements/AlbumGrid.svelte";
+  import type { PageData } from "./$types";
 
-  let data = $state();
+  interface Props {
+    data: PageData;
+  }
 
-  onMount(() => {
-    telegramService.getKeys().then((value) => {
-      data = value;
-    });
-  });
+  let { data }: Props = $props();
 </script>
 
-{data}
+{#await data.streamed.records then records}
+  <AlbumGrid records={JSON.parse(records)}></AlbumGrid>
+{/await}

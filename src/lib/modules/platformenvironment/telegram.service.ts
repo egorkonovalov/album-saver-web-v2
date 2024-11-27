@@ -4,6 +4,24 @@ import {
   retrieveLaunchParams, init, backButton, hapticFeedback, mainButton
 } from "@telegram-apps/sdk-svelte";
 
+
+function requires(feature: { isAvailable: () => boolean }) {
+
+  function decorator(originalMethod: Function) {
+
+    function caller(this: any, ...args: any[]) {
+      return originalMethod.call(this, ...args)
+    }
+
+    if (feature.isAvailable()) {
+      return caller
+    }
+
+  }
+  return decorator
+}
+
+
 export class TelegramService {
 
   closeWith(status: "success") {
@@ -50,26 +68,51 @@ export class TelegramService {
     mainButton.offClick(callback)
   }
 
+  // Decorators are not supported by Vite 🤷
+  // @requires(hapticFeedback.impactOccurred)
   hideMainButton() {
     mainButton.setParams({ isVisible: false })
   }
 
+  // @requires(hapticFeedback.impactOccurred)
   envokeHaptic(type: ImpactHapticFeedbackStyle) {
-    if (hapticFeedback.impactOccurred.isAvailable()) {
-      hapticFeedback.impactOccurred(type);
-    }
+    hapticFeedback.impactOccurred(type);
   }
 
+  // @requires(cloudStorage.setItem)
   async addToStorage(key: string, value: string) {
-    if (cloudStorage.setItem.isAvailable()) {
-      await cloudStorage.setItem(key, value);
+    try {
+      return await cloudStorage.setItem(key, value);
+    } catch (e) {
+      alert(e)
     }
   }
 
+  // @requires(cloudStorage.getKeys)
   async getKeys() {
-    if (cloudStorage.getKeys.isAvailable()) {
-      return await cloudStorage.getKeys();
+    return await cloudStorage.getKeys();
+  }
+
+  // @requires(cloudStorage.getItem)
+  async getItem(key: string) {
+    return await cloudStorage.getItem(key)
+  }
+
+  async deleteItem(key: string) {
+    return await cloudStorage.deleteItem(key)
+  }
+
+  async addToArrayItem(key: string, value: Record<string, any>) {
+    let keyStringValue = await this.getItem(key)
+    let keyArrayValue = []
+    if (keyStringValue.length) {
+      keyArrayValue = JSON.parse(keyStringValue)
     }
+
+    let result = []
+    result = keyArrayValue.concat(value)
+    this.addToStorage(key, JSON.stringify(result))
+    return result
   }
 }
 

@@ -6,7 +6,7 @@
   import AlbumPlaceholder from "$components/utils/AlbumPlaceholder.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
   import telegramService from "$lib/modules/platformenvironment/telegram.service";
-  import type { Album } from "$lib/modules/albums/albums.type";
+  import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
 
   interface Props {
     data: PageData;
@@ -46,9 +46,9 @@
     }
   });
 
-  async function addToLib(album: Album) {
+  async function addToLib(record: Record) {
     loading = true;
-    await telegramService.addToStorage("library", JSON.stringify(album));
+    await telegramService.addToArrayItem("library", record);
     loading = false;
   }
 
@@ -81,7 +81,16 @@
     {#if loading}
       <p>loading..</p>
     {:else}
-      <button onclick={() => addToLib(value)}
+      <button
+        onclick={() =>
+          addToLib({
+            title: value.albumTitle,
+            author: value.artistName,
+            imageUrl: value.albumImage,
+            year: "",
+            recordType: "album",
+            youTubeMusicPlaylistUrl: "", // TODO: get link from the browser
+          })}
         >Add <span class="rounded-full bg-blue-500 text-white px-2 py-1">+</span
         ></button
       >
