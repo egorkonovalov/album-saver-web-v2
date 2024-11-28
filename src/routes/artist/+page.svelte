@@ -7,7 +7,7 @@
   import AlbumCard from "$components/elements/AlbumCard.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
   import { base } from "$app/paths";
-  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
+  import telegramService from "$lib/modules/platformenvironment/telegram.service";
 
   interface Props {
     data: PageData;
@@ -17,7 +17,7 @@
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
-    platformenvironmentService.closeWith("success");
+    telegramService.closeWith("success");
   }
 </script>
 
@@ -30,7 +30,7 @@
 {/await}
 <section>
   <a
-    href="{base}/artist/tracks?artistId=${data.artistId}"
+    href="{base}/artist/tracks?artistId={data.artistId}"
     class="text-xl px-4 btn btn--icon">Top Tracks{@html ChevronRight}</a
   >
   {#await data.streamed.tracks}
@@ -55,7 +55,7 @@
 </section>
 <section>
   <a
-    href="{base}/artist/albums?artistId=${data.artistId}"
+    href="{base}/artist/albums?artistId={data.artistId}"
     class="px-4 btn btn--icon">Albums{@html ChevronRight}</a
   >
   {#await data.streamed.albums}

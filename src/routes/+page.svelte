@@ -58,7 +58,7 @@
 {#key () => {
   return { query, requestType };
 }}
-  <div class="content" style="margin-top: {height}px">
+  <div style="margin-top: {height}px">
     {#if query !== ""}
       {#if requestType === RequestType.Album}
         <Albums {query} />

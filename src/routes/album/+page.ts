@@ -8,11 +8,9 @@ function getParams(url: URL, key: string) {
   error(500, `The value for the parameter "${key}" was not provided.`);
 }
 
-export const load = (async ({ url, parent }) => {
+export const load = (async ({ url }) => {
   const albumUrl = getParams(url, "albumUrl");
-  const { environmentStore } = await parent()
   return {
-    environmentStore,
     albumUrl,
     streamed: {
       album: albumsController.getAlbum(albumUrl),

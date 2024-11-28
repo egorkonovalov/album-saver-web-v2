@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Footer from "$components/elements/Footer.svelte";
   import "../app.css";
 
   interface Props {
@@ -9,3 +10,4 @@
 </script>
 
 {@render children?.()}
+<Footer />

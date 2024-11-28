@@ -7,7 +7,7 @@
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
   import { onMount } from "svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
-  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
+  import telegramService from "$lib/modules/platformenvironment/telegram.service";
 
   interface Props {
     query: string;
@@ -21,7 +21,7 @@
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
-    platformenvironmentService.closeWith("success");
+    telegramService.closeWith("success");
   }
 
   const fetchData = async () => await tracksController.getTracks(query);

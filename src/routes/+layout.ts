@@ -1,11 +1,11 @@
-import platformEnvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
+import telegramService from "$lib/modules/platformenvironment/telegram.service";
 import type { LayoutLoad } from "./$types";
 export const ssr = false;
 export const prerender = true
 
 export const load = (({ route }) => {
   try {
-    platformEnvironmentService.init(route.id)
+    telegramService.init(route.id)
   } catch (e) {
     alert(e)
   }

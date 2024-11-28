@@ -5,7 +5,9 @@
   import { base } from "$app/paths";
   import AlbumPlaceholder from "$components/utils/AlbumPlaceholder.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
-  import platformenvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
+  import telegramService from "$lib/modules/platformenvironment/telegram.service";
+  import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
+  import { page } from "$app/stores";
 
   interface Props {
     data: PageData;
@@ -15,13 +17,15 @@
 
   let selected: string[] = $state([]);
 
+  let loading = $state(false);
+
   function addOrRemove(url: string) {
     if (!selected.includes(url)) {
       selected = selected.concat(url);
     } else {
       selected.splice(selected.indexOf(url), 1);
     }
-    platformenvironmentService.envokeHaptic("light");
+    telegramService.envokeHaptic("light");
   }
 
   async function download(url?: string) {
@@ -30,33 +34,47 @@
     } else if (url) {
       await downloaderController.download(url, 1);
     }
-    platformenvironmentService.closeWith("success");
+    telegramService.closeWith("success");
   }
 
   $effect(() => {
     if (selected.length > 0) {
-      platformenvironmentService.setMainButtonText(
-        `Download Tracks (${selected.length})`
-      );
-      platformenvironmentService.onMainButtonClick(download);
+      telegramService.setMainButtonText(`Download Tracks (${selected.length})`);
+      telegramService.onMainButtonClick(download);
     } else {
-      platformenvironmentService.setMainButtonText("Download Album");
-      platformenvironmentService.onMainButtonClick(() =>
-        download(data.albumUrl)
-      );
+      telegramService.setMainButtonText("Download Album");
+      telegramService.onMainButtonClick(() => download(data.albumUrl));
     }
   });
 
+  async function addToLib(record: Record) {
+    if (record.youTubeMusicPlaylistUrl.length === 0) {
+      throw Error("No album URL");
+    }
+    loading = true;
+    await telegramService.addToArrayItem("library", record);
+    loading = false;
+    isInLibrary = true;
+  }
+
+  let isInLibrary = $state(false);
+
   onMount(async () => {
-    platformenvironmentService.showMainButton("Download Album");
-    platformenvironmentService.onMainButtonClick(() => download(data.albumUrl));
+    telegramService.showMainButton("Download Album");
+    telegramService.onMainButtonClick(() => download(data.albumUrl));
+    const album = await telegramService.findInArrayItem(
+      "library",
+      $page.url.searchParams.get("albumUrl") || "",
+      "youTubeMusicPlaylistUrl"
+    );
+    if (album) {
+      isInLibrary = true;
+    }
   });
 
   onDestroy(() => {
-    platformenvironmentService.offMainButtonClick(() =>
-      download(data.albumUrl)
-    );
-    platformenvironmentService.hideMainButton();
+    telegramService.offMainButtonClick(() => download(data.albumUrl));
+    telegramService.hideMainButton();
   });
 </script>
 
@@ -72,9 +90,25 @@
       <!-- <a
         href="/artist?artistId={value.channelUrl}&artistName={value.artistName}"
         >{value.artistName}</a
-      > -->
+        > -->
       <p>{value.artistName}</p>
     </div>
+    {#if !isInLibrary}
+      <button
+        onclick={() =>
+          addToLib({
+            title: value.albumTitle,
+            author: value.artistName,
+            imageUrl: value.albumImage,
+            year: "",
+            recordType: "Album",
+            youTubeMusicPlaylistUrl:
+              $page.url.searchParams.get("albumUrl") || "",
+          })}
+        >Add <span class="rounded-full bg-blue-500 text-white px-2 py-1">+</span
+        ></button
+      >
+    {/if}
   {/await}
   {#await data.streamed.album}
     <Placeholder count={8} _class="album-entry track-list mt-0" />

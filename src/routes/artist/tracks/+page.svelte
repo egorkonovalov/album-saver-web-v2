@@ -3,12 +3,12 @@
   import RecordCard from "$components/elements/RecordCard.svelte";
   import Placeholder from "$components/utils/Placeholder.svelte";
   import type { PageData } from "./$types";
-  import platformEnvironmentService from "$lib/modules/platformenvironment/platformenvironment.service";
+  import telegramService from "$lib/modules/platformenvironment/telegram.service";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
 
   async function download(url: string) {
     await downloaderController.download(url, 2);
-    platformEnvironmentService.closeWith("success");
+    telegramService.closeWith("success");
   }
 
   interface Props {
