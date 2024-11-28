@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Footer from "$components/elements/Footer.svelte";
   import "../app.css";
 
   interface Props {
@@ -9,9 +10,4 @@
 </script>
 
 {@render children?.()}
-<footer
-  class="w-full sticky bottom-0 h-24 bg-gray-100 flex border border-t border-gray-300"
->
-  <a href="/" class="w-full h-full">Search</a>
-  <a href="/library" class="w-full h-full">Library</a>
-</footer>
+<Footer />

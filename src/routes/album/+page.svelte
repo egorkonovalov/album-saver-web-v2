@@ -54,6 +54,7 @@
     loading = true;
     await telegramService.addToArrayItem("library", record);
     loading = false;
+    isInLibrary = true;
   }
 
   let isInLibrary = $state(false);

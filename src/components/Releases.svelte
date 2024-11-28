@@ -17,7 +17,7 @@
   <div class="album-grid">
     {#each value as record}
       <a
-        href="{base}/album?albumUrl=${record.youTubeMusicPlaylistUrl}"
+        href="{base}/album?albumUrl={record.youTubeMusicPlaylistUrl}"
         class="record"
       >
         <RecordCard {record} requestType={RequestType.Release} />
