@@ -102,6 +102,29 @@ export class TelegramService {
     return await cloudStorage.deleteItem(key)
   }
 
+
+  async findInArrayItem<T>(key: string, id: string, idField: keyof T) {
+    let keyStringValue = await this.getItem(key)
+    let keyArrayValue = []
+    if (keyStringValue.length) {
+      keyArrayValue = JSON.parse(keyStringValue)
+    }
+
+    return keyArrayValue.find((x: T) => x[idField] === id)
+  }
+
+  async removeFromArrayItem<T>(key: string, id: string, idField: keyof T) {
+    let keyStringValue = await this.getItem(key)
+    let keyArrayValue = []
+    if (keyStringValue.length) {
+      keyArrayValue = JSON.parse(keyStringValue)
+    }
+    let result = []
+    result = keyArrayValue.filter((x: T) => x[idField] !== id)
+    this.addToStorage(key, JSON.stringify(result))
+    return result
+  }
+
   async addToArrayItem(key: string, value: Record<string, any>) {
     let keyStringValue = await this.getItem(key)
     let keyArrayValue = []

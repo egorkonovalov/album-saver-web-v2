@@ -7,6 +7,7 @@
   import downloaderController from "$lib/modules/downloader/downloader.controller";
   import telegramService from "$lib/modules/platformenvironment/telegram.service";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
+  import { page } from "$app/stores";
 
   interface Props {
     data: PageData;
@@ -47,14 +48,27 @@
   });
 
   async function addToLib(record: Record) {
+    if (record.youTubeMusicPlaylistUrl.length === 0) {
+      throw Error("No album URL");
+    }
     loading = true;
     await telegramService.addToArrayItem("library", record);
     loading = false;
   }
 
+  let isInLibrary = $state(false);
+
   onMount(async () => {
     telegramService.showMainButton("Download Album");
     telegramService.onMainButtonClick(() => download(data.albumUrl));
+    const album = await telegramService.findInArrayItem(
+      "library",
+      $page.url.searchParams.get("albumUrl") || "",
+      "youTubeMusicPlaylistUrl"
+    );
+    if (album) {
+      isInLibrary = true;
+    }
   });
 
   onDestroy(() => {
@@ -78,9 +92,7 @@
         > -->
       <p>{value.artistName}</p>
     </div>
-    {#if loading}
-      <p>loading..</p>
-    {:else}
+    {#if !isInLibrary}
       <button
         onclick={() =>
           addToLib({
@@ -88,8 +100,9 @@
             author: value.artistName,
             imageUrl: value.albumImage,
             year: "",
-            recordType: "album",
-            youTubeMusicPlaylistUrl: "", // TODO: get link from the browser
+            recordType: "Album",
+            youTubeMusicPlaylistUrl:
+              $page.url.searchParams.get("albumUrl") || "",
           })}
         >Add <span class="rounded-full bg-blue-500 text-white px-2 py-1">+</span
         ></button

@@ -10,7 +10,7 @@
   }
 
   let { requestType, record }: Props = $props();
-  onDestroy(() => albumStore.update(() => ({} as Record)));
+  onDestroy(() => albumStore.update(() => ({}) as Record));
 </script>
 
 <div class="cover" style="background-image: url({record.imageUrl})"></div>
@@ -27,9 +27,11 @@
         <p>
           {record.recordType ? record.recordType : "Album"}
         </p>
-        <p>•</p>
       {/if}
-      <p>{record.year}</p>
+      {#if record.year}
+        <p>•</p>
+        <p>{record.year}</p>
+      {/if}
     </div>
   {/if}
 </div>
