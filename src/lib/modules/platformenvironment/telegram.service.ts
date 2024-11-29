@@ -1,7 +1,7 @@
 import {
   type ImpactHapticFeedbackStyle, closeMiniApp,
   hapticFeedbackNotificationOccurred, miniApp, cloudStorage,
-  retrieveLaunchParams, init, backButton, hapticFeedback, mainButton
+  retrieveLaunchParams, init, backButton, hapticFeedback, mainButton, themeParams
 } from "@telegram-apps/sdk-svelte";
 
 
@@ -46,6 +46,10 @@ export class TelegramService {
     init()
     backButton.mount()
     mainButton.mount()
+    themeParams.mount()
+    if (!themeParams.isCssVarsBound()) {
+      themeParams.bindCssVars()
+    }
     if (routeId === '/') backButton.hide()
     else backButton.show()
     backButton.onClick(() => window.history.back())
