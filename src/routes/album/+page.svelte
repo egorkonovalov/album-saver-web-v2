@@ -2,42 +2,15 @@
   import type { PageData } from "./$types";
   import Placeholder from "$components/utils/Placeholder.svelte";
   import { onDestroy, onMount } from "svelte";
-  import { base } from "$app/paths";
   import AlbumPlaceholder from "$components/utils/AlbumPlaceholder.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
 
   export let data: PageData;
 
-  let selected: string[] = [];
-
-  function addOrRemove(url: string) {
-    if (!selected.includes(url)) {
-      selected = [...selected, url];
-    } else {
-      selected.splice(selected.indexOf(url), 1);
-      selected = selected;
-    }
-    data.environmentStore.envokeHaptic("light");
-  }
-
-  async function download(url?: string) {
-    if (selected.length > 0) {
-      await downloaderController.downloadSet(selected);
-    } else if (url) {
-      await downloaderController.download(url, 1);
-    }
+  async function download(url: string) {
+    await downloaderController.download(url, 1);
     data.environmentStore.envokeHaptic("heavy");
     data.environmentStore.close();
-  }
-
-  $: if (selected.length > 0) {
-    data.environmentStore.setMainButtonText(
-      `Download Tracks (${selected.length})`,
-    );
-    data.environmentStore.onMainButtonClick(download);
-  } else {
-    data.environmentStore.setMainButtonText("Download Album");
-    data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
   }
 
   onMount(async () => {
@@ -73,15 +46,9 @@
     <ul class="track-list">
       {#each value.result as record}
         <li>
-          <button
-            class="track"
-            on:click={() => addOrRemove(record.youTubeMusicPlaylistUrl)}
-          >
+          <div class="track">
             <p>{record.title}</p>
-          </button>
-          {#if selected.includes(record.youTubeMusicPlaylistUrl)}
-            <img src="{base}/check-circle.svg" alt="check" class="h-5 w-5" />
-          {/if}
+          </div>
         </li>
       {/each}
     </ul>
