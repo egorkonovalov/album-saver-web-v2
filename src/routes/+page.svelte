@@ -10,47 +10,51 @@
   import { TOKEN_NAMES } from "$lib/constants";
   import { onDestroy } from "svelte";
   import type { PageData } from "./$types";
+  import { searchState } from "$lib/stores";
 
   export let data: PageData;
 
   function changeRequestType(type: RequestType) {
-    requestType = type;
+    searchState.update(state => ({
+      ...state,
+      requestType: type
+    }));
   }
 
   function handleInputFocusChange(focus: boolean) {
     if (focus) {
-      requestType === RequestType.Release
+      $searchState.requestType === RequestType.Release
         ? changeRequestType(RequestType.Album)
         : null;
     } else {
-      searchQuery === undefined || ""
-        ? requestType === RequestType.Release
+      $searchState.searchQuery === undefined || ""
+        ? $searchState.requestType === RequestType.Release
         : null;
     }
   }
   function handleInputValueChange(inputValue: string) {
-    inputQuery = inputValue;
-    if (!inputQuery) {
-      searchQuery = "";
-      requestType = RequestType.Release;
-    } else if (requestType === RequestType.Release) {
-      requestType = RequestType.Album;
-    }
+    searchState.update(state => {
+      const newState = { ...state, inputQuery: inputValue };
+      if (!inputValue) {
+        newState.searchQuery = "";
+        newState.requestType = RequestType.Release;
+      } else if (state.requestType === RequestType.Release) {
+        newState.requestType = RequestType.Album;
+      }
+      return newState;
+    });
   }
 
   let h;
-  let inputQuery = "";
-  let searchQuery = "";
-  let requestType = RequestType.Release;
   let keyObject = {
-    searchQuery: searchQuery,
-    requestType: RequestType.Release,
+    searchQuery: $searchState.searchQuery,
+    requestType: $searchState.requestType,
   };
 
   $: {
     tokensController.clearTokens(TOKEN_NAMES);
-    keyObject.searchQuery = searchQuery;
-    keyObject.requestType = requestType;
+    keyObject.searchQuery = $searchState.searchQuery;
+    keyObject.requestType = $searchState.requestType;
     keyObject = keyObject;
   }
   onDestroy(() => tokensController.clearTokens(TOKEN_NAMES));
@@ -59,7 +63,10 @@
 <div class="top-bar" bind:clientHeight={h}>
   <div class="flex">
     <Searchbar
-      on:search={(event) => (searchQuery = event.detail.value)}
+      on:search={(event) => searchState.update(state => ({
+        ...state,
+        searchQuery: event.detail.value
+      }))}
       on:inputQueryChange={(event) =>
         handleInputValueChange(event.detail.value)}
       on:inputFocuseChange={(event) =>
@@ -68,7 +75,7 @@
   </div>
   <FilterSelector
     on:changeRequestType={(event) => changeRequestType(event.detail.value)}
-    {requestType}
+    requestType={$searchState.requestType}
   />
 </div>
 
