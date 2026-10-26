@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+
+permissions:
+  contents: write
+
 jobs:
   build-deploy:
     environment: github-pages
@@ -29,4 +33,4 @@ jobs:
         with:
           publish_branch: gh-pages
           publish_dir: build
-          deploy_key: ${{ secrets.DEPLOY_SECRET }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
