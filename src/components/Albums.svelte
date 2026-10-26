@@ -4,12 +4,18 @@
   import Placeholder from "./utils/Placeholder.svelte";
   import albumsController from "$lib/modules/albums/albums.controller";
   import type { Record } from "$lib/modules/musicsearch/interfaces/record.interface";
-  import { onMount } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
+  import { get } from "svelte/store";
   import InfiniteScroll from "svelte-infinite-scroll";
   import LoadinWheel from "./utils/LoadinWheel.svelte";
   import { base } from "$app/paths";
+  import { albumSearchCache } from "$lib/stores";
+  import tokensController from "$lib/modules/tokens/tokens.controller";
+  import { TOKEN_NAMES } from "$lib/constants";
 
   export let query: string;
+
+  const dispatch = createEventDispatcher<{ ready: void }>();
 
   async function fetchData() {
     return await albumsController.getAlbums(query);
@@ -17,20 +23,43 @@
 
   async function handleLoadMore() {
     loadingMore = true;
-    newBatch = await fetchData();
-    loadingMore = false;
+    try {
+      data = [...data, ...(await fetchData())];
+      cacheResults();
+    } finally {
+      loadingMore = false;
+    }
   }
 
-  let newBatch: Record[] = [];
+  function cacheResults() {
+    albumSearchCache.set({
+      query,
+      records: data,
+      tokens: tokensController.getTokens(TOKEN_NAMES),
+    });
+  }
+
   let data: Record[] = [];
   let loadingMore = false;
   let showPlaceholder = false;
-  $: data = [...data, ...newBatch];
 
   onMount(async () => {
+    const cached = get(albumSearchCache);
+    if (cached?.query === query) {
+      data = cached.records;
+      if (cached.tokens) tokensController.tokens = cached.tokens;
+      dispatch("ready");
+      return;
+    }
+
     showPlaceholder = true;
-    data = await fetchData();
-    showPlaceholder = false;
+    try {
+      data = await fetchData();
+      cacheResults();
+    } finally {
+      showPlaceholder = false;
+      dispatch("ready");
+    }
   });
 </script>
 

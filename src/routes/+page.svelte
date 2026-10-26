@@ -8,13 +8,49 @@
   import Artists from "$components/Artists.svelte";
   import tokensController from "$lib/modules/tokens/tokens.controller";
   import { TOKEN_NAMES } from "$lib/constants";
-  import { onDestroy } from "svelte";
+  import { albumSearchCache } from "$lib/stores";
+  import { onDestroy, tick } from "svelte";
+  import type { Snapshot } from "@sveltejs/kit";
   import type { PageData } from "./$types";
 
   export let data: PageData;
 
+  type SearchSnapshot = {
+    inputQuery: string;
+    searchQuery: string;
+    requestType: RequestType;
+    scrollY: number;
+  };
+
+  let inputQuery = "";
+  let searchQuery = "";
+  let requestType = RequestType.Release;
+  let restoreScrollY: number | null = null;
+
+  export const snapshot: Snapshot<SearchSnapshot> = {
+    capture: () => ({ inputQuery, searchQuery, requestType, scrollY: window.scrollY }),
+    restore: (state) => {
+      inputQuery = state.inputQuery;
+      searchQuery = state.searchQuery;
+      requestType = state.requestType;
+      restoreScrollY = state.scrollY;
+    },
+  };
+
+  function resetAlbumSearch() {
+    albumSearchCache.set(null);
+    tokensController.clearTokens(TOKEN_NAMES);
+  }
+
   function changeRequestType(type: RequestType) {
+    if (type === requestType) return;
+    resetAlbumSearch();
     requestType = type;
+  }
+
+  function submitSearch(query: string) {
+    resetAlbumSearch();
+    searchQuery = query;
   }
 
   function handleInputFocusChange(focus: boolean) {
@@ -31,6 +67,7 @@
   function handleInputValueChange(inputValue: string) {
     inputQuery = inputValue;
     if (!inputQuery) {
+      resetAlbumSearch();
       searchQuery = "";
       requestType = RequestType.Release;
     } else if (requestType === RequestType.Release) {
@@ -38,17 +75,22 @@
     }
   }
 
+  async function restoreScrollPosition() {
+    if (restoreScrollY === null) return;
+
+    const scrollY = restoreScrollY;
+    restoreScrollY = null;
+    await tick();
+    requestAnimationFrame(() => window.scrollTo(0, scrollY));
+  }
+
   let h;
-  let inputQuery = "";
-  let searchQuery = "";
-  let requestType = RequestType.Release;
   let keyObject = {
     searchQuery: searchQuery,
     requestType: RequestType.Release,
   };
 
   $: {
-    tokensController.clearTokens(TOKEN_NAMES);
     keyObject.searchQuery = searchQuery;
     keyObject.requestType = requestType;
     keyObject = keyObject;
@@ -59,7 +101,8 @@
 <div class="top-bar" bind:clientHeight={h}>
   <div class="flex">
     <Searchbar
-      on:search={(event) => (searchQuery = event.detail.value)}
+      value={inputQuery}
+      on:search={(event) => submitSearch(event.detail.value)}
       on:inputQueryChange={(event) =>
         handleInputValueChange(event.detail.value)}
       on:inputFocuseChange={(event) =>
@@ -76,7 +119,7 @@
   <div class="content" style="margin-top: {h}px">
     {#if keyObject.searchQuery !== ""}
       {#if keyObject.requestType === RequestType.Album}
-        <Albums query={keyObject.searchQuery} />
+        <Albums query={keyObject.searchQuery} on:ready={restoreScrollPosition} />
       {:else if keyObject.requestType === RequestType.Track}
         <Tracks
           query={keyObject.searchQuery}

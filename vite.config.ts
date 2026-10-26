@@ -1,10 +1,30 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import type { UserConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
-const config: UserConfig = {
-	plugins: [
-		sveltekit(),
-	]
-};
+export default defineConfig(({ mode }) => {
+	const env = loadEnv(mode, process.cwd(), '');
+	const apiProxyTarget = env.API_PROXY_TARGET;
 
-export default config;
+	if (!apiProxyTarget) {
+		throw new Error('API_PROXY_TARGET must be set in .env.local');
+	}
+
+	return {
+		plugins: [
+			sveltekit(),
+		],
+		server: {
+			host: '127.0.0.1',
+			port: 5173,
+			strictPort: true,
+			allowedHosts: ['.ngrok-free.app', '.trycloudflare.com'],
+			proxy: {
+				'/api': {
+					target: apiProxyTarget,
+					changeOrigin: true,
+					rewrite: (path) => path.replace(/^\/api/, '')
+				}
+			}
+		}
+	};
+});
