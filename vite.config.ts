@@ -5,7 +5,7 @@ export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	const apiProxyTarget = env.API_PROXY_TARGET;
 
-	if (!apiProxyTarget) {
+	if (mode === 'development' && !apiProxyTarget) {
 		throw new Error('API_PROXY_TARGET must be set in .env.local');
 	}
 
@@ -18,13 +18,13 @@ export default defineConfig(({ mode }) => {
 			port: 5173,
 			strictPort: true,
 			allowedHosts: ['.ngrok-free.app', '.trycloudflare.com'],
-			proxy: {
+			proxy: apiProxyTarget ? {
 				'/api': {
 					target: apiProxyTarget,
 					changeOrigin: true,
 					rewrite: (path) => path.replace(/^\/api/, '')
 				}
-			}
+			} : undefined
 		}
 	};
 });

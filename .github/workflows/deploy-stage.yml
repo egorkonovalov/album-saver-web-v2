@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set-up Node & Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       - name: Set-up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: "yarn"
@@ -23,7 +23,7 @@ jobs:
       - name: Build
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
-        run: yarn build
+        run: yarn svelte-kit sync && yarn build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
