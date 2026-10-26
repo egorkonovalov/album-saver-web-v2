@@ -2,30 +2,34 @@
   import { base } from "$app/paths";
   import { createEventDispatcher } from "svelte";
 
+  export let value = "";
+
   function searchRecord() {
     input.blur();
     dispatch("search", { value });
   }
 
-  const dispatch = createEventDispatcher();
-  let value: string;
-  let input: HTMLElement;
-  let inFocuse = false;
-
-  $: {
+  function updateInputValue(event: Event) {
+    value = (event.currentTarget as HTMLInputElement).value;
     dispatch("inputQueryChange", { value });
   }
-  $: {
-    dispatch("inputFocuseChange", { value: inFocuse });
+
+  function clearSearch() {
+    value = "";
+    dispatch("inputQueryChange", { value });
   }
+
+  const dispatch = createEventDispatcher();
+  let input: HTMLElement;
 </script>
 
 <form on:submit|preventDefault={searchRecord} class="form">
   <div class="w-full searchbar flex items-center">
     <label class="w-full">
       <input
-        on:focus={() => (inFocuse = true)}
-        on:blur={() => (inFocuse = false)}
+        on:focus={() => dispatch("inputFocuseChange", { value: true })}
+        on:blur={() => dispatch("inputFocuseChange", { value: false })}
+        on:input={updateInputValue}
         bind:this={input}
         type="search"
         bind:value
@@ -37,7 +41,7 @@
     </label>
     {#if value}
       <input
-        on:click={() => (value = "")}
+        on:click={clearSearch}
         type="reset"
         value=""
         style="background: url({base}/close.svg)"

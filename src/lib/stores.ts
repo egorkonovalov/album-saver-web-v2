@@ -4,6 +4,14 @@ import type { PlatformEnvironment } from "./modules/platformenvironment/interfac
 
 export const tokens = writable({});
 
+export type AlbumSearchCache = {
+  query: string;
+  records: Record[];
+  tokens: { [name: string]: string } | null;
+};
+
+export const albumSearchCache = writable<AlbumSearchCache | null>(null);
+
 export const artist = writable<Record>({
   youTubeMusicPlaylistUrl: "",
   title: "",
