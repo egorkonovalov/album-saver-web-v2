@@ -9,22 +9,18 @@
 
   let isDownloading = false;
 
-  async function download(url: string) {
+  function download(url: string) {
     if (isDownloading) return;
 
     isDownloading = true;
     data.environmentStore.disableMainButton();
 
-    try {
-      await downloaderController.download(url, 1);
-      data.environmentStore.envokeHaptic("heavy");
-      data.environmentStore.close();
-    } catch (error) {
+    void downloaderController.download(url, 1).catch((error) => {
       console.error("Unable to start album download", error);
-      data.environmentStore.enableMainButton();
-      isDownloading = false;
-      data.environmentStore.showAlert("Couldn't start the album download. Please try again.");
-    }
+    });
+
+    data.environmentStore.envokeHaptic("heavy");
+    data.environmentStore.close();
   }
 
   const handleMainButtonClick = () => download(data.albumUrl);
