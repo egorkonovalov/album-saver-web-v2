@@ -2,12 +2,30 @@ import platformEnvironmentService from "$lib/modules/platformenvironment/platfor
 import downloaderService from "./downloader.service"
 
 class DownloaderController {
-  async download(youTubeMusicPlaylistUrl: string, entityType: 1 | 2) {
-    return await downloaderService.download({
+  private activeDownloads = new Map<string, Promise<void>>();
+
+  async download(youTubeMusicPlaylistUrl: string, entityType: 1 | 2): Promise<void> {
+    const userId = platformEnvironmentService.getEnvironment().userId.toString();
+    const requestKey = `${userId}:${entityType}:${youTubeMusicPlaylistUrl}`;
+    const activeDownload = this.activeDownloads.get(requestKey);
+
+    if (activeDownload) return await activeDownload;
+
+    const request = downloaderService.download({
       youTubeMusicPlaylistUrl,
-      userId: platformEnvironmentService.getEnvironment().userId.toString(),
+      userId,
       entityType: entityType.toString()
-    })
+    });
+
+    this.activeDownloads.set(requestKey, request);
+
+    try {
+      await request;
+    } finally {
+      if (this.activeDownloads.get(requestKey) === request) {
+        this.activeDownloads.delete(requestKey);
+      }
+    }
   }
 
   async downloadSet(urls: string[]) {

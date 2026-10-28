@@ -7,19 +7,35 @@
 
   export let data: PageData;
 
+  let isDownloading = false;
+
   async function download(url: string) {
-    await downloaderController.download(url, 1);
-    data.environmentStore.envokeHaptic("heavy");
-    data.environmentStore.close();
+    if (isDownloading) return;
+
+    isDownloading = true;
+    data.environmentStore.disableMainButton();
+
+    try {
+      await downloaderController.download(url, 1);
+      data.environmentStore.envokeHaptic("heavy");
+      data.environmentStore.close();
+    } catch (error) {
+      console.error("Unable to start album download", error);
+      data.environmentStore.enableMainButton();
+      isDownloading = false;
+      data.environmentStore.showAlert("Couldn't start the album download. Please try again.");
+    }
   }
 
-  onMount(async () => {
+  const handleMainButtonClick = () => download(data.albumUrl);
+
+  onMount(() => {
     data.environmentStore.showMainButton("Download Album");
-    data.environmentStore.onMainButtonClick(() => download(data.albumUrl));
+    data.environmentStore.onMainButtonClick(handleMainButtonClick);
   });
 
   onDestroy(() => {
-    data.environmentStore.offMainButtonClick(() => download(data.albumUrl));
+    data.environmentStore.offMainButtonClick(handleMainButtonClick);
     data.environmentStore.hideMainButton();
   });
 </script>
