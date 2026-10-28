@@ -3,7 +3,7 @@ import { post } from "$lib/modules/httprequest/httprequest.service"
 
 class DownloaderService {
   async download(query: Record<string, string>) {
-    return await post<void>(API_DOWNLOAD, { params: { ...query } })
+    return await post<void>(API_DOWNLOAD, { params: { ...query } }, { keepalive: true })
   }
   async downloadSet(body: Record<string, any>) {
     return await post<void>(API_DOWNLOADSET, { body })
