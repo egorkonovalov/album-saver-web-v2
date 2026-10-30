@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import Placeholder from "$components/utils/Placeholder.svelte";
   import { onDestroy, onMount } from "svelte";
   import AlbumPlaceholder from "$components/utils/AlbumPlaceholder.svelte";
   import downloaderController from "$lib/modules/downloader/downloader.controller";
@@ -8,6 +7,21 @@
   export let data: PageData;
 
   let isDownloading = false;
+
+  function revealCover(image: HTMLImageElement) {
+    const reveal = () => {
+      if (image.naturalWidth > 0) image.classList.add("is-loaded");
+    };
+
+    image.addEventListener("load", reveal);
+    if (image.complete) reveal();
+
+    return {
+      destroy() {
+        image.removeEventListener("load", reveal);
+      }
+    };
+  }
 
   function download(url: string) {
     if (isDownloading) return;
@@ -40,7 +54,11 @@
   {#await data.streamed.album}
     <AlbumPlaceholder />
   {:then value}
-    <img class="artwork" src={value.albumImage} alt="cover" />
+    <div class="artwork">
+      {#key value.albumImage}
+        <img class="cover-image" src={value.albumImage} alt="cover" use:revealCover />
+      {/key}
+    </div>
     <div class="headings">
       <h3 class="title">
         {value.albumTitle}
@@ -53,7 +71,11 @@
     </div>
   {/await}
   {#await data.streamed.album}
-    <Placeholder count={8} _class="album-entry track-list mt-0" />
+    <ul class="track-list track-list--loading" aria-busy="true" aria-label="Loading tracks">
+      {#each Array(8) as _}
+        <li aria-hidden="true"><span class="track-skeleton-fill" /></li>
+      {/each}
+    </ul>
   {:then value}
     <ul class="track-list">
       {#each value.result as record}

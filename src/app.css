@@ -195,23 +195,6 @@
         @apply hidden;
       }
     }
-    &.track-list.album-entry {
-      & .image {
-        @apply hidden;
-      }
-      & .text-line-sm {
-        @apply hidden;
-      }
-      & .entry {
-        @apply p-2;
-        & .text-container {
-          @apply w-full;
-        }
-        & p {
-          @apply w-full h-5;
-        }
-      }
-    }
   }
 
   .btn {
@@ -232,22 +215,66 @@
       }
     }
     & .artwork {
-      @apply w-2/3 self-center rounded-lg shadow-lg mt-3 aspect-square object-cover;
-    }
-    & .track-list {
-      @apply mt-0;
-      counter-reset: track;
-      & li {
-        @apply flex justify-between items-center p-2;
-        &:nth-child(2n + 2) {
-          @apply bg-[color:var(--tg-theme-secondary-bg-color)] rounded-md;
+      @apply relative block w-2/3 self-center rounded-lg mt-3 aspect-square;
+      background-color: var(--tg-theme-secondary-bg-color, #eee);
+      box-shadow: 0 8px 24px rgb(0 0 0 / 18%), 0 2px 6px rgb(0 0 0 / 8%);
+      & img {
+        @apply block w-full h-full object-cover;
+        border-radius: inherit;
+      }
+      & .cover-image {
+        opacity: 0;
+        &.is-loaded {
+          opacity: 1;
+          animation: album-cover-fade-in 250ms ease-out;
         }
+      }
+      &::after {
+        @apply absolute inset-0 pointer-events-none;
+        content: "";
+        border-radius: inherit;
+        box-shadow: inset 0 0 0 0.5px currentColor;
+        opacity: 0.15;
+      }
+    }
+    & > .track-list {
+      @apply mt-0 pt-0 gap-0;
+      counter-reset: track;
+      & > li {
+        @apply flex items-center px-2 py-3;
+        min-height: 44px;
+        border-bottom: 1px solid var(--tg-theme-section-separator-color, rgb(128 128 128 / 20%));
+        &:first-child {
+          border-top: 1px solid var(--tg-theme-section-separator-color, rgb(128 128 128 / 20%));
+        }
+      }
+      &.track-list--loading > li {
+        position: relative;
+        border-color: transparent;
+        &::before {
+          content: "";
+          height: 1.25rem;
+        }
+        & .track-skeleton-fill {
+          @apply absolute inset-0;
+          border-radius: 7px;
+        }
+        &:nth-child(odd) .track-skeleton-fill {
+          background-color: currentColor;
+          opacity: 0.016;
+        }
+      }
+      & > li {
         & .track {
-          @apply h-5 flex items-center text-sm gap-3 truncate w-full;
-          &:before {
-            @apply text-center h-full;
+          @apply flex items-center text-sm leading-5 gap-3 min-w-0 w-full;
+          &::before {
+            @apply w-6 shrink-0 text-center font-normal tabular-nums;
+            color: var(--tg-theme-hint-color, currentColor);
             counter-increment: track;
             content: counter(track);
+          }
+          & p {
+            @apply min-w-0 truncate font-medium;
           }
         }
       }
@@ -294,5 +321,22 @@
   }
   .record__artist {
     @apply dark:text-stone-400;
+  }
+}
+
+@keyframes album-cover-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .album-entry .artwork .cover-image.is-loaded {
+    animation: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .album-entry > .track-list--loading > li:nth-child(odd) .track-skeleton-fill {
+    opacity: 0.05;
   }
 }
