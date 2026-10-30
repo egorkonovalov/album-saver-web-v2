@@ -16,6 +16,19 @@ yarn dev --open
 ```
 
 
+### Telegram HTTPS tunnel
+
+With the dev server running, start a tunnel in another terminal:
+
+```bash
+cloudflared tunnel --url http://localhost:5173 --http-host-header localhost
+```
+
+The host header override lets Vite accept requests through any newly generated
+tunnel URL without editing `vite.config.ts`. Restart existing tunnels with this
+command. Set the generated HTTPS URL as the bot's menu button URL; Quick Tunnel
+URLs change each time the tunnel starts.
+
 ## Building
 
 To create a production version of your app:
